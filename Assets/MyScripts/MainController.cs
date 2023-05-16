@@ -43,6 +43,5 @@ public class MainController : MonoBehaviour
         transform.rotation *= Quaternion.Euler(0,0,180f);
         // phone.initialDownDirection = transform.up;
         phone.SetInitialDownDirection();
-        phone.ResetGyro();
     }
 }

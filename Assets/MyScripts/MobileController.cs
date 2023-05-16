@@ -6,12 +6,11 @@ public class MobileController : MonoBehaviour
 {
     // Start is called before the first frame update
     private Gyroscope gyro;
-    private Vector3 acce, pointingDirection;
+    private Vector3 pointingDirection;
     private float MaximumDistance = 30.0f;
     private Quaternion initialRotation, gyroInitialRotation;
     public float minimumAngle = 90.0f, maxAlphaAngel;
     public Vector3 initialDownDirection, initialRightDirection;
-    private bool canHit = true, cubeHitSEFlag = true, isOverhit = false;
 
     void Start()
     {   
@@ -38,7 +37,6 @@ public class MobileController : MonoBehaviour
         // ======== RayCast ========
         pointingDirection =  transform.up;
         Ray ray = new Ray(transform.position, pointingDirection);
-        RaycastHit hit;
         // lastHit Initialization
         
 
@@ -46,7 +44,6 @@ public class MobileController : MonoBehaviour
         if (Time.frameCount == 120){
             SetInitialDownDirection();
             initialRightDirection = transform.right;
-            ResetGyro();
         }
         
         // ======== Debug Log ========
@@ -60,13 +57,9 @@ public class MobileController : MonoBehaviour
         return new Quaternion(-q.x, q.y, -q.z, q.w);
     }
 
-    private float GetAngleBetweenTargetAndPointing(Vector3 targetPosition, Vector3 relative_pointingDirection){
-        return Vector3.Angle(targetPosition, relative_pointingDirection);
-    }
-
     public void SetInitialDownDirection(){
         initialDownDirection = pointingDirection;
-        // Debug.Log("Initial Down Direction is Set!");
+        Debug.Log("Initial Down Direction is Set to: " + pointingDirection + ".");
     }
 
     public static float CartesianToSpherical(Vector3 cartCoords){

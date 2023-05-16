@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Linq;
 
 [RequireComponent(typeof(Renderer))]
-public class CubeController : MonoBehaviour
+public class Audioontroller : MonoBehaviour
 {
     // Start is called before the first frame update
     public MobileController MobileController;
@@ -13,9 +13,6 @@ public class CubeController : MonoBehaviour
     public int MaxTrialTime, NumberOfHorizontalPositions, NumberOfVerticalPositions, Radius = 5;
     public int TrialTime, lastPositionIndex = 0, newRandomPositionIndex;
     public float InitialScale, speed, tolerantAngle;
-    public AudioSource SE;
-    public AudioSource SEErrorOverHit;
-    public AudioSource SEisMoving;
     public bool isMoving = false;
     List<int> randomPositionIndexList;
     public Vector3 BodyPositionOffSet = new Vector3(-1.33f, 0.0f, 0.0f);
@@ -135,7 +132,6 @@ public class CubeController : MonoBehaviour
             if (TrialTime == 0){
                 TeleportRandomly();
                 TrialTime = MaxTrialTime;
-                SEisMoving.Play();
             }
             return;
         }
@@ -143,7 +139,6 @@ public class CubeController : MonoBehaviour
             transform.localScale = new Vector3(InitialScale, InitialScale, InitialScale);
             MobileController.minimumAngle = 90.0f;
             MobileController.maxAlphaAngel = 0.0f;
-            SEErrorOverHit.Play();
             TrialTime = MaxTrialTime;
             return;
         }

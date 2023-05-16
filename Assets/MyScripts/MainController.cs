@@ -5,8 +5,7 @@ using UnityEngine;
 public class MainController : MonoBehaviour
 {   
     public MobileController phone;
-    public AudioSource SEStart;
-    public CubeController CubeController;
+    public AudioController AudioController;
     // Start is called before the first frame update
     void Start()
     {   
@@ -24,7 +23,7 @@ public class MainController : MonoBehaviour
         }
 
         if (Time.frameCount == 130) {
-            CubeController.GetComponent<AudioSource>().Play();
+            AudioController.GetComponent<AudioSource>().Play();
         }
 
         // Delayed Voice Prompt
@@ -45,7 +44,5 @@ public class MainController : MonoBehaviour
         // phone.initialDownDirection = transform.up;
         phone.SetInitialDownDirection();
         phone.ResetGyro();
-        SEStart.Play();
-
     }
 }

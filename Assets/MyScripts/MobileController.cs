@@ -6,7 +6,7 @@ public class MobileController : MonoBehaviour
 {
     // Start is called before the first frame update
     private Gyroscope gyro;
-    private Vector3 pointingDirection;
+    public Vector3 pointingDirection;
     private float MaximumDistance = 30.0f;
     private Quaternion initialRotation, gyroInitialRotation;
     public float minimumAngle = 90.0f, maxAlphaAngel;
@@ -28,16 +28,10 @@ public class MobileController : MonoBehaviour
         // ======== Transform Functions ========
         Quaternion offsetRotation = gyro.attitude;
         transform.rotation =  GyroToUnity(offsetRotation);
-        // Debug.Log(transform.rotation);
-
-        // // Alternative Way
-        // Quaternion offsetRotation = Quaternion.Inverse(gyroInitialRotation) * Input.gyro.attitude;
-        // transform.rotation = initialRotation * offsetRotation;
 
         // ======== RayCast ========
         pointingDirection =  transform.up;
         Ray ray = new Ray(transform.position, pointingDirection);
-        // lastHit Initialization
         
 
         // initialDownDirection Initialization
@@ -48,11 +42,8 @@ public class MobileController : MonoBehaviour
         
         // ======== Debug Log ========
         Debug.DrawRay(transform.position, pointingDirection * MaximumDistance, Color.green);
-        // Debug.Log("The Gyro's current rotation: " + gyro.attitude);
-        // Debug.Log("The Gyro's offset rotation: " + transform.rotation);
     }
 
-    // Input.gyro.attitude returns a quaternion for a right-handed coordinate system, while unity has a left-handed coordinate system.
     private Quaternion GyroToUnity(Quaternion q){
         return new Quaternion(-q.x, q.y, -q.z, q.w);
     }

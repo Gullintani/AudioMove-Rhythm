@@ -13,13 +13,30 @@ public class AudioController : MonoBehaviour
     public float speed, tolerantAngle;
     public bool isMoving = false;
     public Vector3 BodyPositionOffSet = new Vector3(-1.33f, 0.0f, 0.0f);
-
+    public List<Vector3> divisionCartesianVectors;
+    public float percussionRadius = 2.0f;
+    
     void Start() {
+        
+        divisionCartesianVectors.Add(SphericalToCartesian(percussionRadius, Mathf.PI/2.0f, Mathf.PI/3.0f));
+        divisionCartesianVectors.Add(SphericalToCartesian(percussionRadius, Mathf.PI/2.0f, 0.0f));
+        divisionCartesianVectors.Add(SphericalToCartesian(percussionRadius, Mathf.PI/2.0f, -Mathf.PI/3.0f));
 
+        divisionCartesianVectors.Add(SphericalToCartesian(percussionRadius, Mathf.PI/6.0f, Mathf.PI/3.0f));
+        divisionCartesianVectors.Add(SphericalToCartesian(percussionRadius, Mathf.PI/6.0f, 0.0f));
+        divisionCartesianVectors.Add(SphericalToCartesian(percussionRadius, Mathf.PI/6.0f, -Mathf.PI/3.0f));
+
+        divisionCartesianVectors.Add(SphericalToCartesian(percussionRadius, Mathf.PI/6.0f * 5.0f, Mathf.PI/3.0f));
+        divisionCartesianVectors.Add(SphericalToCartesian(percussionRadius, Mathf.PI/6.0f * 5.0f, 0.0f));
+        divisionCartesianVectors.Add(SphericalToCartesian(percussionRadius, Mathf.PI/6.0f * 5.0f, -Mathf.PI/3.0f));
+
+        foreach (Vector3 CartesianCoordinate in divisionCartesianVectors){
+            Debug.Log(CartesianCoordinate);
+        }
     }
 
     private void Update() {
-        
+
     }
 
     public Vector3 SphericalToCartesian(float radius, float polar, float elevation){

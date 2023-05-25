@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PercussionControl : MonoBehaviour
+public class MainPercussionControl9 : MonoBehaviour
 {
-    public PercussionControl1 p1;
-    public PercussionControl2 p2;
-    public PercussionControl3 p3;
-    public PercussionControl4 p4;
-    public PercussionControl5 p5;
-    public PercussionControl6 p6;
-    public PercussionControl7 p7;
-    public PercussionControl8 p8;
-    public PercussionControl9 p9;
+    public PercussionControl91 p1;
+    public PercussionControl92 p2;
+    public PercussionControl93 p3;
+    public PercussionControl94 p4;
+    public PercussionControl95 p5;
+    public PercussionControl96 p6;
+    public PercussionControl97 p7;
+    public PercussionControl98 p8;
+    public PercussionControl99 p9;
 
     // Start is called before the first frame update
     void Start()

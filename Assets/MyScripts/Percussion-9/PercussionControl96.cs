@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PercussionControl3 : MonoBehaviour
+public class PercussionControl96 : MonoBehaviour
 {
     private AudioSource percussion;
     private bool triggerFlag;

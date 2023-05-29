@@ -108,9 +108,6 @@ public class AudioProcessor : MonoBehaviour
 			spec [i] = 100.0f;
 
 		auco = new Autoco (maxlag, decay, framePeriod, getBandWidth ());
-
-		// Print BPM at start
-		Debug.Log(auco.avgBpm());
 		
 		lastT = getCurrentTimeMillis ();
 
@@ -233,8 +230,8 @@ public class AudioProcessor : MonoBehaviour
 			if (++now == colmax)
 				now = 0;
 
-			//Debug.Log(System.Math.Round(60 / (tempopd * framePeriod)) + " bpm");
-			//Debug.Log(System.Math.Round(auco.avgBpm()) + " bpm");
+			Debug.Log(System.Math.Round(60 / (tempopd * framePeriod)) + " bpm");
+			// Debug.Log(System.Math.Round(auco.avgBpm()) + " bpm");
 		}
 	}
 

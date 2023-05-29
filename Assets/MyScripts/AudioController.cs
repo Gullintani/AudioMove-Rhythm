@@ -22,7 +22,7 @@ public class AudioController : MonoBehaviour
 
     }
     void onOnbeatDetected (){
-		Debug.Log ("Beat!!!");
+		// Debug.Log ("Beat!!!");
         // TeleportRandomly();
 	}
 

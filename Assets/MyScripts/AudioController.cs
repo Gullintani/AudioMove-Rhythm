@@ -9,13 +9,8 @@ public class AudioController : MonoBehaviour
     // Start is called before the first frame update
     public AudioSource Music;
     public Vector3 BodyPositionOffSet = new Vector3(-1.33f, 0.0f, 0.0f);
-    public float percussionRadius = 2.0f;
     void Start() {
 
-        AudioProcessor processor = FindObjectOfType<AudioProcessor>();
-        processor.tapTempo();
-		processor.onBeat.AddListener(onOnbeatDetected);
-		processor.onSpectrum.AddListener(onSpectrum);
     }
 
     private void Update(){

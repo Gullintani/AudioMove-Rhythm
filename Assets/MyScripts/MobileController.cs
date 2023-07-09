@@ -8,7 +8,6 @@ public class MobileController : MonoBehaviour
     private Gyroscope gyro;
     public Vector3 pointingDirection;
     private float MaximumDistance = 30.0f;
-    private Quaternion initialRotation, gyroInitialRotation;
     public float minimumAngle = 90.0f, maxAlphaAngel;
     public Vector3 initialDownDirection, initialRightDirection;
 
@@ -17,9 +16,6 @@ public class MobileController : MonoBehaviour
         // ======== Sensor Input ========
         Input.gyro.enabled = true;
         gyro = Input.gyro;
-        initialRotation = transform.rotation;
-        gyroInitialRotation = gyro.attitude;
-
     }
 
     // Update is called once per frame

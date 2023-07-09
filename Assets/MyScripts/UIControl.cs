@@ -7,10 +7,10 @@ public class UIControl : MonoBehaviour
 {
     // Start is called before the first frame update
     public MainController MainController;
-    public AudioSource SEStart;
+    public AudioSource Verbal;
     void Start()
     {
-        
+        Verbal = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -24,7 +24,6 @@ public class UIControl : MonoBehaviour
         Button buttonCalibration = root.Q<Button>("ButtonCalibration");
 
         buttonCalibration.clicked += () => MainController.WorldCalibration();
-        // SEStart.Play();
-        // Debug.Log("Manual Calibration Complete");
+        buttonCalibration.clicked += () => Verbal.Play();        
     }
 }

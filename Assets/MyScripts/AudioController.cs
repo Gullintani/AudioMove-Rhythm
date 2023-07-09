@@ -10,27 +10,24 @@ public class AudioController : MonoBehaviour
     public AudioSource Music;
     public Vector3 BodyPositionOffSet = new Vector3(-1.33f, 0.0f, 0.0f);
     void Start() {
+        AudioClip musicClip = GetComponent<AudioSource>().clip;
 
+        UniBpmAnalyzer bpmAnalyzer = new UniBpmAnalyzer();
+        int bpm = UniBpmAnalyzer.AnalyzeBpm(musicClip);
+        if (bpm < 0)
+        {
+            Debug.LogError("AudioClip is null.");
+            return;
+        } else{
+            Debug.Log("BPM is " + bpm);
+        }
     }
 
     private void Update(){
 
     }
-    void onOnbeatDetected (){
-		// Debug.Log ("Beat!!!");
-        // TeleportRandomly();
-	}
 
 	//This event will be called every frame while music is playing
-	void onSpectrum (float[] spectrum){
-		//The spectrum is logarithmically averaged
-		//to 12 bands
-		for (int i = 0; i < spectrum.Length; ++i) {
-			Vector3 start = new Vector3 (i, 0, 0);
-			Vector3 end = new Vector3 (i*5, spectrum [i] * 50, 0);
-			Debug.DrawLine (start, end);
-		}
-	}
 
     public Vector3 SphericalToCartesian(float radius, float polar, float elevation){
         float a = radius * Mathf.Cos(elevation);

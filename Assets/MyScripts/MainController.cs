@@ -4,30 +4,71 @@ using UnityEngine;
 
 public class MainController : MonoBehaviour
 {   
-    public MobileController phone;
+    public MobileController Phone;
     public AudioController AudioController;
-    // Start is called before the first frame update
+    public List<Vector3> PositionList;
+    public bool HaveStarted = false;
+    
+    private void OnEnable() {
+        Debug.Log("===================== OnEnable of MainController =======================");
+    }
     void Start()
     {
-           
+        Debug.Log("===================== Start of MainController =======================");
+        
+        
+        // Generate Basic PositionList
+        GeneratePositions();
+
+        // Customize Interface
+
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Time.frameCount == 120) {
             WorldCalibration();
         }
 
-        if (Time.frameCount == 130) {
-            AudioController.GetComponent<AudioSource>().Play();
-        }
-
     }
 
+    private void GeneratePositions(){
+        // Get music clip
+        AudioClip musicClip = AudioController.GetComponent<AudioSource>().clip;
+        UniBpmAnalyzer bpmAnalyzer = new UniBpmAnalyzer();
+        int BPM = UniBpmAnalyzer.AnalyzeBpm(musicClip);
+        if (BPM < 0)
+        {
+            Debug.LogError("AudioClip is null.");
+            return;
+        } else{
+            Debug.Log("BPM is " + BPM);
+        }
+        
+        // For different BPM
+        if(BPM <= 80){
+            Debug.Log("BPM is smaller than 80");
+        }else if(BPM <= 100){
+            Debug.Log("BPM is smaller than 100");
+        }else if(BPM <= 120){
+            Debug.Log("BPM is smaller than 120");
+        }else if(BPM <= 180){
+            Debug.Log("BPM is smaller than 180");
+        }else if(BPM > 180){
+            Debug.Log("BPM is larger than 180");
+        }
+    }
+
+    public Vector3 SphericalToCartesian(float radius, float polar, float elevation){
+        float a = radius * Mathf.Cos(elevation);
+        float x = a * Mathf.Cos(polar);
+        float y = radius * Mathf.Sin(elevation);
+        float z = a * Mathf.Sin(polar);
+        return new Vector3(x, y, z);
+    }
     public void WorldCalibration(){
-        transform.rotation = phone.transform.rotation;
+        transform.rotation = Phone.transform.rotation;
         transform.rotation *= Quaternion.Euler(0,0,180f);
-        phone.SetInitialDownDirection();
+        Phone.SetInitialDownDirection();
     }
 }

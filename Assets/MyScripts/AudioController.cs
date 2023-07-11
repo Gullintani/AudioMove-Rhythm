@@ -10,17 +10,7 @@ public class AudioController : MonoBehaviour
     public AudioSource Music;
     public Vector3 BodyPositionOffSet = new Vector3(-1.33f, 0.0f, 0.0f);
     void Start() {
-        AudioClip musicClip = GetComponent<AudioSource>().clip;
-
-        UniBpmAnalyzer bpmAnalyzer = new UniBpmAnalyzer();
-        int bpm = UniBpmAnalyzer.AnalyzeBpm(musicClip);
-        if (bpm < 0)
-        {
-            Debug.LogError("AudioClip is null.");
-            return;
-        } else{
-            Debug.Log("BPM is " + bpm);
-        }
+        
     }
 
     private void Update(){
@@ -28,13 +18,10 @@ public class AudioController : MonoBehaviour
     }
 
 	//This event will be called every frame while music is playing
+    
+    
+    public void MoveToNextLocation(){
 
-    public Vector3 SphericalToCartesian(float radius, float polar, float elevation){
-        float a = radius * Mathf.Cos(elevation);
-        float x = a * Mathf.Cos(polar);
-        float y = radius * Mathf.Sin(elevation);
-        float z = a * Mathf.Sin(polar);
-        return new Vector3(x, y, z);
     }
 
     public void TeleportRandomly() {

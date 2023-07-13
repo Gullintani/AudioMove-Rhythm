@@ -4,5 +4,6 @@
     </ui:VisualElement>
     <ui:VisualElement>
         <ui:Slider picking-mode="Ignore" label="Slider Size" value="42" high-value="100" name="SliderSize" />
+        <ui:Slider picking-mode="Ignore" label="Slider Height" value="42" high-value="100" name="SliderHeight" />
     </ui:VisualElement>
 </ui:UXML>

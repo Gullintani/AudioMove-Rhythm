@@ -8,6 +8,7 @@ public class MainController : MonoBehaviour
     public AudioController AudioController;
     public GameObject PreviewPrefab;
     public List<Vector3> PositionList;
+    public List<GameObject> PreviewSphereList;
     public bool HaveStarted = false;
     private int BPMLevel;
 
@@ -18,7 +19,8 @@ public class MainController : MonoBehaviour
     void Start()
     {
         Debug.Log("===================== Start of MainController =======================");
-        
+        // Hide the AudioController first
+        AudioController.transform.localScale = new Vector3(0f, 0f, 0f);
         
         // Generate Basic PositionList
         GeneratePositions();
@@ -72,10 +74,15 @@ public class MainController : MonoBehaviour
         {
             PositionList[index] = SphericalToCartesian(PositionList[index]);
             Debug.Log("Position (Cartesian)" + index + ": " + PositionList[index]);
+            
+            // Generate Preview
+            GameObject PreviewSphere = Instantiate(PreviewPrefab, PositionList[index], Quaternion.identity);
+            PreviewSphere.name = "PreviewSphere " + index.ToString();
+            PreviewSphereList.Add(PreviewSphere);
         }
 
-        // Generate Preview
-
+        
+        
     }
     private List<Vector3> GeneratePositionsInFront(float startAngle, float endAngle, int numberOfPosition, float distance)
     {

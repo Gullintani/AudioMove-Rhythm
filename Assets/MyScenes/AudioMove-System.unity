@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -154,7 +154,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Phone: {fileID: 441558713}
   AudioController: {fileID: 534158932}
+  PreviewPrefab: {fileID: 4006676270041921276, guid: 2c42e7674f4064720a361f8356ab742b, type: 3}
   PositionList: []
+  PreviewSphereList: []
   HaveStarted: 0
 --- !u!4 &224480866
 Transform:
@@ -742,7 +744,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1119608054}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 5.5, z: 2}
+  m_LocalPosition: {x: 0, y: 10, z: 5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1000,6 +1002,7 @@ MonoBehaviour:
   - {fileID: 455144778}
   - {fileID: 1119608057}
   - {fileID: 1786897682}
+  TargetScale: 0
   MainController: {fileID: 224480865}
   Verbal: {fileID: 1595359774}
   Clip1_calibration: {fileID: 8300000, guid: 77599f318f111824886998cb1e1b3627, type: 3}

@@ -85,18 +85,18 @@ public class UIControl : MonoBehaviour
         // Switch camera
         SwitchToCameraSide();
         // Change phi data
-        float Phi = Mathf.Lerp(-45, 45, UISliderHeight.value / 100f);
-        for (int index = 0; index < MainController.PositionList.Count; index++){
-            // Update position list
-            Vector3 TempCartesian = MainController.PositionList[index];
-            Vector3 TempSpherical = CartesianToSpherical(new Vector3(TempCartesian.x, TempCartesian.y, TempCartesian.z));
-            TempSpherical = new Vector3(TempSpherical.x, TempSpherical.y, Phi);
-            MainController.PositionList[index] = SphericalToCartesian(TempSpherical);
-            
-            // Update preview sphere
-            MainController.PreviewSphereList[index].transform.localPosition = MainController.PositionList[index];
+        float Phi = Mathf.Lerp(-2, 2, UISliderHeight.value / 100f);
+        // for (int index = 0; index < MainController.PositionList.Count; index++){
+        //     // Update position list
+        //     Vector3 TempCartesian = MainController.PositionList[index];
+        //     Vector3 TempSpherical = CartesianToSpherical(new Vector3(TempCartesian.x, TempCartesian.y, TempCartesian.z));
+        //     TempSpherical = new Vector3(TempSpherical.x, TempSpherical.y, Phi);
+        //     MainController.PositionList[index] = SphericalToCartesian(TempSpherical);
+        // }
+        for (int index = 0; index < MainController.PreviewSphereList.Count; index++){
+            Vector3 TempVector = MainController.PreviewSphereList[index].transform.position;
+            MainController.PreviewSphereList[index].transform.position = new Vector3(TempVector.x, Phi, TempVector.z);
         }
-        
     }
 
     private void SwitchToCameraBack(){

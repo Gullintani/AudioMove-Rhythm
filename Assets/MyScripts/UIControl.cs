@@ -19,9 +19,11 @@ public class UIControl : MonoBehaviour
     private Slider UISliderSize;
     private Slider UISliderHeight;
     private Button UIButton;
+    public bool HaveStarted = false;
+
 
     private void OnEnable() {
-        Debug.Log("===================== OnEnable of UIControl =======================");
+
     }
     void Start()
     {   
@@ -39,28 +41,14 @@ public class UIControl : MonoBehaviour
         // Button Event
         UIButton.clicked += delegate(){
             // Check if the programe have started
-            if(MainController.HaveStarted){
+            if(HaveStarted){
                 // If started, calibration
                 MainController.WorldCalibration();
                 Verbal.PlayOneShot(Clip1_calibration);
                 SwitchToCameraBack();
             }else{
                 // If not started,
-                // 1. restart the music
-                AudioController.GetComponent<AudioSource>().Play();
-                // 2. destroy preview spheres
-                foreach (GameObject PreviewSphere in MainController.PreviewSphereList)
-                {
-                    Destroy(PreviewSphere);
-                }
-                MainController.PreviewSphereList.Clear();
-                // 3. make target visiable
-                AudioController.transform.localScale = new Vector3(TargetSize, TargetSize, TargetSize);
-
-                MainController.WorldCalibration();
-                MainController.HaveStarted = true;
-                Verbal.PlayOneShot(Clip2_start);
-                SwitchToCameraBack();
+                ActivateGameScene();
             }
             
         };
@@ -68,7 +56,52 @@ public class UIControl : MonoBehaviour
 
     // Update is called once per frame
     void Update(){
-        
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log("Space pressed. Test function triggered.");
+            ActivateSettingScene();
+            // MoveToNextRandomPosition();
+        }
+    }
+
+    public void ActivateSettingScene(){
+        // 1. generate preview shperes
+        MainController.GeneratePositions();
+        // 2. hide audio move sphere
+        AudioController.transform.localPosition = new Vector3(0f, 10f, 5f);
+        AudioController.transform.localScale = new Vector3(0f, 0f, 0f);
+        // 3. display ui
+        UISliderSize.style.display = DisplayStyle.Flex;
+        UISliderHeight.style.display = DisplayStyle.Flex;
+
+        HaveStarted = false;
+
+    }
+
+    public void ActivateGameScene(){
+        // 1. restart the music
+        AudioController.GetComponent<AudioSource>().Play();
+        // 2. destroy preview spheres
+        foreach (GameObject PreviewSphere in MainController.PreviewSphereList)
+        {
+            Destroy(PreviewSphere);
+        }
+        MainController.PreviewSphereList.Clear();
+        // 3. make target visiable
+        AudioController.transform.localScale = new Vector3(TargetSize, TargetSize, TargetSize);
+        MainController.WorldCalibration();
+        HaveStarted = true;
+        Verbal.PlayOneShot(Clip2_start);
+        SwitchToCameraBack();
+        // 4. hide setting ui
+        UISliderSize.style.display = DisplayStyle.None;
+        UISliderHeight.style.display = DisplayStyle.None;
+        // 5. restore size
+        AudioController.transform.localPosition = new Vector3(0f, 0f, 5f);
+        AudioController.transform.localScale = new Vector3(TargetSize, TargetSize, TargetSize);
+
+        HaveStarted = true;
+
     }
 
     private void OnSliderSizeValueChanged(ChangeEvent<float> evt){   

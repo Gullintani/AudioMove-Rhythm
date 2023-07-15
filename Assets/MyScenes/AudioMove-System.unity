@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -154,10 +154,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Phone: {fileID: 441558713}
   AudioController: {fileID: 534158932}
+  UIControl: {fileID: 1595359773}
   PreviewPrefab: {fileID: 4006676270041921276, guid: 2c42e7674f4064720a361f8356ab742b, type: 3}
   PositionList: []
   PreviewSphereList: []
-  HaveStarted: 0
 --- !u!4 &224480866
 Transform:
   m_ObjectHideFlags: 0
@@ -496,6 +496,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Music: {fileID: 534158931}
   BodyPositionOffSet: {x: -1.33, y: 0, z: 0}
+  MainController: {fileID: 224480865}
 --- !u!114 &534158933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1009,6 +1010,7 @@ MonoBehaviour:
   Clip2_start: {fileID: 8300000, guid: 40dbb81309e271a45b780ce910ead41c, type: 3}
   AudioController: {fileID: 534158932}
   UI: {fileID: 1595359771}
+  HaveStarted: 0
 --- !u!82 &1595359774
 AudioSource:
   m_ObjectHideFlags: 0

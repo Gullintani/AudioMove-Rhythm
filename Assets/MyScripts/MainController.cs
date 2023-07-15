@@ -6,38 +6,35 @@ public class MainController : MonoBehaviour
 {   
     public MobileController Phone;
     public AudioController AudioController;
+    public UIControl UIControl;
     public GameObject PreviewPrefab;
     public List<Vector3> PositionList;
     public List<GameObject> PreviewSphereList;
-    public bool HaveStarted = false;
     private int BPMLevel;
 
     
     private void OnEnable() {
-        Debug.Log("===================== OnEnable of MainController =======================");
+
     }
     void Start()
     {
-        Debug.Log("===================== Start of MainController =======================");
-        // Hide the AudioController first
-        AudioController.transform.localScale = new Vector3(0f, 0f, 0f);
-        
-        // Generate Basic PositionList
-        GeneratePositions();
-
-        // Customize Interface
+        // Setting scene.
+        UIControl.ActivateSettingScene();
 
     }
 
     void Update()
-    {
+    {   
+        
         if (Time.frameCount == 120) {
             WorldCalibration();
         }
 
     }
 
-    private void GeneratePositions(){
+    
+
+    public void GeneratePositions(){
         // Get music clip
         AudioClip musicClip = AudioController.GetComponent<AudioSource>().clip;
         UniBpmAnalyzer bpmAnalyzer = new UniBpmAnalyzer();
@@ -121,5 +118,18 @@ public class MainController : MonoBehaviour
         transform.rotation = Phone.transform.rotation;
         transform.rotation *= Quaternion.Euler(0,0,180f);
         Phone.SetInitialDownDirection();
+    }
+
+    public static float CartesianToSpherical(Vector3 cartCoords){
+        if (cartCoords.x == 0)
+            cartCoords.x = Mathf.Epsilon;
+        float outRadius = Mathf.Sqrt((cartCoords.x * cartCoords.x)
+                        + (cartCoords.y * cartCoords.y)
+                        + (cartCoords.z * cartCoords.z));
+        float outPolar = Mathf.Atan(cartCoords.z / cartCoords.x);
+        if (cartCoords.x < 0)
+            outPolar += Mathf.PI;
+        float outElevation = Mathf.Asin(cartCoords.y / outRadius);
+        return outPolar;
     }
 }

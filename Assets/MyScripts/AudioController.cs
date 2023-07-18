@@ -11,8 +11,13 @@ public class AudioController : MonoBehaviour
     public Vector3 BodyPositionOffSet = new Vector3(-1.33f, 0.0f, 0.0f);
     public MainController MainController;
     private int CurrentPositionIndex=0;
+    private Material TargetMaterial = null;
+    public bool isMoving = false;
 
     void Start() {
+        // Initialize sphere material and color
+        TargetMaterial = GetComponent<Renderer>().material;
+        ColorHit(false);
         
     }
 
@@ -21,12 +26,14 @@ public class AudioController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Debug.Log("Space pressed. Test function triggered.");
-            // MoveToNextPosition();
+            MoveToNextPosition();
             // MoveToNextRandomPosition();
         }
     }
 
-	//This event will be called every frame while music is playing
+	public void ColorHit(bool isHit) {
+        TargetMaterial.color = isHit ? Color.green : Color.cyan;
+    }
     
     
     // Move to the next position in PositionList

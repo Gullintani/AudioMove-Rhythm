@@ -18,14 +18,12 @@ public class MainController : MonoBehaviour
     }
     void Start()
     {
-        // Setting scene.
         UIControl.ActivateSettingScene();
-
     }
 
     void Update()
     {   
-        
+        // Setting scene.
         if (Time.frameCount == 120) {
             WorldCalibration();
         }
@@ -70,7 +68,7 @@ public class MainController : MonoBehaviour
         for (int index = 0; index < PositionList.Count; index++)
         {
             PositionList[index] = SphericalToCartesian(PositionList[index]);
-            Debug.Log("Position (Cartesian)" + index + ": " + PositionList[index]);
+            // Debug.Log("Position (Cartesian)" + index + ": " + PositionList[index]);
             
             // Generate Preview
             GameObject PreviewSphere = Instantiate(PreviewPrefab, PositionList[index], Quaternion.identity);

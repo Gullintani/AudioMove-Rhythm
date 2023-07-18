@@ -19,26 +19,28 @@ public class UIControl : MonoBehaviour
     private Slider UISliderSize;
     private Slider UISliderHeight;
     private Button UIButton;
+    private Button UIButtonBack;
     public bool HaveStarted = false;
 
 
     private void OnEnable() {
-
-    }
-    void Start()
-    {   
         // Initialization
         Verbal = GetComponent<AudioSource>();
         UIRoot = UI.rootVisualElement;
         UIButton = UIRoot.Q<Button>("ButtonCalibration");
+        UIButtonBack = UIRoot.Q<Button>("ButtonBack");
         UISliderSize = UIRoot.Q<Slider>("SliderSize");
         UISliderHeight = UIRoot.Q<Slider>("SliderHeight");
+    }
+    void Start()
+    {   
+        
         
         // Event Register
         UISliderSize.RegisterValueChangedCallback(OnSliderSizeValueChanged);
         UISliderHeight.RegisterValueChangedCallback(OnSliderHeightValueChanged);
 
-        // Button Event
+        // Calibration Button Event
         UIButton.clicked += delegate(){
             // Check if the programe have started
             if(HaveStarted){
@@ -50,18 +52,20 @@ public class UIControl : MonoBehaviour
                 // If not started,
                 ActivateGameScene();
             }
-            
+        };
+        // Back Button Event
+        UIButtonBack.clicked += delegate(){
+            ActivateSettingScene();
+            SwitchToCameraBack();
         };
     }
 
     // Update is called once per frame
     void Update(){
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Debug.Log("Space pressed. Test function triggered.");
-            ActivateSettingScene();
-            // MoveToNextRandomPosition();
-        }
+        // if (Input.GetKeyDown(KeyCode.Space))
+        // {
+        //     Debug.Log("Space pressed. Test function triggered.");
+        // }
     }
 
     public void ActivateSettingScene(){
@@ -73,7 +77,7 @@ public class UIControl : MonoBehaviour
         // 3. display ui
         UISliderSize.style.display = DisplayStyle.Flex;
         UISliderHeight.style.display = DisplayStyle.Flex;
-
+        UIButtonBack.style.display = DisplayStyle.None;
         HaveStarted = false;
 
     }
@@ -96,6 +100,7 @@ public class UIControl : MonoBehaviour
         // 4. hide setting ui
         UISliderSize.style.display = DisplayStyle.None;
         UISliderHeight.style.display = DisplayStyle.None;
+        UIButtonBack.style.display = DisplayStyle.Flex;
         // 5. restore size
         AudioController.transform.localPosition = new Vector3(0f, 0f, 5f);
         AudioController.transform.localScale = new Vector3(TargetSize, TargetSize, TargetSize);

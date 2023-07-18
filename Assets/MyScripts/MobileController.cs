@@ -21,23 +21,27 @@ public class MobileController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {   
-        // ======== Transform Functions ========
+        // Coordinate transform functions
         Quaternion offsetRotation = gyro.attitude;
         transform.rotation =  GyroToUnity(offsetRotation);
 
-        // ======== RayCast ========
+        // Create raycast
         pointingDirection =  transform.up;
         Ray ray = new Ray(transform.position, pointingDirection);
         
 
-        // initialDownDirection Initialization
+        // InitialDownDirection initialization
         if (Time.frameCount == 120){
             SetInitialDownDirection();
             initialRightDirection = transform.right;
         }
         
-        // ======== Debug Log ========
+        // Target detection
+        
+
+        // Debug
         Debug.DrawRay(transform.position, pointingDirection * MaximumDistance, Color.green);
+
     }
 
     private Quaternion GyroToUnity(Quaternion q){

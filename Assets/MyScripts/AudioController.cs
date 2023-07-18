@@ -13,12 +13,16 @@ public class AudioController : MonoBehaviour
     private int CurrentPositionIndex=0;
     private Material TargetMaterial = null;
     public bool isMoving = false;
+    public float MovingSpeed = 10.0f;
+    private Vector3 MovingDestination;
 
     void Start() {
         // Initialize sphere material and color
         TargetMaterial = GetComponent<Renderer>().material;
         ColorHit(false);
         
+        // Initialize MovingDestination
+        MovingDestination = new Vector3(0f, 0f, 5f);
     }
 
     private void Update(){
@@ -29,19 +33,27 @@ public class AudioController : MonoBehaviour
             MoveToNextPosition();
             // MoveToNextRandomPosition();
         }
+
+        // Smooth moving
+        if(transform.localPosition != MovingDestination){
+            MoveSmooth();
+        }
     }
 
 	public void ColorHit(bool isHit) {
         TargetMaterial.color = isHit ? Color.green : Color.cyan;
     }
     
-    
+    private void MoveSmooth(){
+        transform.localPosition = Vector3.MoveTowards(transform.localPosition, MovingDestination, MovingSpeed * Time.deltaTime);
+    }
+
     // Move to the next position in PositionList
     public void MoveToNextPosition(){
         if(CurrentPositionIndex >= MainController.PositionList.Count){
             CurrentPositionIndex = 0;
         }
-        this.transform.localPosition = MainController.PositionList[CurrentPositionIndex];
+        MovingDestination = MainController.PositionList[CurrentPositionIndex];
         CurrentPositionIndex += 1;
     }
 
@@ -53,13 +65,6 @@ public class AudioController : MonoBehaviour
             randomIndex = Random.Range(0, MainController.PositionList.Count);
         }
         CurrentPositionIndex = randomIndex;
-        this.transform.localPosition = MainController.PositionList[CurrentPositionIndex];
-    }
-
-    public void MoveRandomly() {
-        Vector3 direction = Random.onUnitSphere;
-        direction.y = Mathf.Clamp(direction.y, 0.5f, 1.0f);
-        float distance = 2.0f * Random.value + 1.5f;
-        transform.localPosition = distance * direction;
+        MovingDestination = MainController.PositionList[CurrentPositionIndex];
     }
 }

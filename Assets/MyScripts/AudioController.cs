@@ -29,7 +29,7 @@ public class AudioController : MonoBehaviour
         // Testing function.
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log("Space pressed. Test function triggered.");
+            Debug.Log("Space pressed. AudioController.cs test triggered.");
             MoveToNextPosition();
             // MoveToNextRandomPosition();
         }

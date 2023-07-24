@@ -53,7 +53,7 @@ public class UIControlBodyPosition : MonoBehaviour
         UIButtonExerciseStart.clicked += delegate(){
             // Critical here, switch scene
             // Pass data through scenes test
-            PlayerPrefs.SetInt("score", 100);
+            PlayerPrefsUtility.SaveVector3List(TargetPositionManager.PositionList);
             SceneManager.LoadScene("AudioMoveSystem");
         };
     }

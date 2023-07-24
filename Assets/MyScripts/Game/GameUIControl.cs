@@ -32,7 +32,10 @@ public class GameUIControl : MonoBehaviour
 
         // OnStart displays and verbal prompt
         Verbal.PlayOneShot(Clip1_ExerciseStart);
-        Debug.Log(PlayerPrefs.GetInt("score"));
+        Debug.Log(PlayerPrefsUtility.LoadVector3List()[0]);
+        Debug.Log(PlayerPrefsUtility.LoadVector3List()[1]);
+        Debug.Log(PlayerPrefsUtility.LoadVector3List()[2]);
+
 
         // Set Button Event
         UIButtonCalibration.clicked += delegate(){

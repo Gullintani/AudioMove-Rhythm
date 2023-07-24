@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/MyScenes/AudioMoveHome.unity
+    guid: dd0a8446e85b3234e860da5cc9262241
+  - enabled: 1
     path: Assets/MyScenes/AudioMoveSettings.unity
     guid: 71827e4c09bdc2442b35095a132f8dbb
   - enabled: 1

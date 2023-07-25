@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TargetPositionManager : MonoBehaviour
+public class TargetPositionManagerBackup : MonoBehaviour
 {
     public GameObject PreviewPrefab;
     public Vector3 SettingViewOffset;
@@ -22,8 +22,38 @@ public class TargetPositionManager : MonoBehaviour
     }
 
     public void GeneratePositions(){
+        // Get music clip
+        AudioClip musicClip = GetComponent<AudioSource>().clip;
+        UniBpmAnalyzer bpmAnalyzer = new UniBpmAnalyzer();
+        int BPM = UniBpmAnalyzer.AnalyzeBpm(musicClip);
+        if (BPM < 0)
+        {
+            Debug.LogError("AudioClip is null.");
+            return;
+        } else{
+            Debug.Log("BPM is " + BPM);
+        }
+        
+        // For different BPM
+        if(BPM <= 80){
+            BPMLevel = 2;
+            Debug.Log("BPM is smaller than 80");
+        }else if(BPM <= 100){
+            BPMLevel = 3;
+            Debug.Log("BPM is smaller than 100");
+        }else if(BPM <= 120){
+            BPMLevel = 4;
+            Debug.Log("BPM is smaller than 120");
+        }else if(BPM <= 180){
+            BPMLevel = 5;
+            Debug.Log("BPM is smaller than 180");
+        }else if(BPM > 180){
+            BPMLevel = 6;
+            Debug.Log("BPM is larger than 180");
+        }
+
         // Generate positions
-        PositionList = GenerateSphericalPositions(startAngle:30f, endAngle:150f, numberOfPosition:4, distance:5f);
+        PositionList = GenerateSphericalPositions(startAngle:30f, endAngle:150f, numberOfPosition:BPMLevel, distance:5f);
         for (int index = 0; index < PositionList.Count; index++)
         {
             PositionList[index] = SphericalToCartesian(PositionList[index]);

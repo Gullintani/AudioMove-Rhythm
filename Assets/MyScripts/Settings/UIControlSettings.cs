@@ -15,10 +15,8 @@ public class UIControlBodyPosition : MonoBehaviour
     public AudioClip Clip3_WearingPrompt;
     public float TargetSize = 2f;
     private VisualElement UIRoot;
-    private Button UIButtonConfirm;
-    private Button UIButtonStart;
+    private Button UIButtonNext;
     private Button UIButtonBack;
-    private Button UIButtonExerciseStart;
     private Slider UISliderSize;
     private Slider UISliderHeight;
     public string CurrentView = "BodyPosition";
@@ -28,49 +26,69 @@ public class UIControlBodyPosition : MonoBehaviour
         // Variables claim
         Verbal = GetComponent<AudioSource>();
         UIRoot = UI.rootVisualElement;
-        UIButtonConfirm = UIRoot.Q<Button>("ButtonConfirm");
-        UIButtonStart = UIRoot.Q<Button>("ButtonStart");
+        UIButtonNext = UIRoot.Q<Button>("ButtonNext");
         UIButtonBack = UIRoot.Q<Button>("ButtonBack");
-        UIButtonExerciseStart = UIRoot.Q<Button>("ButtonExerciseStart");
         UISliderSize = UIRoot.Q<Slider>("SliderSize");
         UISliderHeight = UIRoot.Q<Slider>("SliderHeight");
         UISliderSize.RegisterValueChangedCallback(OnSliderSizeValueChanged);
         UISliderHeight.RegisterValueChangedCallback(OnSliderHeightValueChanged);
 
         // Visual and audio state
-        DisplayBodyPositionView();
+        DisplayMusicSelectingView();
 
         // Button event registration
-        UIButtonConfirm.clicked += delegate(){
-            DisplayTargetSettingView();
-        };
-        UIButtonStart.clicked += delegate(){
-            DisplayWearingView();
+        UIButtonNext.clicked += delegate(){
+            if(CurrentView == "MusicSelecting"){
+                DisplayBodyPositionView();
+            }else if(CurrentView == "BodyPosition"){
+                DisplayTargetSettingView();
+            }else if(CurrentView == "TargetSetting"){
+                DisplayWearingView();
+            }
         };
         UIButtonBack.clicked += delegate(){
-            DisplayBodyPositionView();
+            if(CurrentView == "BodyPosition"){
+                DisplayMusicSelectingView();
+            }else if(CurrentView == "TargetSetting"){
+                DisplayBodyPositionView();
+            }else if(CurrentView == "Wearing"){
+                DisplayTargetSettingView();
+            }
         };
-        UIButtonExerciseStart.clicked += delegate(){
-            // Critical here, switch scene
-            // Pass data through scenes test
-            PlayerPrefsUtility.SaveVector3List(TargetPositionManager.PositionList);
-            SceneManager.LoadScene("AudioMoveSystem");
-        };
+        
+        // UIButtonExerciseStart.clicked += delegate(){
+        //     // Critical here, switch scene
+        //     // Pass data through scenes test
+        //     PlayerPrefsUtility.SaveVector3List(TargetPositionManager.PositionList);
+        //     SceneManager.LoadScene("AudioMoveSystem");
+        // };
     }
 
     void Update()
     {   
         // If have selected, display button
         if(CameraRotation.CurrentSelection != null && CurrentView == "BodyPosition"){
-            UIButtonConfirm.style.display = DisplayStyle.Flex;
+            UIButtonNext.style.display = DisplayStyle.Flex;
         }
     }
 
+    private void DisplayPreview(){
+        CurrentView = "Preview";
+        
+    }
+
+    private void DisplayMusicSelectingView(){
+        CameraRotation.isSelectingMusic = true;
+        CurrentView = "MusicSelecting";
+        UIButtonNext.style.display = DisplayStyle.Flex;
+        UIButtonBack.style.display = DisplayStyle.None;
+        UISliderSize.style.display = DisplayStyle.None;
+        UISliderHeight.style.display = DisplayStyle.None;
+    }
+
     private void DisplayTargetSettingView(){
-        CurrentView = "TargetSeeting";
+        CurrentView = "TargetSetting";
         Verbal.PlayOneShot(Clip2_TargetSettingsPrompt);
-        UIButtonConfirm.style.display = DisplayStyle.None;
-        UIButtonStart.style.display = DisplayStyle.Flex;
         UIButtonBack.style.display = DisplayStyle.Flex;
         UISliderSize.style.display = DisplayStyle.Flex;
         UISliderHeight.style.display = DisplayStyle.Flex;
@@ -79,12 +97,11 @@ public class UIControlBodyPosition : MonoBehaviour
         TargetPositionManager.GeneratePositions();
     }
     private void DisplayBodyPositionView(){
+        CameraRotation.isSelectingMusic = false;
         CurrentView = "BodyPosition";
         Verbal.PlayOneShot(Clip1_SelectPositionPrompt);
-        UIButtonConfirm.style.display = DisplayStyle.None;
-        UIButtonStart.style.display = DisplayStyle.None;
-        UIButtonBack.style.display = DisplayStyle.None;
-        UIButtonExerciseStart.style.display = DisplayStyle.None;
+        UIButtonNext.style.display = DisplayStyle.None;
+        UIButtonBack.style.display = DisplayStyle.Flex;
         UISliderSize.style.display = DisplayStyle.None;
         UISliderHeight.style.display = DisplayStyle.None;
         CameraRotation.MovingDestinationPosition = CameraRotation.BodyPositionCameraBasePosition;
@@ -101,14 +118,10 @@ public class UIControlBodyPosition : MonoBehaviour
     private void DisplayWearingView(){
         CurrentView = "Wearing";
         Verbal.PlayOneShot(Clip3_WearingPrompt);
-        UIButtonStart.style.display = DisplayStyle.None;
-        UIButtonBack.style.display = DisplayStyle.None;
+        UIButtonNext.style.display = DisplayStyle.Flex;
+        UIButtonBack.style.display = DisplayStyle.Flex;
         UISliderSize.style.display = DisplayStyle.None;
         UISliderHeight.style.display = DisplayStyle.None;
-        UIButtonExerciseStart.style.display = DisplayStyle.Flex;
-        CameraRotation.MovingDestinationPosition = CameraRotation.WearingCameraBasePosition;
-        CameraRotation.isMovingCamera = true;
-        CameraRotation.isWearingView = true;
     }
 
     private void OnSliderSizeValueChanged(ChangeEvent<float> evt){   

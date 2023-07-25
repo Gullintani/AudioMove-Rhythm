@@ -5,6 +5,7 @@ using UnityEngine;
 public class CameraRotation : MonoBehaviour
 {
     public GameObject Dummy;
+    public GameObject Headphone;
     public GameObject PhoneLeftUpperArm;
     public GameObject PhoneLeftLowerArm;
     public GameObject PhoneRightUpperArm;
@@ -15,16 +16,20 @@ public class CameraRotation : MonoBehaviour
     public GameObject PhoneRightLowerLeg;
     public GameObject WearingViewBackground;
     public UIControlBodyPosition UISetting;
-    private float RotationSpeed = 50f;
+    private float RotationSpeed;
+    private float SelfRotationSpeed;
     private float MovingSpeed = 15f;
     public Vector3 BodyPositionCameraBasePosition;
     public Vector3 TargetSettingCameraBasePosition;
     public Vector3 WearingCameraBasePosition;
     public Vector3 MovingDestinationPosition;
+    private Vector3 HeadphonePosition;
     public bool isMovingCamera;
-    public bool isWearingView;
-
+    public bool isRotatingCamera;
+    public bool isSelectingMusic;
     public GameObject CurrentSelection = null;
+    private Vector3 CurrentLookAt;
+    private Quaternion TargetRotation;
     private void Start()
     {   
         // Initial phone states
@@ -39,26 +44,36 @@ public class CameraRotation : MonoBehaviour
 
         // Initial variable setting
         BodyPositionCameraBasePosition = transform.position;
-        TargetSettingCameraBasePosition = new Vector3(0f, 8f, -8f);
-        WearingCameraBasePosition = WearingViewBackground.transform.position + new Vector3(0f, -5f, 0f);
+        TargetSettingCameraBasePosition = new Vector3(0f, 6f, -8f);
         isMovingCamera = false;
-        isWearingView = false;
+        isRotatingCamera = false;
+        isSelectingMusic = true;
         RotationSpeed = 50f;
+        SelfRotationSpeed = 10f;
         MovingSpeed = 15f;
+        HeadphonePosition = new Vector3(1.87f, 5f, 4f);
 
     }
 
     private void Update()
     {   
-        // Camera Movement Control
-        if (isWearingView == false){
-            transform.LookAt(Dummy.transform.position);
+        // Handle music selecting view
+        if (isSelectingMusic == false){
+            CurrentLookAt = Dummy.transform.position;
+            TargetRotation = Quaternion.LookRotation(Dummy.transform.position - transform.position);
+            Headphone.SetActive(false);
         }else{
-            MovingSpeed = 30f;
-            Vector3 targetDir = WearingViewBackground.transform.position - transform.position;
-            Quaternion targetRotation = Quaternion.LookRotation(targetDir, Vector3.up);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 20f * Time.deltaTime);
+            CurrentLookAt = HeadphonePosition;
+            TargetRotation = Quaternion.LookRotation(HeadphonePosition - transform.position);
+            Headphone.SetActive(true);
         }
+        if(TargetRotation != transform.rotation){
+            transform.rotation = Quaternion.Slerp(transform.rotation, TargetRotation, SelfRotationSpeed * Time.deltaTime);
+        } else {
+                transform.LookAt(CurrentLookAt);
+        }
+        
+        // Camera Movement Control
         if (isMovingCamera == true){
             transform.position = Vector3.MoveTowards(transform.position, MovingDestinationPosition, MovingSpeed * Time.deltaTime);
             if(transform.position == MovingDestinationPosition){
@@ -67,7 +82,7 @@ public class CameraRotation : MonoBehaviour
         }
 
         // Body position selection
-        if (Input.touchCount > 0 && isMovingCamera == false && isWearingView == false)
+        if (Input.touchCount > 0 && isMovingCamera == false && isSelectingMusic == false)
         // if (Input.GetMouseButton(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved))
         {   
             Touch touch = Input.GetTouch(0);
@@ -132,20 +147,30 @@ public class CameraRotation : MonoBehaviour
             }
 
             // Camera Rotation (only keep horizontal axis)
-            if (touch.phase == TouchPhase.Moved){
-                // Get moving offset from mouse or touch
-                float horizontalInput = Input.GetAxis("Mouse X") + Input.touches[0].deltaPosition.x;
-                float verticalInput = Input.GetAxis("Mouse Y") + Input.touches[0].deltaPosition.y;
+            if (touch.phase == TouchPhase.Moved && isSelectingMusic == false){
                 
-                // Calculate rotation angle
-                float horizontalRotation = horizontalInput * RotationSpeed * Time.deltaTime;
-                float verticalRotation = verticalInput * RotationSpeed * Time.deltaTime;
-                // Debug.Log(horizontalRotation);
+                if (UISetting.CurrentView != "TargetSetting"){
+                    // Get moving offset from mouse or touch
+                    float horizontalInput = Input.GetAxis("Mouse X") + Input.touches[0].deltaPosition.x;
+                    float verticalInput = Input.GetAxis("Mouse Y") + Input.touches[0].deltaPosition.y;
+                    
+                    // Calculate rotation angle
+                    float horizontalRotation = horizontalInput * RotationSpeed * Time.deltaTime;
+                    float verticalRotation = verticalInput * RotationSpeed * Time.deltaTime;
+                    // Debug.Log(horizontalRotation);
 
-                // Rotate around the target
-                transform.RotateAround(Dummy.transform.position, Vector3.up, horizontalRotation);
-                transform.RotateAround(Dummy.transform.position, transform.right, -verticalRotation);
-            }   
+                    // Rotate around the target
+                    transform.RotateAround(Dummy.transform.position, Vector3.up, horizontalRotation);
+                    transform.RotateAround(Dummy.transform.position, transform.right, -verticalRotation);
+                }else{
+                    // In target setting view, move camera in a plane
+                    float horizontalInput = Input.GetAxis("Mouse X") + Input.touches[0].deltaPosition.x;
+                    float verticalInput = Input.GetAxis("Mouse Y") + Input.touches[0].deltaPosition.y;
+
+                    transform.position += new Vector3(horizontalInput * 0.01f, 0f, 0f);
+                }
+            }
+            
         }
 
     }

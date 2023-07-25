@@ -9,7 +9,7 @@ public class TargetPositionManager : MonoBehaviour
     public List<Vector3> PositionList;
     public List<GameObject> PreviewSphereList;
     private int BPMLevel;
-
+    public Material OriginalMaterial;
     void Start()
     {
         // Because generated preview are based on (0,0,0), I need offset for TargetSettingView
@@ -19,6 +19,9 @@ public class TargetPositionManager : MonoBehaviour
     void Update()
     {
         
+    }
+    public void GenerrateTarget(){
+
     }
 
     public void GeneratePositions(){
@@ -32,6 +35,8 @@ public class TargetPositionManager : MonoBehaviour
             // Generate Preview
             GameObject PreviewSphere = Instantiate(PreviewPrefab, PositionList[index] + SettingViewOffset, Quaternion.identity);
             PreviewSphere.name = "PreviewSphere " + index.ToString();
+            Renderer renderer = PreviewSphere.GetComponent<Renderer>();
+            renderer.material = OriginalMaterial;
             PreviewSphereList.Add(PreviewSphere);
         }
     }

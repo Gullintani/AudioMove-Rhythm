@@ -17,6 +17,8 @@ public class UIControlBodyPosition : MonoBehaviour
     private VisualElement UIRoot;
     private Button UIButtonNext;
     private Button UIButtonBack;
+    private Button UIButtonAdd;
+    private Button UIButtonRemove;
     private Slider UISliderSize;
     private Slider UISliderHeight;
     public string CurrentView = "BodyPosition";
@@ -28,6 +30,9 @@ public class UIControlBodyPosition : MonoBehaviour
         UIRoot = UI.rootVisualElement;
         UIButtonNext = UIRoot.Q<Button>("ButtonNext");
         UIButtonBack = UIRoot.Q<Button>("ButtonBack");
+        UIButtonAdd = UIRoot.Q<Button>("ButtonAdd");
+        UIButtonRemove = UIRoot.Q<Button>("ButtonRemove");
+
         UISliderSize = UIRoot.Q<Slider>("SliderSize");
         UISliderHeight = UIRoot.Q<Slider>("SliderHeight");
         UISliderSize.RegisterValueChangedCallback(OnSliderSizeValueChanged);
@@ -43,7 +48,7 @@ public class UIControlBodyPosition : MonoBehaviour
             }else if(CurrentView == "BodyPosition"){
                 DisplayTargetSettingView();
             }else if(CurrentView == "TargetSetting"){
-                DisplayWearingView();
+                DisplayPreview();
             }
         };
         UIButtonBack.clicked += delegate(){
@@ -51,7 +56,7 @@ public class UIControlBodyPosition : MonoBehaviour
                 DisplayMusicSelectingView();
             }else if(CurrentView == "TargetSetting"){
                 DisplayBodyPositionView();
-            }else if(CurrentView == "Wearing"){
+            }else if(CurrentView == "Preview"){
                 DisplayTargetSettingView();
             }
         };
@@ -74,7 +79,15 @@ public class UIControlBodyPosition : MonoBehaviour
 
     private void DisplayPreview(){
         CurrentView = "Preview";
-        
+        Verbal.PlayOneShot(Clip3_WearingPrompt);
+        UIButtonNext.style.display = DisplayStyle.Flex;
+        UIButtonBack.style.display = DisplayStyle.Flex;
+        UIButtonAdd.style.display = DisplayStyle.None;
+        UIButtonRemove.style.display = DisplayStyle.None;
+        UISliderSize.style.display = DisplayStyle.None;
+        UISliderHeight.style.display = DisplayStyle.None;
+        CameraRotation.MovingDestinationPosition = CameraRotation.TargetSettingCameraBasePosition;
+        CameraRotation.isMovingCamera = true;
     }
 
     private void DisplayMusicSelectingView(){
@@ -82,6 +95,8 @@ public class UIControlBodyPosition : MonoBehaviour
         CurrentView = "MusicSelecting";
         UIButtonNext.style.display = DisplayStyle.Flex;
         UIButtonBack.style.display = DisplayStyle.None;
+        UIButtonAdd.style.display = DisplayStyle.None;
+        UIButtonRemove.style.display = DisplayStyle.None;
         UISliderSize.style.display = DisplayStyle.None;
         UISliderHeight.style.display = DisplayStyle.None;
     }
@@ -89,7 +104,10 @@ public class UIControlBodyPosition : MonoBehaviour
     private void DisplayTargetSettingView(){
         CurrentView = "TargetSetting";
         Verbal.PlayOneShot(Clip2_TargetSettingsPrompt);
+        UIButtonNext.style.display = DisplayStyle.Flex;
         UIButtonBack.style.display = DisplayStyle.Flex;
+        UIButtonAdd.style.display = DisplayStyle.Flex;
+        UIButtonRemove.style.display = DisplayStyle.Flex;
         UISliderSize.style.display = DisplayStyle.Flex;
         UISliderHeight.style.display = DisplayStyle.Flex;
         CameraRotation.MovingDestinationPosition = CameraRotation.TargetSettingCameraBasePosition;
@@ -102,6 +120,8 @@ public class UIControlBodyPosition : MonoBehaviour
         Verbal.PlayOneShot(Clip1_SelectPositionPrompt);
         UIButtonNext.style.display = DisplayStyle.None;
         UIButtonBack.style.display = DisplayStyle.Flex;
+        UIButtonBack.style.display = DisplayStyle.None;
+        UIButtonAdd.style.display = DisplayStyle.None;
         UISliderSize.style.display = DisplayStyle.None;
         UISliderHeight.style.display = DisplayStyle.None;
         CameraRotation.MovingDestinationPosition = CameraRotation.BodyPositionCameraBasePosition;
@@ -113,15 +133,6 @@ public class UIControlBodyPosition : MonoBehaviour
             TargetPositionManager.PositionList = new List<Vector3>();
             TargetPositionManager.PreviewSphereList = new List<GameObject>();
         }
-    }
-
-    private void DisplayWearingView(){
-        CurrentView = "Wearing";
-        Verbal.PlayOneShot(Clip3_WearingPrompt);
-        UIButtonNext.style.display = DisplayStyle.Flex;
-        UIButtonBack.style.display = DisplayStyle.Flex;
-        UISliderSize.style.display = DisplayStyle.None;
-        UISliderHeight.style.display = DisplayStyle.None;
     }
 
     private void OnSliderSizeValueChanged(ChangeEvent<float> evt){   

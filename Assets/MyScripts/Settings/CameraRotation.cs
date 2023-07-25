@@ -14,22 +14,24 @@ public class CameraRotation : MonoBehaviour
     public GameObject PhoneLeftLowerLeg;
     public GameObject PhoneRightUpperLeg;
     public GameObject PhoneRightLowerLeg;
-    public GameObject WearingViewBackground;
     public UIControlBodyPosition UISetting;
+    public TargetPositionManager TargetPositionManager;
     private float RotationSpeed;
     private float SelfRotationSpeed;
     private float MovingSpeed = 15f;
     public Vector3 BodyPositionCameraBasePosition;
     public Vector3 TargetSettingCameraBasePosition;
-    public Vector3 WearingCameraBasePosition;
     public Vector3 MovingDestinationPosition;
     private Vector3 HeadphonePosition;
     public bool isMovingCamera;
     public bool isRotatingCamera;
     public bool isSelectingMusic;
     public GameObject CurrentSelection = null;
+    public GameObject CurrentTargetSelection = null;
     private Vector3 CurrentLookAt;
     private Quaternion TargetRotation;
+    public Material OriginalMaterial;
+    public Material HighlightMaterial;
     private void Start()
     {   
         // Initial phone states
@@ -44,7 +46,7 @@ public class CameraRotation : MonoBehaviour
 
         // Initial variable setting
         BodyPositionCameraBasePosition = transform.position;
-        TargetSettingCameraBasePosition = new Vector3(0f, 6f, -8f);
+        TargetSettingCameraBasePosition = new Vector3(0f, 6f, -6f);
         isMovingCamera = false;
         isRotatingCamera = false;
         isSelectingMusic = true;
@@ -57,7 +59,7 @@ public class CameraRotation : MonoBehaviour
 
     private void Update()
     {   
-        // Handle music selecting view
+        // Camera self rotation control
         if (isSelectingMusic == false){
             CurrentLookAt = Dummy.transform.position;
             TargetRotation = Quaternion.LookRotation(Dummy.transform.position - transform.position);
@@ -73,7 +75,7 @@ public class CameraRotation : MonoBehaviour
                 transform.LookAt(CurrentLookAt);
         }
         
-        // Camera Movement Control
+        // Camera transform control
         if (isMovingCamera == true){
             transform.position = Vector3.MoveTowards(transform.position, MovingDestinationPosition, MovingSpeed * Time.deltaTime);
             if(transform.position == MovingDestinationPosition){
@@ -81,68 +83,71 @@ public class CameraRotation : MonoBehaviour
             }
         }
 
-        // Body position selection
+        // Camera rotation control
         if (Input.touchCount > 0 && isMovingCamera == false && isSelectingMusic == false)
         // if (Input.GetMouseButton(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved))
         {   
             Touch touch = Input.GetTouch(0);
-            // Only in BodyPositionView can select position
-            if (touch.phase == TouchPhase.Began && UISetting.CurrentView == "BodyPosition"){
+            if (touch.phase == TouchPhase.Began){
                 // Create ray from camera view
                 Ray ray = Camera.main.ScreenPointToRay(touch.position);
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit))
                 {   
                     GameObject selectedObject = hit.collider.gameObject;
-                    if (selectedObject.name != "cubeRoomEnv"){
-                        // Hide previous selection phone
-                        if(CurrentSelection != null){
-                            HidePhone(CurrentSelection);
+                    // In body position setting view
+                    if(UISetting.CurrentView == "BodyPosition"){
+                        if (selectedObject.name != "cubeRoomEnv"){
+                            // Hide previous selection phone
+                            if(CurrentSelection != null){
+                                HidePhone(CurrentSelection);
+                            }
+                            // Select current
+                            if(selectedObject.name == "Left Arm"){
+                                ShowPhone(PhoneLeftUpperArm);
+                                CurrentSelection = PhoneLeftUpperArm;
+                            }else if(selectedObject.name == "Left Forearm"){
+                                ShowPhone(PhoneLeftLowerArm);
+                                CurrentSelection = PhoneLeftLowerArm;
+                            }else if(selectedObject.name == "Right Arm"){
+                                ShowPhone(PhoneRightUpperArm);
+                                CurrentSelection = PhoneRightUpperArm;
+                            }else if(selectedObject.name == "Right Forearm"){
+                                ShowPhone(PhoneRightLowerArm);
+                                CurrentSelection = PhoneRightLowerArm;
+                            }else if(selectedObject.name == "Left Thigh"){
+                                ShowPhone(PhoneLeftUpperLeg);
+                                CurrentSelection = PhoneLeftUpperLeg;
+                            }else if(selectedObject.name == "Left Leg"){
+                                ShowPhone(PhoneLeftLowerLeg);
+                                CurrentSelection = PhoneLeftLowerLeg;
+                            }else if(selectedObject.name == "Right Thigh"){
+                                ShowPhone(PhoneRightUpperLeg);
+                                CurrentSelection = PhoneRightUpperLeg;
+                            }else if(selectedObject.name == "Right Leg"){
+                                ShowPhone(PhoneRightLowerLeg);
+                                CurrentSelection = PhoneRightLowerLeg;
+                            }
                         }
-                        // Select current
-                        if(selectedObject.name == "Left Arm"){
-                            ShowPhone(PhoneLeftUpperArm);
-                            CurrentSelection = PhoneLeftUpperArm;
-                        }else if(selectedObject.name == "Left Forearm"){
-                            ShowPhone(PhoneLeftLowerArm);
-                            CurrentSelection = PhoneLeftLowerArm;
-                        }else if(selectedObject.name == "Right Arm"){
-                            ShowPhone(PhoneRightUpperArm);
-                            CurrentSelection = PhoneRightUpperArm;
-                        }else if(selectedObject.name == "Right Forearm"){
-                            ShowPhone(PhoneRightLowerArm);
-                            CurrentSelection = PhoneRightLowerArm;
-                        }else if(selectedObject.name == "Left Thigh"){
-                            ShowPhone(PhoneLeftUpperLeg);
-                            CurrentSelection = PhoneLeftUpperLeg;
-                        }else if(selectedObject.name == "Left Leg"){
-                            ShowPhone(PhoneLeftLowerLeg);
-                            CurrentSelection = PhoneLeftLowerLeg;
-                        }else if(selectedObject.name == "Right Thigh"){
-                            ShowPhone(PhoneRightUpperLeg);
-                            CurrentSelection = PhoneRightUpperLeg;
-                        }else if(selectedObject.name == "Right Leg"){
-                            ShowPhone(PhoneRightLowerLeg);
-                            CurrentSelection = PhoneRightLowerLeg;
-                        }
-                    }else{
-                        HidePhone(CurrentSelection);
-                        CurrentSelection = null;
                     }
 
-                    // Material change (hard to implement)
-                    // GameObject selectedObject = hit.collider.gameObject;
-                    // if (selectedObject.name != "cubeRoomEnv"){
-                    //     if (CurrentSelection != null){
-                    //         DeSelect(CurrentSelection);
-                    //     }
-                    //     Select(selectedObject);
-                    //     CurrentSelection = selectedObject;
-                    // }else{
-                    //     DeSelect(CurrentSelection);
-                    //     CurrentSelection = null;
-                    // }
-                    // Debug.Log("Selected object: " + CurrentSelection.name);
+                    // In target setting view
+                    if(UISetting.CurrentView == "TargetSetting"){
+                        // Only hit the preview spheres
+                        if(IsPreviewSphere(selectedObject)){
+                            // Select preview sphere
+                            if(CurrentTargetSelection != null && CurrentTargetSelection.name != "cubeRoomEnv"){
+                                DeSelectHighlightMaterial(CurrentTargetSelection);
+                            }
+                            SelectHighlightMaterial(selectedObject);
+                            CurrentTargetSelection = selectedObject;
+                            Debug.Log(selectedObject.name);
+                        }else if(selectedObject.name == "cubeRoomEnv"){
+                            // Cancel selection
+                            DeSelectHighlightMaterial(CurrentTargetSelection);
+                            CurrentTargetSelection = selectedObject;
+                        }
+                    }
                 }
             }
 
@@ -185,22 +190,19 @@ public class CameraRotation : MonoBehaviour
     {
         phone.SetActive(true);
     }
+    private bool IsPreviewSphere(GameObject InputObject){
+        return InputObject.name.ToLower().Contains("Preview".ToLower());
+    }
+    private void SelectHighlightMaterial(GameObject selection){
+        Renderer renderer = selection.GetComponent<Renderer>();
+        renderer.material = HighlightMaterial;
+        Debug.Log("Selected");
+    }
 
-    // private void SelectHighlightMaterial(GameObject selection){
-    //     Renderer renderer = selection.GetComponent<Renderer>();
-    //     if (renderer != null)
-    //     {
-    //         OriginalMaterial = renderer.material;
-    //         renderer.material = SelectMaterial;
-    //     }
-    // }
-
-    // private void DeSelectHighlightMaterial(GameObject selection){
-    //     Renderer renderer = selection.GetComponent<Renderer>();
-    //     if (renderer != null)
-    //     {
-    //         renderer.material = OriginalMaterial;
-    //     }
-    // }
+    private void DeSelectHighlightMaterial(GameObject selection){
+        Renderer renderer = selection.GetComponent<Renderer>();
+        renderer.material = OriginalMaterial;
+        Debug.Log("DeSelected");
+    }
 }
 

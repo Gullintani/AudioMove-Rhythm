@@ -1051,6 +1051,7 @@ MonoBehaviour:
   SettingViewOffset: {x: 0, y: 0, z: 0}
   PositionList: []
   PreviewSphereList: []
+  OriginalMaterial: {fileID: 2100000, guid: af011d82bd51e5948b3c355348424667, type: 2}
 --- !u!82 &1383796900
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1964,15 +1965,18 @@ MonoBehaviour:
   PhoneLeftLowerLeg: {fileID: 1306335382}
   PhoneRightUpperLeg: {fileID: 1744547508}
   PhoneRightLowerLeg: {fileID: 1806769859}
-  WearingViewBackground: {fileID: 405406127}
   UISetting: {fileID: 71157718}
+  TargetPositionManager: {fileID: 1383796899}
   BodyPositionCameraBasePosition: {x: 0, y: 0, z: 0}
   TargetSettingCameraBasePosition: {x: 0, y: 0, z: 0}
-  WearingCameraBasePosition: {x: 0, y: 0, z: 0}
   MovingDestinationPosition: {x: 0, y: 0, z: 0}
   isMovingCamera: 0
+  isRotatingCamera: 0
   isSelectingMusic: 0
   CurrentSelection: {fileID: 0}
+  CurrentTargetSelection: {fileID: 0}
+  OriginalMaterial: {fileID: 2100000, guid: af011d82bd51e5948b3c355348424667, type: 2}
+  HighlightMaterial: {fileID: 2100000, guid: 6a87da185466cf94c87df6c49e5e843f, type: 2}
 --- !u!1 &1979723248 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -3793703669434266731, guid: 81bb9eea30387e442899949a80011e55, type: 3}

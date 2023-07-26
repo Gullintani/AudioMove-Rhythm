@@ -58,6 +58,8 @@ public class UIControlBodyPosition : MonoBehaviour
                 DisplayBodyPositionView();
             }else if(CurrentView == "Preview"){
                 DisplayTargetSettingView();
+            }else if(CurrentView == "MusicSelecting"){
+                SceneManager.LoadScene("AudioMoveHome");
             }
         };
         
@@ -94,7 +96,7 @@ public class UIControlBodyPosition : MonoBehaviour
         CameraRotation.isSelectingMusic = true;
         CurrentView = "MusicSelecting";
         UIButtonNext.style.display = DisplayStyle.Flex;
-        UIButtonBack.style.display = DisplayStyle.None;
+        UIButtonBack.style.display = DisplayStyle.Flex;
         UIButtonAdd.style.display = DisplayStyle.None;
         UIButtonRemove.style.display = DisplayStyle.None;
         UISliderSize.style.display = DisplayStyle.None;
@@ -120,8 +122,8 @@ public class UIControlBodyPosition : MonoBehaviour
         Verbal.PlayOneShot(Clip1_SelectPositionPrompt);
         UIButtonNext.style.display = DisplayStyle.None;
         UIButtonBack.style.display = DisplayStyle.Flex;
-        UIButtonBack.style.display = DisplayStyle.None;
         UIButtonAdd.style.display = DisplayStyle.None;
+        UIButtonRemove.style.display = DisplayStyle.None;
         UISliderSize.style.display = DisplayStyle.None;
         UISliderHeight.style.display = DisplayStyle.None;
         CameraRotation.MovingDestinationPosition = CameraRotation.BodyPositionCameraBasePosition;

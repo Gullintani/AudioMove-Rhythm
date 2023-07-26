@@ -958,7 +958,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 64000011095866406, guid: 8d8c4feb0f3734158b2332286ba4342b, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114000010983088856, guid: 8d8c4feb0f3734158b2332286ba4342b, type: 3}
       propertyPath: floor
@@ -1974,7 +1974,7 @@ MonoBehaviour:
   isRotatingCamera: 0
   isSelectingMusic: 0
   CurrentSelection: {fileID: 0}
-  CurrentTargetSelection: {fileID: 0}
+  CurrentTargetSelection: {fileID: 2143275976}
   OriginalMaterial: {fileID: 2100000, guid: af011d82bd51e5948b3c355348424667, type: 2}
   HighlightMaterial: {fileID: 2100000, guid: 6a87da185466cf94c87df6c49e5e843f, type: 2}
 --- !u!1 &1979723248 stripped
@@ -2108,6 +2108,11 @@ CapsuleCollider:
 Transform:
   m_CorrespondingSourceObject: {fileID: -7134897859409405753, guid: 81bb9eea30387e442899949a80011e55, type: 3}
   m_PrefabInstance: {fileID: 1748009422}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2143275976 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1000011959013568, guid: 8d8c4feb0f3734158b2332286ba4342b, type: 3}
+  m_PrefabInstance: {fileID: 1321327390}
   m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

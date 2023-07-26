@@ -27,7 +27,7 @@ public class CameraRotation : MonoBehaviour
     public bool isRotatingCamera;
     public bool isSelectingMusic;
     public GameObject CurrentSelection = null;
-    public GameObject CurrentTargetSelection = null;
+    public GameObject CurrentTargetSelection;
     private Vector3 CurrentLookAt;
     private Quaternion TargetRotation;
     public Material OriginalMaterial;
@@ -134,6 +134,7 @@ public class CameraRotation : MonoBehaviour
                     // In target setting view
                     if(UISetting.CurrentView == "TargetSetting"){
                         // Only hit the preview spheres
+                        Debug.Log(selectedObject);
                         if(IsPreviewSphere(selectedObject)){
                             // Select preview sphere
                             if(CurrentTargetSelection != null && CurrentTargetSelection.name != "cubeRoomEnv"){
@@ -141,8 +142,7 @@ public class CameraRotation : MonoBehaviour
                             }
                             SelectHighlightMaterial(selectedObject);
                             CurrentTargetSelection = selectedObject;
-                            Debug.Log(selectedObject.name);
-                        }else if(selectedObject.name == "cubeRoomEnv"){
+                        }else if(CurrentTargetSelection.name != "cubeRoomEnv" && selectedObject.name == "cubeRoomEnv"){
                             // Cancel selection
                             DeSelectHighlightMaterial(CurrentTargetSelection);
                             CurrentTargetSelection = selectedObject;
@@ -153,31 +153,29 @@ public class CameraRotation : MonoBehaviour
 
             // Camera Rotation (only keep horizontal axis)
             if (touch.phase == TouchPhase.Moved && isSelectingMusic == false){
-                
+                // Get moving offset from mouse or touch
+                float horizontalInput = Input.GetAxis("Mouse X") + Input.touches[0].deltaPosition.x;
+                float verticalInput = Input.GetAxis("Mouse Y") + Input.touches[0].deltaPosition.y;
                 if (UISetting.CurrentView != "TargetSetting"){
-                    // Get moving offset from mouse or touch
-                    float horizontalInput = Input.GetAxis("Mouse X") + Input.touches[0].deltaPosition.x;
-                    float verticalInput = Input.GetAxis("Mouse Y") + Input.touches[0].deltaPosition.y;
-                    
                     // Calculate rotation angle
                     float horizontalRotation = horizontalInput * RotationSpeed * Time.deltaTime;
                     float verticalRotation = verticalInput * RotationSpeed * Time.deltaTime;
-                    // Debug.Log(horizontalRotation);
 
                     // Rotate around the target
                     transform.RotateAround(Dummy.transform.position, Vector3.up, horizontalRotation);
                     transform.RotateAround(Dummy.transform.position, transform.right, -verticalRotation);
-                }else{
-                    // In target setting view, move camera in a plane
-                    float horizontalInput = Input.GetAxis("Mouse X") + Input.touches[0].deltaPosition.x;
-                    float verticalInput = Input.GetAxis("Mouse Y") + Input.touches[0].deltaPosition.y;
-
-                    transform.position += new Vector3(horizontalInput * 0.01f, 0f, 0f);
+                }else if(UISetting.CurrentView == "TargetSetting"){
+                    // Dragging target
+                    if(IsPreviewSphere(CurrentTargetSelection)){
+                        // Move the target
+                        CurrentTargetSelection.transform.position += new Vector3(horizontalInput * 0.005f, verticalInput * 0.005f, 0);
+                    }else{
+                        // In target setting view, move camera in a plane
+                        transform.position += new Vector3(horizontalInput * 0.01f, 0f, 0f);
+                    }           
                 }
             }
-            
         }
-
     }
 
 

@@ -46,14 +46,14 @@ public class CameraRotation : MonoBehaviour
 
         // Initial variable setting
         BodyPositionCameraBasePosition = transform.position;
-        TargetSettingCameraBasePosition = new Vector3(0f, 6f, -6f);
+        TargetSettingCameraBasePosition = new Vector3(0f, 1f, -6f);
         isMovingCamera = false;
         isRotatingCamera = false;
         isSelectingMusic = true;
         RotationSpeed = 50f;
         SelfRotationSpeed = 10f;
         MovingSpeed = 15f;
-        HeadphonePosition = new Vector3(1.87f, 5f, 4f);
+        HeadphonePosition = new Vector3(1.87f, 0f, 4f);
 
     }
 
@@ -168,7 +168,8 @@ public class CameraRotation : MonoBehaviour
                     // Dragging target
                     if(IsPreviewSphere(CurrentTargetSelection)){
                         // Move the target
-                        CurrentTargetSelection.transform.position += new Vector3(horizontalInput * 0.005f, verticalInput * 0.005f, 0);
+                        // CurrentTargetSelection.transform.position += new Vector3(horizontalInput * 0.005f, verticalInput * 0.005f, 0);
+                        CurrentTargetSelection.transform.position = TargetPositionManager.PositionConstrain(SelectedTarget:CurrentTargetSelection, HorizontalInput:horizontalInput, VerticalInput:verticalInput, StartThetaAngle:30f, EndThetaAngle:150f, StartPhiAngle:-30f, EndPhiAngle:30f, Distance:5f);
                     }else{
                         // In target setting view, move camera in a plane
                         transform.position += new Vector3(horizontalInput * 0.01f, 0f, 0f);

@@ -7,10 +7,6 @@ public class GameMainController : MonoBehaviour
     public GameMobileController Phone;
     public GameAudioController GameAudioController;
     public GameUIControl GameUIControl;
-    public List<Vector3> PositionList;
-    public List<GameObject> PreviewSphereList;
-    private int BPMLevel;
-
     
     private void OnEnable() {
 

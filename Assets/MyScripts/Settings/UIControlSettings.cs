@@ -13,7 +13,7 @@ public class UIControlBodyPosition : MonoBehaviour
     public AudioClip Clip1_SelectPositionPrompt;
     public AudioClip Clip2_TargetSettingsPrompt;
     public AudioClip Clip3_WearingPrompt;
-    public float TargetSize = 2f;
+    public float TargetSize = 3f;
     private VisualElement UIRoot;
     private Button UIButtonNext;
     private Button UIButtonBack;
@@ -46,17 +46,20 @@ public class UIControlBodyPosition : MonoBehaviour
                 DisplayTargetSettingView();
             }else if(CurrentView == "TargetSetting"){
                 DisplayPreview();
+            }else if(CurrentView == "Preview"){
+                TargetPositionManager.SaveSettingsToPlay();
+                SceneManager.LoadScene("AudioMoveSystem");
             }
         };
         UIButtonBack.clicked += delegate(){
-            if(CurrentView == "BodyPosition"){
+            if(CurrentView == "MusicSelecting"){
+                SceneManager.LoadScene("AudioMoveHome");
+            }else if(CurrentView == "BodyPosition"){
                 DisplayMusicSelectingView();
             }else if(CurrentView == "TargetSetting"){
                 DisplayBodyPositionView();
             }else if(CurrentView == "Preview"){
                 DisplayTargetSettingView();
-            }else if(CurrentView == "MusicSelecting"){
-                SceneManager.LoadScene("AudioMoveHome");
             }
         };
         
@@ -148,6 +151,8 @@ public class UIControlBodyPosition : MonoBehaviour
         foreach (GameObject PreviewSphere in TargetPositionManager.PreviewSphereList){
             PreviewSphere.transform.localScale = new Vector3(TargetSize, TargetSize, TargetSize);
         }
+        // Save target size
+        PlayerPrefs.SetFloat("TargetSize", TargetSize);
     }
 
 }

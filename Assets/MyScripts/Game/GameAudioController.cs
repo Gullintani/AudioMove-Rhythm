@@ -15,11 +15,17 @@ public class GameAudioController : MonoBehaviour
     public bool isMoving = false;
     public float MovingSpeed = 10.0f;
     private Vector3 MovingDestination;
-
+    private List<Vector3> PositionList;
+    private float TargetSize;
     void Start() {
-        // Initialize sphere material and color
+        // Load data from PlayerPref in setting scene
+        PositionList = PlayerPrefsUtility.LoadVector3List();
+        TargetSize = PlayerPrefs.GetFloat("TargetSize");
+
+        // Initialize sphere material, color and size
         TargetMaterial = GetComponent<Renderer>().material;
         ColorHit(false);
+        this.transform.localScale = new Vector3(TargetSize, TargetSize, TargetSize);
         
         // Initialize MovingDestination
         MovingDestination = new Vector3(0f, 0f, 5f);
@@ -50,21 +56,21 @@ public class GameAudioController : MonoBehaviour
 
     // Move to the next position in PositionList
     public void MoveToNextPosition(){
-        if(CurrentPositionIndex >= GameMainController.PositionList.Count){
+        if(CurrentPositionIndex >= PositionList.Count){
             CurrentPositionIndex = 0;
         }
-        MovingDestination = GameMainController.PositionList[CurrentPositionIndex];
+        MovingDestination = PositionList[CurrentPositionIndex];
         CurrentPositionIndex += 1;
     }
 
     // Move to random next position in PositionList
     public void MoveToNextRandomPosition(){
-        int randomIndex = Random.Range(0, GameMainController.PositionList.Count);
+        int randomIndex = Random.Range(0, PositionList.Count);
         while (randomIndex == CurrentPositionIndex)
         {
-            randomIndex = Random.Range(0, GameMainController.PositionList.Count);
+            randomIndex = Random.Range(0, PositionList.Count);
         }
         CurrentPositionIndex = randomIndex;
-        MovingDestination = GameMainController.PositionList[CurrentPositionIndex];
+        MovingDestination = PositionList[CurrentPositionIndex];
     }
 }

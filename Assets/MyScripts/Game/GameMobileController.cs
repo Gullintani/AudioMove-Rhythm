@@ -13,7 +13,7 @@ public class GameMobileController : MonoBehaviour
 
     void Start()
     {   
-        // ======== Sensor Input ========
+        // Gyroscope input
         Input.gyro.enabled = true;
         gyro = Input.gyro;
     }

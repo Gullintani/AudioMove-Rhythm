@@ -28,6 +28,21 @@ public class TargetPositionManager : MonoBehaviour
     {
         
     }
+
+    public void SaveSettingsToPlay(){
+        // Remove hidden targets
+        PreviewSphereList.RemoveAll(item => !item.activeSelf);
+        // Generate a new position list, and save it to PlayerPref
+        List<Vector3> PositionListPlay = new List<Vector3>();
+        for (int index = 0; index < PreviewSphereList.Count; index++){
+            PositionListPlay.Add(PreviewSphereList[index].transform.position);
+        }
+        // Target size is saved in UIControlSettings.cs
+        PlayerPrefsUtility.SaveVector3List(PositionListPlay);
+        Debug.Log(PositionListPlay.Count);
+        // PlayerPrefsUtility.SaveVector3List();
+    }
+
     public void GenerateTarget(Vector3 position){
         GameObject PreviewSphere = Instantiate(PreviewPrefab, position, Quaternion.identity);
         PreviewSphere.name = "PreviewSphere " + PreviewSphereList.Count.ToString();

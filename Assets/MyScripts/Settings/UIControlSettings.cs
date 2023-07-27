@@ -20,7 +20,6 @@ public class UIControlBodyPosition : MonoBehaviour
     private Button UIButtonAdd;
     private Button UIButtonRemove;
     private Slider UISliderSize;
-    private Slider UISliderHeight;
     public string CurrentView = "BodyPosition";
 
     void Start()
@@ -34,9 +33,7 @@ public class UIControlBodyPosition : MonoBehaviour
         UIButtonRemove = UIRoot.Q<Button>("ButtonRemove");
 
         UISliderSize = UIRoot.Q<Slider>("SliderSize");
-        UISliderHeight = UIRoot.Q<Slider>("SliderHeight");
         UISliderSize.RegisterValueChangedCallback(OnSliderSizeValueChanged);
-        UISliderHeight.RegisterValueChangedCallback(OnSliderHeightValueChanged);
 
         // Visual and audio state
         DisplayMusicSelectingView();
@@ -63,12 +60,16 @@ public class UIControlBodyPosition : MonoBehaviour
             }
         };
         
-        // UIButtonExerciseStart.clicked += delegate(){
-        //     // Critical here, switch scene
-        //     // Pass data through scenes test
-        //     PlayerPrefsUtility.SaveVector3List(TargetPositionManager.PositionList);
-        //     SceneManager.LoadScene("AudioMoveSystem");
-        // };
+        UIButtonAdd.clicked += delegate(){
+            TargetPositionManager.GenerateTarget(new Vector3(0f, 0f, 5f));
+        };
+
+        UIButtonRemove.clicked += delegate(){
+            Debug.Log("UI Remove Button Clicked");
+            if(CameraRotation.CurrentTargetSelection.name != "cubeRoomEnv"){
+                TargetPositionManager.RemoveTarget(CameraRotation.CurrentTargetSelection);
+            }
+        };
     }
 
     void Update()
@@ -77,6 +78,14 @@ public class UIControlBodyPosition : MonoBehaviour
         if(CameraRotation.CurrentSelection != null && CurrentView == "BodyPosition"){
             UIButtonNext.style.display = DisplayStyle.Flex;
         }
+
+        // if(CameraRotation.CurrentTargetSelection.name.ToLower().Contains("Preview".ToLower()) == true && CurrentView == "TargetSetting"){
+        //     UIButtonAdd.style.display = DisplayStyle.None;
+        //     UIButtonRemove.style.display = DisplayStyle.Flex;
+        // }else if(CameraRotation.CurrentTargetSelection.name.ToLower().Contains("Preview".ToLower()) == false && CurrentView == "TargetSetting"){
+        //     UIButtonAdd.style.display = DisplayStyle.Flex;
+        //     UIButtonRemove.style.display = DisplayStyle.None;
+        // }
     }
 
     private void DisplayPreview(){
@@ -87,7 +96,6 @@ public class UIControlBodyPosition : MonoBehaviour
         UIButtonAdd.style.display = DisplayStyle.None;
         UIButtonRemove.style.display = DisplayStyle.None;
         UISliderSize.style.display = DisplayStyle.None;
-        UISliderHeight.style.display = DisplayStyle.None;
         CameraRotation.MovingDestinationPosition = CameraRotation.TargetSettingCameraBasePosition;
         CameraRotation.isMovingCamera = true;
     }
@@ -100,7 +108,6 @@ public class UIControlBodyPosition : MonoBehaviour
         UIButtonAdd.style.display = DisplayStyle.None;
         UIButtonRemove.style.display = DisplayStyle.None;
         UISliderSize.style.display = DisplayStyle.None;
-        UISliderHeight.style.display = DisplayStyle.None;
     }
 
     private void DisplayTargetSettingView(){
@@ -111,7 +118,6 @@ public class UIControlBodyPosition : MonoBehaviour
         UIButtonAdd.style.display = DisplayStyle.Flex;
         UIButtonRemove.style.display = DisplayStyle.Flex;
         UISliderSize.style.display = DisplayStyle.Flex;
-        UISliderHeight.style.display = DisplayStyle.Flex;
         CameraRotation.MovingDestinationPosition = CameraRotation.TargetSettingCameraBasePosition;
         CameraRotation.isMovingCamera = true;
         TargetPositionManager.GeneratePositions();
@@ -125,7 +131,6 @@ public class UIControlBodyPosition : MonoBehaviour
         UIButtonAdd.style.display = DisplayStyle.None;
         UIButtonRemove.style.display = DisplayStyle.None;
         UISliderSize.style.display = DisplayStyle.None;
-        UISliderHeight.style.display = DisplayStyle.None;
         CameraRotation.MovingDestinationPosition = CameraRotation.BodyPositionCameraBasePosition;
         CameraRotation.isMovingCamera = true;
         // Destroy previews and clear storage
@@ -145,19 +150,4 @@ public class UIControlBodyPosition : MonoBehaviour
         }
     }
 
-    private void OnSliderHeightValueChanged(ChangeEvent<float> evt){
-        // Change phi data
-        float Phi = Mathf.Lerp(TargetPositionManager.SettingViewOffset.y-2, TargetPositionManager.SettingViewOffset.y+2, UISliderHeight.value / 100f);
-        // for (int index = 0; index < MainController.PositionList.Count; index++){
-        //     // Update position list
-        //     Vector3 TempCartesian = MainController.PositionList[index];
-        //     Vector3 TempSpherical = CartesianToSpherical(new Vector3(TempCartesian.x, TempCartesian.y, TempCartesian.z));
-        //     TempSpherical = new Vector3(TempSpherical.x, TempSpherical.y, Phi);
-        //     MainController.PositionList[index] = SphericalToCartesian(TempSpherical);
-        // }
-        for (int index = 0; index < TargetPositionManager.PreviewSphereList.Count; index++){
-            Vector3 TempVector = TargetPositionManager.PreviewSphereList[index].transform.position;
-            TargetPositionManager.PreviewSphereList[index].transform.position = new Vector3(TempVector.x, Phi, TempVector.z);
-        }
-    }
 }

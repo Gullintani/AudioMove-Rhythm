@@ -83,8 +83,8 @@ public class CameraRotation : MonoBehaviour
             }
         }
 
-        // Camera rotation control
-        if (Input.touchCount > 0 && isMovingCamera == false && isSelectingMusic == false)
+        // Camera rotation control, And control the click on remove button in target setting scene
+        if (Input.touchCount > 0 && isMovingCamera == false && isSelectingMusic == false && Input.GetTouch(0).position.y > Screen.height * 0.10f)
         // if (Input.GetMouseButton(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved))
         {   
             Touch touch = Input.GetTouch(0);
@@ -134,7 +134,6 @@ public class CameraRotation : MonoBehaviour
                     // In target setting view
                     if(UISetting.CurrentView == "TargetSetting"){
                         // Only hit the preview spheres
-                        Debug.Log(selectedObject);
                         if(IsPreviewSphere(selectedObject)){
                             // Select preview sphere
                             if(CurrentTargetSelection != null && CurrentTargetSelection.name != "cubeRoomEnv"){
@@ -142,7 +141,7 @@ public class CameraRotation : MonoBehaviour
                             }
                             SelectHighlightMaterial(selectedObject);
                             CurrentTargetSelection = selectedObject;
-                        }else if(CurrentTargetSelection.name != "cubeRoomEnv" && selectedObject.name == "cubeRoomEnv"){
+                        }else if(IsPreviewSphere(CurrentTargetSelection) == true && selectedObject.name == "cubeRoomEnv"){
                             // Cancel selection
                             DeSelectHighlightMaterial(CurrentTargetSelection);
                             CurrentTargetSelection = selectedObject;
@@ -195,13 +194,11 @@ public class CameraRotation : MonoBehaviour
     private void SelectHighlightMaterial(GameObject selection){
         Renderer renderer = selection.GetComponent<Renderer>();
         renderer.material = HighlightMaterial;
-        Debug.Log("Selected");
     }
 
     private void DeSelectHighlightMaterial(GameObject selection){
         Renderer renderer = selection.GetComponent<Renderer>();
         renderer.material = OriginalMaterial;
-        Debug.Log("DeSelected");
     }
 }
 

@@ -5,7 +5,6 @@
     </ui:VisualElement>
     <ui:VisualElement>
         <ui:Slider picking-mode="Ignore" label="Target Size" value="42" high-value="100" name="SliderSize" focusable="false" />
-        <ui:Slider picking-mode="Ignore" label="Target Hight" value="42" high-value="100" name="SliderHeight" focusable="false" />
     </ui:VisualElement>
     <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); align-self: center; bottom: auto; right: auto; height: auto; width: auto; align-items: flex-end; justify-content: center; top: auto; position: relative; flex-direction: row;">
         <ui:Button text="+" display-tooltip-when-elided="true" name="ButtonAdd" style="-unity-font: url(&apos;project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=2230732570650464555&amp;guid=25718d11f2f638845a5e2b3441829f90&amp;type=3#NotInter-Regular&apos;); -unity-font-style: bold-and-italic; background-color: rgb(255, 125, 0); border-top-left-radius: 5px; border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; color: rgb(255, 255, 255);" />

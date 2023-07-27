@@ -14,12 +14,13 @@ public class TargetPositionManager : MonoBehaviour
     {
         // Because generated preview are based on (0,0,0), I need offset for TargetSettingView
         SettingViewOffset = new Vector3(0, 0, 0);
-        Vector3 initialCartesian = new Vector3(Mathf.Sqrt(3)/4, Mathf.Sqrt(3)/2, 0.25f);
-        Debug.Log("initial cartesian: " + initialCartesian);
-        Vector3 transformedSpherical = CartesianToSpherical(initialCartesian);
-        Debug.Log("transformed spherical: " + transformedSpherical);
-        Vector3 BackCartesian = SphericalToCartesian(transformedSpherical);
-        Debug.Log("Return back to cartesian: " + BackCartesian);
+        // Coordinate transform test
+        // Vector3 initialCartesian = new Vector3(Mathf.Sqrt(3)/4, Mathf.Sqrt(3)/2, 0.25f);
+        // Debug.Log("initial cartesian: " + initialCartesian);
+        // Vector3 transformedSpherical = CartesianToSpherical(initialCartesian);
+        // Debug.Log("transformed spherical: " + transformedSpherical);
+        // Vector3 BackCartesian = SphericalToCartesian(transformedSpherical);
+        // Debug.Log("Return back to cartesian: " + BackCartesian);
 
     }
 
@@ -27,8 +28,19 @@ public class TargetPositionManager : MonoBehaviour
     {
         
     }
-    public void GenerrateTarget(){
+    public void GenerateTarget(Vector3 position){
+        GameObject PreviewSphere = Instantiate(PreviewPrefab, position, Quaternion.identity);
+        PreviewSphere.name = "PreviewSphere " + PreviewSphereList.Count.ToString();
+        Renderer renderer = PreviewSphere.GetComponent<Renderer>();
+        renderer.material = OriginalMaterial;
+        PreviewSphere.transform.localScale = new Vector3(3f, 3f, 3f);
+        PreviewSphereList.Add(PreviewSphere);
+    }
 
+    public void RemoveTarget(GameObject RemoveTarget){
+        // Note: Destroy() will not destroy the object until the end of frame
+        // Destroy(RemoveTarget);
+        RemoveTarget.SetActive(false);
     }
 
     public void GeneratePositions(){
@@ -44,6 +56,7 @@ public class TargetPositionManager : MonoBehaviour
             PreviewSphere.name = "PreviewSphere " + index.ToString();
             Renderer renderer = PreviewSphere.GetComponent<Renderer>();
             renderer.material = OriginalMaterial;
+            PreviewSphere.transform.localScale = new Vector3(3f, 3f, 3f);
             PreviewSphereList.Add(PreviewSphere);
         }
     }

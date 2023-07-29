@@ -148,11 +148,16 @@ public class UIControlBodyPosition : MonoBehaviour
     private void OnSliderSizeValueChanged(ChangeEvent<float> evt){   
         // Change size data
         TargetSize = Mathf.Lerp(2, 8, UISliderSize.value / 100f);
-        foreach (GameObject PreviewSphere in TargetPositionManager.PreviewSphereList){
-            PreviewSphere.transform.localScale = new Vector3(TargetSize, TargetSize, TargetSize);
+        if(CameraRotation.IsPreviewSphere(CameraRotation.CurrentTargetSelection) == true){
+            CameraRotation.CurrentTargetSelection.transform.localScale = new Vector3(TargetSize, TargetSize, TargetSize);
+        }else{
+            foreach (GameObject PreviewSphere in TargetPositionManager.PreviewSphereList){
+                PreviewSphere.transform.localScale = new Vector3(TargetSize, TargetSize, TargetSize);
+            }
+            // Save target size
+            PlayerPrefs.SetFloat("TargetSize", TargetSize);
         }
-        // Save target size
-        PlayerPrefs.SetFloat("TargetSize", TargetSize);
+        
     }
 
 }

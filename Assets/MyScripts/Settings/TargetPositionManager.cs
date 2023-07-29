@@ -34,12 +34,15 @@ public class TargetPositionManager : MonoBehaviour
         PreviewSphereList.RemoveAll(item => !item.activeSelf);
         // Generate a new position list, and save it to PlayerPref
         List<Vector3> PositionListPlay = new List<Vector3>();
+        List<Vector3> SizeListPlay = new List<Vector3>();
         for (int index = 0; index < PreviewSphereList.Count; index++){
             PositionListPlay.Add(PreviewSphereList[index].transform.position);
+            SizeListPlay.Add(PreviewSphereList[index].transform.localScale);
         }
-        // Target size is saved in UIControlSettings.cs
-        PlayerPrefsUtility.SaveVector3List(PositionListPlay);
-        Debug.Log(PositionListPlay.Count);
+        // Save target size in a list too.
+        PlayerPrefsUtility.SaveVector3List(PositionListPlay, "Position");
+        PlayerPrefsUtility.SaveVector3List(SizeListPlay, "TargetSize");
+        // Debug.Log(PositionListPlay.Count);
         // PlayerPrefsUtility.SaveVector3List();
     }
 

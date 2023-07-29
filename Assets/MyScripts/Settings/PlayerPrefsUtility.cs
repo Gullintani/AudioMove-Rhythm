@@ -21,23 +21,23 @@ public static class PlayerPrefsUtility {
     //=================================================================================
 
     // welkin's implementation
-    public static void SaveVector3List(List<Vector3> myVectorList){
+    public static void SaveVector3List(List<Vector3> myVectorList, string name){
         for (int i = 0; i < myVectorList.Count; i++)
         {
-            PlayerPrefs.SetFloat("VectorX_" + i, myVectorList[i].x);
-            PlayerPrefs.SetFloat("VectorY_" + i, myVectorList[i].y);
-            PlayerPrefs.SetFloat("VectorZ_" + i, myVectorList[i].z);
+            PlayerPrefs.SetFloat(name + "X_" + i, myVectorList[i].x);
+            PlayerPrefs.SetFloat(name + "Y_" + i, myVectorList[i].y);
+            PlayerPrefs.SetFloat(name + "Z_" + i, myVectorList[i].z);
         }
         PlayerPrefs.Save();
     }
-    public static List<Vector3> LoadVector3List(){
+    public static List<Vector3> LoadVector3List(string name){
         List<Vector3> myVectorList = new List<Vector3>();
         int i = 0;
-        while (PlayerPrefs.HasKey("VectorX_" + i))
+        while (PlayerPrefs.HasKey(name + "X_" + i))
         {
-            float x = PlayerPrefs.GetFloat("VectorX_" + i);
-            float y = PlayerPrefs.GetFloat("VectorY_" + i);
-            float z = PlayerPrefs.GetFloat("VectorZ_" + i);
+            float x = PlayerPrefs.GetFloat(name + "X_" + i);
+            float y = PlayerPrefs.GetFloat(name + "Y_" + i);
+            float z = PlayerPrefs.GetFloat(name + "Z_" + i);
             myVectorList.Add(new Vector3(x, y, z));
             i++;
         }

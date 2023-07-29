@@ -84,7 +84,7 @@ public class CameraRotation : MonoBehaviour
         }
 
         // Camera rotation control, And control the click on remove button in target setting scene
-        if (Input.touchCount > 0 && isMovingCamera == false && isSelectingMusic == false && Input.GetTouch(0).position.y > Screen.height * 0.10f)
+        if (Input.touchCount > 0 && isMovingCamera == false && isSelectingMusic == false && Input.GetTouch(0).position.y > Screen.height * 0.10f && Input.GetTouch(0).position.y < Screen.height * 0.8f)
         // if (Input.GetMouseButton(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved))
         {   
             Touch touch = Input.GetTouch(0);
@@ -188,7 +188,7 @@ public class CameraRotation : MonoBehaviour
     {
         phone.SetActive(true);
     }
-    private bool IsPreviewSphere(GameObject InputObject){
+    public bool IsPreviewSphere(GameObject InputObject){
         return InputObject.name.ToLower().Contains("Preview".ToLower());
     }
     private void SelectHighlightMaterial(GameObject selection){

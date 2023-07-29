@@ -13,19 +13,21 @@ public class GameAudioController : MonoBehaviour
     private int CurrentPositionIndex=0;
     private Material TargetMaterial = null;
     public bool isMoving = false;
-    public float MovingSpeed = 10.0f;
+    private float MovingSpeed = 10f;
+    private float ScalingSpeed = 10f;
     private Vector3 MovingDestination;
+    private Vector3 TargetSize;
     private List<Vector3> PositionList;
-    private float TargetSize;
+    private List<Vector3> TargetSizeList;
     void Start() {
         // Load data from PlayerPref in setting scene
-        PositionList = PlayerPrefsUtility.LoadVector3List();
-        TargetSize = PlayerPrefs.GetFloat("TargetSize");
+        PositionList = PlayerPrefsUtility.LoadVector3List("Position");
+        TargetSizeList = PlayerPrefsUtility.LoadVector3List("TargetSize");
 
         // Initialize sphere material, color and size
         TargetMaterial = GetComponent<Renderer>().material;
         ColorHit(false);
-        this.transform.localScale = new Vector3(TargetSize, TargetSize, TargetSize);
+        this.transform.localScale = TargetSizeList[0];
         
         // Initialize MovingDestination
         MovingDestination = new Vector3(0f, 0f, 5f);
@@ -43,6 +45,7 @@ public class GameAudioController : MonoBehaviour
         // Smooth moving
         if(transform.localPosition != MovingDestination){
             MoveSmooth();
+            ChangeSizeSmooth();
         }
     }
 
@@ -53,6 +56,9 @@ public class GameAudioController : MonoBehaviour
     private void MoveSmooth(){
         transform.localPosition = Vector3.MoveTowards(transform.localPosition, MovingDestination, MovingSpeed * Time.deltaTime);
     }
+    private void ChangeSizeSmooth(){
+        transform.localScale = Vector3.Lerp(transform.localScale, TargetSize, ScalingSpeed * Time.deltaTime);
+    }
 
     // Move to the next position in PositionList
     public void MoveToNextPosition(){
@@ -60,6 +66,7 @@ public class GameAudioController : MonoBehaviour
             CurrentPositionIndex = 0;
         }
         MovingDestination = PositionList[CurrentPositionIndex];
+        TargetSize = TargetSizeList[CurrentPositionIndex];
         CurrentPositionIndex += 1;
     }
 
@@ -72,5 +79,6 @@ public class GameAudioController : MonoBehaviour
         }
         CurrentPositionIndex = randomIndex;
         MovingDestination = PositionList[CurrentPositionIndex];
+        TargetSize = TargetSizeList[CurrentPositionIndex];
     }
 }

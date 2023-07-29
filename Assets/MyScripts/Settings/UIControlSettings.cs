@@ -20,6 +20,7 @@ public class UIControlBodyPosition : MonoBehaviour
     private Button UIButtonAdd;
     private Button UIButtonRemove;
     private Slider UISliderSize;
+    private Label UITextCoordinate;
     public string CurrentView = "BodyPosition";
 
     void Start()
@@ -31,6 +32,7 @@ public class UIControlBodyPosition : MonoBehaviour
         UIButtonBack = UIRoot.Q<Button>("ButtonBack");
         UIButtonAdd = UIRoot.Q<Button>("ButtonAdd");
         UIButtonRemove = UIRoot.Q<Button>("ButtonRemove");
+        UITextCoordinate = UIRoot.Q<Label>("TextCoordinate");
 
         UISliderSize = UIRoot.Q<Slider>("SliderSize");
         UISliderSize.RegisterValueChangedCallback(OnSliderSizeValueChanged);
@@ -80,6 +82,13 @@ public class UIControlBodyPosition : MonoBehaviour
         // If have selected, display button
         if(CameraRotation.CurrentSelection != null && CurrentView == "BodyPosition"){
             UIButtonNext.style.display = DisplayStyle.Flex;
+        }
+
+        if(CameraRotation.IsPreviewSphere(CameraRotation.CurrentTargetSelection) == true && CurrentView == "TargetSetting"){
+            Vector3 CurrentSphericalCoordinate = TargetPositionManager.CartesianToSpherical(CameraRotation.CurrentTargetSelection.transform.position);
+            UITextCoordinate.text = "Azimuth: " + CurrentSphericalCoordinate.y.ToString("#0.00") + "; Elevation: " + CurrentSphericalCoordinate.z.ToString("#0.00") ;
+        }else{
+            UITextCoordinate.text = "";
         }
 
         // if(CameraRotation.CurrentTargetSelection.name.ToLower().Contains("Preview".ToLower()) == true && CurrentView == "TargetSetting"){

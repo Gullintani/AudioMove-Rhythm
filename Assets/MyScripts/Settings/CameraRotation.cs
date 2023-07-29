@@ -32,6 +32,7 @@ public class CameraRotation : MonoBehaviour
     private Quaternion TargetRotation;
     public Material OriginalMaterial;
     public Material HighlightMaterial;
+    private float StartThetaAngle, EndThetaAngle, StartPhiAngle, EndPhiAngle;
     private void Start()
     {   
         // Initial phone states
@@ -54,6 +55,11 @@ public class CameraRotation : MonoBehaviour
         SelfRotationSpeed = 10f;
         MovingSpeed = 15f;
         HeadphonePosition = new Vector3(1.87f, 0f, 4f);
+        // Limb motion limitation
+        StartThetaAngle = 45f;
+        EndThetaAngle = 135f;
+        StartPhiAngle = -30f;
+        EndPhiAngle = 30f;
 
     }
 
@@ -168,7 +174,7 @@ public class CameraRotation : MonoBehaviour
                     if(IsPreviewSphere(CurrentTargetSelection)){
                         // Move the target
                         // CurrentTargetSelection.transform.position += new Vector3(horizontalInput * 0.005f, verticalInput * 0.005f, 0);
-                        CurrentTargetSelection.transform.position = TargetPositionManager.PositionConstrain(SelectedTarget:CurrentTargetSelection, HorizontalInput:horizontalInput, VerticalInput:verticalInput, StartThetaAngle:30f, EndThetaAngle:150f, StartPhiAngle:-30f, EndPhiAngle:30f, Distance:5f);
+                        CurrentTargetSelection.transform.position = TargetPositionManager.PositionConstrain(SelectedTarget:CurrentTargetSelection, HorizontalInput:horizontalInput, VerticalInput:verticalInput, StartThetaAngle:StartThetaAngle, EndThetaAngle:EndThetaAngle, StartPhiAngle:StartPhiAngle, EndPhiAngle:EndPhiAngle, Distance:5f);
                     }else{
                         // In target setting view, move camera in a plane
                         transform.position += new Vector3(horizontalInput * 0.01f, 0f, 0f);

@@ -108,7 +108,7 @@ public class TargetPositionManager : MonoBehaviour
 
         return positions;
     }
-    private Vector3 CartesianToSpherical(Vector3 cartesian){
+    public Vector3 CartesianToSpherical(Vector3 cartesian){
         float radius = Mathf.Sqrt(cartesian.x * cartesian.x + cartesian.y * cartesian.y + cartesian.z * cartesian.z);
         float a = Mathf.Sqrt(cartesian.x * cartesian.x + cartesian.z * cartesian.z);
         float theta = Mathf.Acos(cartesian.x/ a) * Mathf.Rad2Deg;
@@ -117,7 +117,7 @@ public class TargetPositionManager : MonoBehaviour
         // spherical.z = (spherical.z + 360) % 360;
         return new Vector3(radius, theta, phi);
     }
-    private Vector3 SphericalToCartesian(Vector3 SphericalVector){
+    public Vector3 SphericalToCartesian(Vector3 SphericalVector){
         float radius = SphericalVector.x;
         float theta = SphericalVector.y;
         float phi = SphericalVector.z;

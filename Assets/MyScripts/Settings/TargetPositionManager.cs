@@ -10,6 +10,7 @@ public class TargetPositionManager : MonoBehaviour
     public List<GameObject> PreviewSphereList;
     private int BPMLevel;
     public Material OriginalMaterial;
+    public Vector3 LimbEffectorCartesian;
     void Start()
     {
         // Because generated preview are based on (0,0,0), I need offset for TargetSettingView
@@ -87,6 +88,9 @@ public class TargetPositionManager : MonoBehaviour
         // float Phi = CurrrentSpherical.z + VerticalInput * 0.1f;
         float Theta = Mathf.Clamp(CurrrentSpherical.y - HorizontalInput * 0.1f, StartThetaAngle, EndThetaAngle);
         float Phi = Mathf.Clamp(CurrrentSpherical.z + VerticalInput * 0.1f, StartPhiAngle, EndPhiAngle);
+
+        // Set limb IK effector position
+        LimbEffectorCartesian = SphericalToCartesian(new Vector3(2, Theta, Phi));
         return SphericalToCartesian(new Vector3(Distance, Theta, Phi));
     }
 

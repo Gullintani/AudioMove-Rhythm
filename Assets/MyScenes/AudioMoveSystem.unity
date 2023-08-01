@@ -407,7 +407,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: 248799cb4acba48f7b3ee842a80f788c, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 7d4c1ec32b11ce64498595770c68949b, type: 3}
+  m_audioClip: {fileID: 8300000, guid: b775c8aabc3301147af5c504bca9d0d7, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -509,7 +509,6 @@ MonoBehaviour:
   BodyPositionOffSet: {x: -1.33, y: 0, z: 0}
   GameMainController: {fileID: 0}
   isMoving: 0
-  MovingSpeed: 10
 --- !u!114 &534158933
 MonoBehaviour:
   m_ObjectHideFlags: 0

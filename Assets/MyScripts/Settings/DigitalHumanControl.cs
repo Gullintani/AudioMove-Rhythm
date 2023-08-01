@@ -5,25 +5,21 @@ using UnityEngine;
 public class DigitalHumanControl : MonoBehaviour
 
 {
-    public Transform target;
-
-    private Animator animator;
-    private AvatarIKGoal armIKGoal = AvatarIKGoal.LeftHand;
-
+    public GameObject IKLeftHandEffector;
+    public CameraRotation CameraRotation;
+    public UIControlBodyPosition UIControlBodyPosition;
+    public TargetPositionManager TargetPositionManager;
+    private Vector3 InitialIKLimbEffectorPosition;
     private void Start()
     {
-        animator = GetComponent<Animator>();
+        InitialIKLimbEffectorPosition = IKLeftHandEffector.transform.position;
     }
 
-    private void OnAnimatorIK(int layerIndex)
-    {
-        if (target != null)
-        {
-            // Set IK and weight
-            // animator.SetIKPositionWeight(armIKGoal, 1f);
-            // animator.SetIKPosition(armIKGoal, target.position);
-            // animator.SetIKRotationWeight(armIKGoal, 1f);
-            // animator.SetIKRotation(armIKGoal, target.rotation);
+    private void Update() {
+        if(UIControlBodyPosition.CurrentView == "TargetSetting" && CameraRotation.IsPreviewSphere(CameraRotation.CurrentTargetSelection) == true){
+            IKLeftHandEffector.transform.position = TargetPositionManager.LimbEffectorCartesian;
+        }else{
+            IKLeftHandEffector.transform.position = InitialIKLimbEffectorPosition;
         }
     }
 }

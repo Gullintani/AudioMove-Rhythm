@@ -47,6 +47,7 @@ public class UIControlBodyPosition : MonoBehaviour
             }else if(CurrentView == "BodyPosition"){
                 DisplayTargetSettingView();
             }else if(CurrentView == "TargetSetting"){
+                TargetPositionManager.SaveSettingsToPlay();
                 DisplayPreview();
             }else if(CurrentView == "Preview"){
                 TargetPositionManager.SaveSettingsToPlay();

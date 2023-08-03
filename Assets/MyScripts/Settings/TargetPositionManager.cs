@@ -7,8 +7,8 @@ public class TargetPositionManager : MonoBehaviour
     public GameObject PreviewPrefab;
     public Vector3 SettingViewOffset;
     public List<Vector3> PositionList;
+    public List<Vector3> PositionListPlay;
     public List<GameObject> PreviewSphereList;
-    private int BPMLevel;
     public Material OriginalMaterial;
     public Vector3 LimbEffectorCartesian;
     void Start()
@@ -34,7 +34,7 @@ public class TargetPositionManager : MonoBehaviour
         // Remove hidden targets
         PreviewSphereList.RemoveAll(item => !item.activeSelf);
         // Generate a new position list, and save it to PlayerPref
-        List<Vector3> PositionListPlay = new List<Vector3>();
+        PositionListPlay = new List<Vector3>();
         List<Vector3> SizeListPlay = new List<Vector3>();
         for (int index = 0; index < PreviewSphereList.Count; index++){
             PositionListPlay.Add(PreviewSphereList[index].transform.position);

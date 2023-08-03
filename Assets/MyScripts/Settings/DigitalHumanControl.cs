@@ -12,8 +12,7 @@ public class DigitalHumanControl : MonoBehaviour
     public TargetPositionManager TargetPositionManager;
     private Vector3 InitialIKLeftHandEffectorPosition, IKLeftHandEffectorDownPosition;
     private Vector3 InitialIKRightHandEffectorPosition, IKRightHandEffectorDownPosition;
-    private Vector3 MovingDestination;
-    private float MovingSpeed = 2.0f;
+    private float MovingSpeed = 5.0f;
     private int currentTargetIndex = 0;
     
     private void Start()
@@ -25,7 +24,6 @@ public class DigitalHumanControl : MonoBehaviour
         IKRightHandEffectorDownPosition = new Vector3(0.208000004f, 0.994000018f, 0.0120000001f);
 
         // Control the animation in Preview view
-        // MovingDestination = TargetPositionManager.PositionListPlay[currentTargetIndex];
     }
 
     private void Update() {
@@ -36,15 +34,16 @@ public class DigitalHumanControl : MonoBehaviour
                 IKLeftHandEffector.transform.position = TargetPositionManager.LimbEffectorCartesian;
             }
         }
-        // else if(UIControlBodyPosition.CurrentView == "Preview"){
-        //     if(Vector3.Distance(IKLeftHandEffector.transform.position, MovingDestination) < 0.1f){
-        //         currentTargetIndex = (currentTargetIndex + 1) % TargetPositionManager.PositionListPlay.Count;
-        //     }
-        //     MoveToTarget(IKLeftHandEffector);
-        // }
+        else if(UIControlBodyPosition.CurrentView == "Preview"){
+            if(Vector3.Distance(IKLeftHandEffector.transform.position, TargetPositionManager.PositionListPlay[currentTargetIndex]) < 0.1f){
+                currentTargetIndex = (currentTargetIndex + 1) % TargetPositionManager.PositionListPlay.Count;
+                // Debug.Log("Digital Human Limb Arrive at Destination" + TargetPositionManager.PositionListPlay[currentTargetIndex]);
+            }
+            MoveToTarget(IKLeftHandEffector);
+        }
         else{
-            // IKLeftHandEffector.transform.position = InitialIKLeftHandEffectorPosition;
-            // IKRightHandEffector.transform.position = InitialIKRightHandEffectorPosition;
+            IKLeftHandEffector.transform.position = InitialIKLeftHandEffectorPosition;
+            IKRightHandEffector.transform.position = InitialIKRightHandEffectorPosition;
         }
     }
 

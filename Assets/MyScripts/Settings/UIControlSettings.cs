@@ -50,7 +50,6 @@ public class UIControlBodyPosition : MonoBehaviour
                 TargetPositionManager.SaveSettingsToPlay();
                 DisplayPreview();
             }else if(CurrentView == "Preview"){
-                TargetPositionManager.SaveSettingsToPlay();
                 SceneManager.LoadScene("AudioMoveSystem");
             }
         };
@@ -124,6 +123,17 @@ public class UIControlBodyPosition : MonoBehaviour
     }
 
     private void DisplayTargetSettingView(){
+        // clear previous elements
+        if(TargetPositionManager.PreviewSphereList.Count != 0){
+            foreach (GameObject PreviewSphere in TargetPositionManager.PreviewSphereList)
+                {
+                    Destroy(PreviewSphere);
+                    TargetPositionManager.PositionList = new List<Vector3>();
+                    TargetPositionManager.PreviewSphereList = new List<GameObject>();
+                }
+        }
+
+        // settings
         CurrentView = "TargetSetting";
         Verbal.PlayOneShot(Clip2_TargetSettingsPrompt);
         UIButtonNext.style.display = DisplayStyle.Flex;

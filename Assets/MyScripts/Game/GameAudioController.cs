@@ -17,12 +17,16 @@ public class GameAudioController : MonoBehaviour
     private float ScalingSpeed = 10f;
     private Vector3 MovingDestination;
     private Vector3 TargetSize;
-    private List<Vector3> PositionList;
-    private List<Vector3> TargetSizeList;
+    public List<Vector3> PositionList;
+    public List<Vector3> TargetSizeList;
+    private int NumberOfTargets;
     void Start() {
         // Load data from PlayerPref in setting scene
+        NumberOfTargets = PlayerPrefs.GetInt("NumberOfTargets");
         PositionList = PlayerPrefsUtility.LoadVector3List("Position");
         TargetSizeList = PlayerPrefsUtility.LoadVector3List("TargetSize");
+        PositionList = PositionList.GetRange(0, NumberOfTargets);
+        TargetSizeList = TargetSizeList.GetRange(0, NumberOfTargets);
 
         // Initialize sphere material, color and size
         TargetMaterial = GetComponent<Renderer>().material;

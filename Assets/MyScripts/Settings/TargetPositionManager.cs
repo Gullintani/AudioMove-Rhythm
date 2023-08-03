@@ -8,6 +8,7 @@ public class TargetPositionManager : MonoBehaviour
     public Vector3 SettingViewOffset;
     public List<Vector3> PositionList;
     public List<Vector3> PositionListPlay;
+    public List<Vector3> SizeListPlay;
     public List<GameObject> PreviewSphereList;
     public Material OriginalMaterial;
     public Vector3 LimbEffectorCartesian;
@@ -35,7 +36,7 @@ public class TargetPositionManager : MonoBehaviour
         PreviewSphereList.RemoveAll(item => !item.activeSelf);
         // Generate a new position list, and save it to PlayerPref
         PositionListPlay = new List<Vector3>();
-        List<Vector3> SizeListPlay = new List<Vector3>();
+        SizeListPlay = new List<Vector3>();
         for (int index = 0; index < PreviewSphereList.Count; index++){
             PositionListPlay.Add(PreviewSphereList[index].transform.position);
             SizeListPlay.Add(PreviewSphereList[index].transform.localScale);
@@ -43,8 +44,7 @@ public class TargetPositionManager : MonoBehaviour
         // Save target size in a list too.
         PlayerPrefsUtility.SaveVector3List(PositionListPlay, "Position");
         PlayerPrefsUtility.SaveVector3List(SizeListPlay, "TargetSize");
-        // Debug.Log(PositionListPlay.Count);
-        // PlayerPrefsUtility.SaveVector3List();
+        PlayerPrefs.SetInt("NumberOfTargets", PositionListPlay.Count);
     }
 
     public void GenerateTarget(Vector3 position){

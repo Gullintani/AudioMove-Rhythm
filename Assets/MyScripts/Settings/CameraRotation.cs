@@ -16,6 +16,7 @@ public class CameraRotation : MonoBehaviour
     public GameObject PhoneRightLowerLeg;
     public UIControlBodyPosition UISetting;
     public TargetPositionManager TargetPositionManager;
+    public DigitalHumanControl DigitalHumanControl;
     private float RotationSpeed;
     private float SelfRotationSpeed;
     private float MovingSpeed = 15f;
@@ -134,6 +135,7 @@ public class CameraRotation : MonoBehaviour
                                 ShowPhone(PhoneRightLowerLeg);
                                 CurrentSelection = PhoneRightLowerLeg;
                             }
+                            DigitalHumanControl.AttachedLimb = CurrentSelection.name;
                         }
                     }
 
@@ -147,7 +149,7 @@ public class CameraRotation : MonoBehaviour
                             }
                             SelectHighlightMaterial(selectedObject);
                             CurrentTargetSelection = selectedObject;
-                        }else if(IsPreviewSphere(CurrentTargetSelection) == true && selectedObject.name == "cubeRoomEnv"){
+                        }else if(CurrentTargetSelection!=null && IsPreviewSphere(CurrentTargetSelection) == true && selectedObject.name == "cubeRoomEnv"){
                             // Cancel selection
                             DeSelectHighlightMaterial(CurrentTargetSelection);
                             CurrentTargetSelection = selectedObject;

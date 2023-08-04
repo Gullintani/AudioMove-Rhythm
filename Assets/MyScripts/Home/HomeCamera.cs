@@ -5,7 +5,7 @@ using UnityEngine;
 public class HomeCamera : MonoBehaviour
 {
     private float RotationSpeed = 10f;
-    private float MovingSpeed = 15f;
+    // private float MovingSpeed = 15f;
     public HomeUI HomeUI;
     private Quaternion InitialRotation;
     void Start()

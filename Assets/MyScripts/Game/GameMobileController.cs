@@ -36,7 +36,9 @@ public class GameMobileController : MonoBehaviour
         RaycastHit hit;
         
         // Target detection
-        
+        if (Physics.Raycast(ray, out hit)){
+            
+        }
 
         // Debug
         Debug.DrawRay(transform.position, pointingDirection * MaximumDistance, Color.green);

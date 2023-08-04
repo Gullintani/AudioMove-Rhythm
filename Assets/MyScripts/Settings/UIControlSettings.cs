@@ -48,6 +48,7 @@ public class UIControlBodyPosition : MonoBehaviour
                 DisplayTargetSettingView();
             }else if(CurrentView == "TargetSetting"){
                 TargetPositionManager.SaveSettingsToPlay();
+
                 DisplayPreview();
             }else if(CurrentView == "Preview"){
                 SceneManager.LoadScene("AudioMoveSystem");
@@ -84,7 +85,7 @@ public class UIControlBodyPosition : MonoBehaviour
             UIButtonNext.style.display = DisplayStyle.Flex;
         }
 
-        if(CameraRotation.IsPreviewSphere(CameraRotation.CurrentTargetSelection) == true && CurrentView == "TargetSetting"){
+        if(CameraRotation.CurrentTargetSelection!=null && CameraRotation.IsPreviewSphere(CameraRotation.CurrentTargetSelection) == true && CurrentView == "TargetSetting"){
             Vector3 CurrentSphericalCoordinate = TargetPositionManager.CartesianToSpherical(CameraRotation.CurrentTargetSelection.transform.position);
             UITextCoordinate.text = "Azimuth: " + CurrentSphericalCoordinate.y.ToString("#0.00") + "; Elevation: " + CurrentSphericalCoordinate.z.ToString("#0.00") ;
         }else{

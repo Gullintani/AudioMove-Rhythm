@@ -51,7 +51,7 @@ public class CameraRotation : MonoBehaviour
         isMovingCamera = false;
         isRotatingCamera = false;
         isSelectingMusic = true;
-        RotationSpeed = 50f;
+        RotationSpeed = 20f;
         SelfRotationSpeed = 10f;
         MovingSpeed = 15f;
         HeadphonePosition = new Vector3(1.87f, 0f, 4f);

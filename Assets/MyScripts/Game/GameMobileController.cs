@@ -9,7 +9,7 @@ public class GameMobileController : MonoBehaviour
     public Vector3 pointingDirection;
     private float MaximumDistance = 30.0f;
     public float minimumAngle = 90.0f, maxAlphaAngel;
-    public Vector3 initialDownDirection, initialRightDirection;
+    public Vector3 initialDownDirection;
 
     void Start()
     {   
@@ -21,6 +21,11 @@ public class GameMobileController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {   
+        // InitialDownDirection initialization
+        if (Time.frameCount == 120){
+            SetInitialDownDirection();
+        }
+
         // Coordinate transform functions
         Quaternion offsetRotation = gyro.attitude;
         transform.rotation =  GyroToUnity(offsetRotation);
@@ -28,13 +33,7 @@ public class GameMobileController : MonoBehaviour
         // Create raycast
         pointingDirection =  transform.up;
         Ray ray = new Ray(transform.position, pointingDirection);
-        
-
-        // InitialDownDirection initialization
-        if (Time.frameCount == 120){
-            SetInitialDownDirection();
-            initialRightDirection = transform.right;
-        }
+        RaycastHit hit;
         
         // Target detection
         

@@ -90,7 +90,7 @@ public class TargetPositionManager : MonoBehaviour
         float Phi = Mathf.Clamp(CurrrentSpherical.z + VerticalInput * 0.1f, StartPhiAngle, EndPhiAngle);
 
         // Set limb IK effector position
-        LimbEffectorCartesian = SphericalToCartesian(new Vector3(2, Theta, Phi));
+        LimbEffectorCartesian = SphericalToCartesian(new Vector3(2f, Theta, Phi));
         return SphericalToCartesian(new Vector3(Distance, Theta, Phi));
     }
 

@@ -31,7 +31,7 @@ public class DigitalHumanControl : MonoBehaviour
             IKLeftHandEffector.transform.localPosition = IKLeftHandEffectorDownPosition;
             IKRightHandEffector.transform.localPosition = IKRightHandEffectorDownPosition;
             if(CameraRotation.IsPreviewSphere(CameraRotation.CurrentTargetSelection) == true){
-                IKLeftHandEffector.transform.position = TargetPositionManager.LimbEffectorCartesian;
+                IKLeftHandEffector.transform.position = TargetPositionManager.LimbEffectorCartesian + new Vector3(0f, 0f, 0f);
             }
         }
         else if(UIControlBodyPosition.CurrentView == "Preview"){

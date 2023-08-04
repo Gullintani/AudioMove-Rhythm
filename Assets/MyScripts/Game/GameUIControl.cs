@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 
 public class GameUIControl : MonoBehaviour
 {
@@ -9,10 +10,10 @@ public class GameUIControl : MonoBehaviour
     public Camera[] CameraList;
     public float TargetSize = 2f;
     public GameMainController GameMainController;
+    public GameAudioController GameAudioController;
     public AudioSource Verbal;
     public AudioClip Clip1_ExerciseStart;
     public AudioClip Clip2_Calibration;
-    public GameAudioController GameAudioController;
     public UIDocument UI;
     private VisualElement UIRoot;
     private Button UIButtonCalibration;
@@ -35,19 +36,17 @@ public class GameUIControl : MonoBehaviour
 
         // Set Button Event
         UIButtonCalibration.clicked += delegate(){
-            Debug.Log("Calibration");
+            Verbal.PlayOneShot(Clip2_Calibration);
+            GameMainController.WorldCalibration();
         };
         UIButtonBack.clicked += delegate(){
-            Debug.Log("Back to Setting Scene");
+            SceneManager.LoadScene("AudioMoveSettings");
         };
     }
 
     // Update is called once per frame
     void Update(){
-        // if (Input.GetKeyDown(KeyCode.Space))
-        // {
-        //     Debug.Log("Space pressed. Test function triggered.");
-        // }
+
     }
 
     private Vector3 CartesianToSpherical(Vector3 cartesian){

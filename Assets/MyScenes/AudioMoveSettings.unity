@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.1817166, g: 0.22737932, b: 0.30742213, a: 1}
+  m_IndirectSpecularColor: {r: 0.18171641, g: 0.22737882, b: 0.30742162, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -882,7 +882,7 @@ Transform:
   m_GameObject: {fileID: 1092191080}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.2, y: 1.48, z: 0}
+  m_LocalPosition: {x: -0.2, y: 1.151, z: 0.028}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1283,6 +1283,7 @@ MonoBehaviour:
   SettingViewOffset: {x: 0, y: 0, z: 0}
   PositionList: []
   PositionListPlay: []
+  SizeListPlay: []
   PreviewSphereList: []
   OriginalMaterial: {fileID: 2100000, guid: af011d82bd51e5948b3c355348424667, type: 2}
   LimbEffectorCartesian: {x: 0, y: 0, z: 0}

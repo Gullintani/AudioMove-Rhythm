@@ -150,7 +150,7 @@ namespace HearXR
             UpdateTrackingButton();
         }
         
-        private void CalibrateStartingRotation()
+        public void CalibrateStartingRotation()
         {
             _calibratedOffset = _lastRotation;
             UpdateRotationOffsetButtons();

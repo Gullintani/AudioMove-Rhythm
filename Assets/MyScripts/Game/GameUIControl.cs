@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
-
+using HearXR;
 public class GameUIControl : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -11,6 +11,7 @@ public class GameUIControl : MonoBehaviour
     public float TargetSize = 2f;
     public GameMainController GameMainController;
     public GameAudioController GameAudioController;
+    public HeadphoneMotionExample HeadphoneMotionExample;
     public AudioSource Verbal;
     public AudioClip Clip1_ExerciseStart;
     public AudioClip Clip2_Calibration;
@@ -38,6 +39,7 @@ public class GameUIControl : MonoBehaviour
         // Set Button Event
         UIButtonCalibration.clicked += delegate(){
             Verbal.PlayOneShot(Clip2_Calibration);
+            HeadphoneMotionExample.CalibrateStartingRotation();
             GameMainController.WorldCalibration();
         };
         UIButtonBack.clicked += delegate(){

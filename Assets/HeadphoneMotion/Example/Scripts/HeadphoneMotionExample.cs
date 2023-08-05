@@ -40,6 +40,7 @@ namespace HearXR
     {
         #region Editor Fields
         [SerializeField] private Transform _rotateTarget = default;
+        [SerializeField] private Transform _rotateTarget2 = default;
         [SerializeField] private Text _motionAvailabilityText = default;
         [SerializeField] private Text _headphoneConnectionStatusText = default;
         [SerializeField] private Button _toggleTrackingButton = default;
@@ -120,10 +121,12 @@ namespace HearXR
             if (_calibratedOffset == Quaternion.identity)
             {
                 _rotateTarget.rotation = rotation;
+                _rotateTarget2.rotation = rotation;
             }
             else
             {
                 _rotateTarget.rotation = rotation * Quaternion.Inverse(_calibratedOffset);
+                _rotateTarget2.rotation = rotation * Quaternion.Inverse(_calibratedOffset);
             }
             
             _lastRotation = rotation;

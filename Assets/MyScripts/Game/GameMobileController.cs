@@ -10,6 +10,8 @@ public class GameMobileController : MonoBehaviour
     private float MaximumDistance = 30.0f;
     public float minimumAngle = 90.0f, maxAlphaAngel;
     public Vector3 initialDownDirection;
+    public GameAudioController GameAudioController;
+    public GameUIControl GameUIControl;
 
     void Start()
     {   
@@ -37,7 +39,11 @@ public class GameMobileController : MonoBehaviour
         
         // Target detection
         if (Physics.Raycast(ray, out hit)){
-            
+            GameObject HitObject = hit.collider.gameObject;
+            if (HitObject.name.Contains("Sphere") && GameAudioController.isMoving == false){
+                GameAudioController.MoveToNextPosition();
+                GameUIControl.Verbal.PlayOneShot(GameUIControl.Clip3_SuccessHit);
+            }
         }
 
         // Debug

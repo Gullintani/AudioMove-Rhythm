@@ -14,6 +14,7 @@ public class GameUIControl : MonoBehaviour
     public AudioSource Verbal;
     public AudioClip Clip1_ExerciseStart;
     public AudioClip Clip2_Calibration;
+    public AudioClip Clip3_SuccessHit;
     public UIDocument UI;
     private VisualElement UIRoot;
     private Button UIButtonCalibration;

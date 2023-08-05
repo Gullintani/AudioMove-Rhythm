@@ -51,8 +51,11 @@ public class GameAudioController : MonoBehaviour
 
         // Smooth moving
         if(transform.localPosition != MovingDestination){
+            isMoving = true;
             MoveSmooth();
             ChangeSizeSmooth();
+        }else{
+            isMoving = false;
         }
     }
 

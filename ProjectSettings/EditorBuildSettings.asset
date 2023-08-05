@@ -14,7 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/MyScenes/AudioMoveSystem.unity
     guid: 0a0660f99be064071b995e4120a220df
-  - enabled: 0
+  - enabled: 1
     path: Assets/HeadphoneMotion/Example/Scenes/HeadphoneMotionExample.unity
     guid: 47f2d13c6e6654d47a2a038695496755
   m_configObjects: {}

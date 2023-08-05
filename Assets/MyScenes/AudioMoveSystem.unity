@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18217021, g: 0.2246046, b: 0.2884034, a: 1}
+  m_IndirectSpecularColor: {r: 0.18215132, g: 0.22456804, b: 0.28842226, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1133,7 +1133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 165c7fb012f894bfa9ce01af9d3ebbd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotateTarget: {fileID: 963194228}
+  _rotateTarget: {fileID: 1532046141}
   _motionAvailabilityText: {fileID: 756628327}
   _headphoneConnectionStatusText: {fileID: 876037489}
   _toggleTrackingButton: {fileID: 356694672}
@@ -1246,7 +1246,6 @@ GameObject:
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
-  - component: {fileID: 963194230}
   m_Layer: 0
   m_Name: Camera Listener
   m_TagString: MainCamera
@@ -1348,24 +1347,6 @@ MonoBehaviour:
   recorderSeamless: 0
   recorderSourceTag: Untagged
   recorderFoldout: 1
---- !u!114 &963194230
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd660cfdc2c69fa4b9a1a890dc0264b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _rotateTarget: {fileID: 0}
-  _motionAvailabilityText: {fileID: 0}
-  _headphoneConnectionStatusText: {fileID: 0}
-  _toggleTrackingButton: {fileID: 0}
-  _calibrateStartingRotationButton: {fileID: 0}
-  _resetCalibrationButton: {fileID: 0}
 --- !u!1001 &1336987486
 PrefabInstance:
   m_ObjectHideFlags: 0

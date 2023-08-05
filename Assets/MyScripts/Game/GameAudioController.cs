@@ -37,6 +37,7 @@ public class GameAudioController : MonoBehaviour
         
         // Initialize MovingDestination
         MovingDestination = PositionList[0];
+        TargetSize = TargetSizeList[0];
     }
 
     private void Update(){

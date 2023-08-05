@@ -136,6 +136,8 @@ public class CameraRotation : MonoBehaviour
                                 CurrentSelection = PhoneRightLowerLeg;
                             }
                             DigitalHumanControl.AttachedLimb = CurrentSelection.name;
+                            // Update constrains depends on limb selection
+                            UpdatePositionConstrain(CurrentSelection.name);
                         }
                     }
 
@@ -207,6 +209,35 @@ public class CameraRotation : MonoBehaviour
     private void DeSelectHighlightMaterial(GameObject selection){
         Renderer renderer = selection.GetComponent<Renderer>();
         renderer.material = OriginalMaterial;
+    }
+    private void UpdatePositionConstrain(string AttachedLimb){
+        if(AttachedLimb.Contains("LeftUpperArm")||AttachedLimb.Contains("RightUpperArm")){
+                StartThetaAngle = 45f;
+                EndThetaAngle = 135f;
+                StartPhiAngle = -30f;
+                EndPhiAngle = 30f;
+                TargetPositionManager.SettingViewOffset = new Vector3(0f, 0f, 0f);
+            }else if(AttachedLimb.Contains("LeftLowerArm")||AttachedLimb.Contains("RightLowerArm")){
+                StartThetaAngle = 60;
+                EndThetaAngle = 120f;
+                StartPhiAngle = -30f;
+                EndPhiAngle = 30f;
+                TargetPositionManager.SettingViewOffset = new Vector3(0f, -0.5f, 0f);
+            }else if(AttachedLimb.Contains("LeftUpperLeg")||AttachedLimb.Contains("RightUpperLeg")){
+                StartThetaAngle = 60;
+                EndThetaAngle = 120f;
+                StartPhiAngle = -80f;
+                EndPhiAngle = 0f;
+                TargetPositionManager.SettingViewOffset = new Vector3(0f, -1f, 0f);
+            }else if(AttachedLimb.Contains("LeftLowerLeg")||AttachedLimb.Contains("RightLowerLeg")){
+                StartThetaAngle = 60;
+                EndThetaAngle = 120f;
+                StartPhiAngle = -80f;
+                EndPhiAngle = 0f;
+                TargetPositionManager.SettingViewOffset = new Vector3(0f, -1.5f, 0f);
+            }
+        TargetPositionManager.GenerateThetaStart = StartThetaAngle;
+        TargetPositionManager.GenerateThetaEnd = EndThetaAngle;
     }
 }
 

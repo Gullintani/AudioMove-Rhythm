@@ -17,12 +17,14 @@ public class GameAudioController : MonoBehaviour
     private float ScalingSpeed = 10f;
     private Vector3 MovingDestination;
     private Vector3 TargetSize;
+    private Vector3 PositionOffect;
     public List<Vector3> PositionList;
     public List<Vector3> TargetSizeList;
     private int NumberOfTargets;
     void Start() {
         // Load data from PlayerPref in setting scene
         NumberOfTargets = PlayerPrefs.GetInt("NumberOfTargets");
+        PositionOffect = new Vector3(0f, PlayerPrefs.GetFloat("VerticalOffest"), 0f);
         PositionList = PlayerPrefsUtility.LoadVector3List("Position");
         TargetSizeList = PlayerPrefsUtility.LoadVector3List("TargetSize");
         PositionList = PositionList.GetRange(0, NumberOfTargets);
@@ -34,7 +36,7 @@ public class GameAudioController : MonoBehaviour
         this.transform.localScale = TargetSizeList[0];
         
         // Initialize MovingDestination
-        MovingDestination = new Vector3(0f, 0f, 5f);
+        MovingDestination = PositionList[0];
     }
 
     private void Update(){

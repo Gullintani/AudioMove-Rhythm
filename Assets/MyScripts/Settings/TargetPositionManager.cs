@@ -12,10 +12,12 @@ public class TargetPositionManager : MonoBehaviour
     public List<GameObject> PreviewSphereList;
     public Material OriginalMaterial;
     public Vector3 LimbEffectorCartesian;
+    public float GenerateThetaStart;
+    public float GenerateThetaEnd;
     void Start()
     {
         // Because generated preview are based on (0,0,0), I need offset for TargetSettingView
-        SettingViewOffset = new Vector3(0, 0, 0);
+        // SettingViewOffset = new Vector3(0, 0, 0);
         // Coordinate transform test
         // Vector3 initialCartesian = new Vector3(Mathf.Sqrt(3)/4, Mathf.Sqrt(3)/2, 0.25f);
         // Debug.Log("initial cartesian: " + initialCartesian);
@@ -44,11 +46,12 @@ public class TargetPositionManager : MonoBehaviour
         // Save target size in a list too.
         PlayerPrefsUtility.SaveVector3List(PositionListPlay, "Position");
         PlayerPrefsUtility.SaveVector3List(SizeListPlay, "TargetSize");
+        PlayerPrefs.SetFloat("VerticalOffest", SettingViewOffset.y);
         PlayerPrefs.SetInt("NumberOfTargets", PositionListPlay.Count);
     }
 
     public void GenerateTarget(Vector3 position){
-        GameObject PreviewSphere = Instantiate(PreviewPrefab, position, Quaternion.identity);
+        GameObject PreviewSphere = Instantiate(PreviewPrefab, position + SettingViewOffset, Quaternion.identity);
         PreviewSphere.name = "PreviewSphere " + PreviewSphereList.Count.ToString();
         Renderer renderer = PreviewSphere.GetComponent<Renderer>();
         renderer.material = OriginalMaterial;
@@ -64,7 +67,7 @@ public class TargetPositionManager : MonoBehaviour
 
     public void GeneratePositions(){
         // Generate positions
-        PositionList = GenerateSphericalPositions(startAngle:30f, endAngle:150f, numberOfPosition:4, distance:5f);
+        PositionList = GenerateSphericalPositions(startAngle:GenerateThetaStart, endAngle:GenerateThetaEnd, numberOfPosition:3, distance:5f);
         for (int index = 0; index < PositionList.Count; index++)
         {
             PositionList[index] = SphericalToCartesian(PositionList[index]);
@@ -90,7 +93,7 @@ public class TargetPositionManager : MonoBehaviour
         float Phi = Mathf.Clamp(CurrrentSpherical.z + VerticalInput * 0.1f, StartPhiAngle, EndPhiAngle);
 
         // Set limb IK effector position
-        LimbEffectorCartesian = SphericalToCartesian(new Vector3(2f, Theta, Phi));
+        LimbEffectorCartesian = SphericalToCartesian(new Vector3(Distance, Theta, Phi));
         return SphericalToCartesian(new Vector3(Distance, Theta, Phi));
     }
 

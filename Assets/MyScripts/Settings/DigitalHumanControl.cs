@@ -19,7 +19,6 @@ public class DigitalHumanControl : MonoBehaviour
     private Vector3 InitialIKLeftLegEffectorPosition, InitialIKRightLegEffectorPosition;
     private float MovingSpeed = 5.0f;
     private int currentTargetIndex = 0;
-    
     private void Start()
     {
         // Initial variable settings
@@ -54,7 +53,11 @@ public class DigitalHumanControl : MonoBehaviour
             IKLeftLegEffector.transform.position = InitialIKLeftLegEffectorPosition;
             IKRightLegEffector.transform.position = InitialIKRightLegEffectorPosition;
             if(CameraRotation.CurrentTargetSelection!=null && CameraRotation.IsPreviewSphere(CameraRotation.CurrentTargetSelection) == true){
+                // Position control of effector
                 CurrentMovingEffector.transform.position = TargetPositionManager.LimbEffectorCartesian + new Vector3(0f, 0f, 0f);
+                // Rotation control of effector
+                // CurrentMovingEffector.transform.LookAt(new Vector3(TargetPositionManager.LimbEffectorCartesian.x, TargetPositionManager.LimbEffectorCartesian.y, TargetPositionManager.LimbEffectorCartesian.z));
+                // CurrentMovingEffector.transform.LookAt(CameraRotation.CurrentTargetSelection.transform, Vector3.up);
             }
         }
         // Animation in preview view

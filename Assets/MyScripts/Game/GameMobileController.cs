@@ -4,51 +4,63 @@ using UnityEngine;
 
 public class GameMobileController : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private bool GyroEnabled;
     private Gyroscope gyro;
+    private Quaternion rotation;
     public Vector3 pointingDirection;
-    private float MaximumDistance = 30.0f;
-    public float minimumAngle = 90.0f, maxAlphaAngel;
     public Vector3 initialDownDirection;
     public GameAudioController GameAudioController;
     public GameUIControl GameUIControl;
 
     void Start()
     {   
-        // Gyroscope input
+        // Gyroscope initialize
+        GyroEnabled = EnableGyro();
         Input.gyro.enabled = true;
-        gyro = Input.gyro;
+
+        // Set the rotation offset
+        // RotationOffSet = Quanterion.Euler(180f, 0f, 180f);
     }
 
-    // Update is called once per frame
     void Update()
     {   
         // InitialDownDirection initialization
         if (Time.frameCount == 120){
             SetInitialDownDirection();
         }
+        if (GyroEnabled){
+            this.transform.rotation = gyro.attitude * rotation;
 
-        // Coordinate transform functions
-        Quaternion offsetRotation = gyro.attitude;
-        transform.rotation =  GyroToUnity(offsetRotation);
-
-        // Create raycast
-        pointingDirection =  transform.up;
-        Ray ray = new Ray(transform.position, pointingDirection);
-        RaycastHit hit;
-        
-        // Target detection
-        if (Physics.Raycast(ray, out hit)){
-            GameObject HitObject = hit.collider.gameObject;
-            if (HitObject.name.Contains("Sphere") && GameAudioController.isMoving == false){
-                GameAudioController.MoveToNextPosition();
-                GameUIControl.Verbal.PlayOneShot(GameUIControl.Clip3_SuccessHit);
+            // Create raycast
+            pointingDirection = transform.up;
+            Ray ray = new Ray(transform.position, pointingDirection);
+            RaycastHit hit;
+            
+            // Target detection
+            if (Physics.Raycast(ray, out hit)){
+                GameObject HitObject = hit.collider.gameObject;
+                if (HitObject.name.Contains("Sphere") && GameAudioController.isMoving == false){
+                    GameAudioController.MoveToNextPosition();
+                    GameUIControl.Verbal.PlayOneShot(GameUIControl.Clip3_SuccessHit);
+                }
             }
+
+            // Debug
+            Debug.DrawRay(transform.position, pointingDirection * 30.0f, Color.green);
         }
+    }
 
-        // Debug
-        Debug.DrawRay(transform.position, pointingDirection * MaximumDistance, Color.green);
+    private bool EnableGyro(){
+        if(SystemInfo.supportsGyroscope){
+            gyro = Input.gyro;
+            gyro.enabled = true;
 
+            this.transform.rotation = Quaternion.Euler(90f, 90f, 0f);
+            rotation = new Quaternion(0,0,1,0);
+
+            return true;
+        }
+        return false;
     }
 
     private Quaternion GyroToUnity(Quaternion q){

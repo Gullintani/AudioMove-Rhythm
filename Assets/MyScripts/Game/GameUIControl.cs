@@ -39,8 +39,9 @@ public class GameUIControl : MonoBehaviour
         // Set Button Event
         UIButtonCalibration.clicked += delegate(){
             Verbal.PlayOneShot(Clip2_Calibration);
-            HeadphoneMotionExample.CalibrateStartingRotation();
-            GameMainController.WorldCalibration();
+            // Calibrate headphone and smartphone at the same time
+            // HeadphoneMotionExample.CalibrateStartingRotation();
+            // GameMainController.WorldCalibration();
         };
         UIButtonBack.clicked += delegate(){
             SceneManager.LoadScene("AudioMoveSettings");

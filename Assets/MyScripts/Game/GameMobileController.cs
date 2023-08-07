@@ -6,7 +6,7 @@ public class GameMobileController : MonoBehaviour
 {
     private bool GyroEnabled;
     private Gyroscope gyro;
-    private Quaternion rotation;
+    private Quaternion OffSetRotation, InitialPosture;
     public Vector3 pointingDirection;
     public Vector3 initialDownDirection;
     public GameAudioController GameAudioController;
@@ -25,11 +25,13 @@ public class GameMobileController : MonoBehaviour
     void Update()
     {   
         // InitialDownDirection initialization
-        if (Time.frameCount == 120){
-            SetInitialDownDirection();
-        }
+        // if (Time.frameCount == 120){
+            // SetInitialDownDirection();
+        // }
         if (GyroEnabled){
-            this.transform.rotation = gyro.attitude * rotation;
+            Quaternion gyroRotation = Input.gyro.attitude;
+            transform.rotation = GyroToUnity(gyroRotation);
+            // Debug.Log("GyroRotation" + gyroRotation + "|" + "TransformRotation" + transform.rotation);
 
             // Create raycast
             pointingDirection = transform.up;
@@ -55,8 +57,11 @@ public class GameMobileController : MonoBehaviour
             gyro = Input.gyro;
             gyro.enabled = true;
 
-            this.transform.rotation = Quaternion.Euler(90f, 90f, 0f);
-            rotation = new Quaternion(0,0,1,0);
+            Debug.Log(this.transform.rotation);
+            
+            InitialPosture = Quaternion.Euler(0f, 0f, 0f);
+            OffSetRotation = new Quaternion(0,0,-1,0);
+            // rotation = ;
 
             return true;
         }

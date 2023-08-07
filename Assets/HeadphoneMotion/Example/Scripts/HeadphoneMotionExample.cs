@@ -120,13 +120,13 @@ namespace HearXR
             // Match the target object's rotation to the headphone rotation.
             if (_calibratedOffset == Quaternion.identity)
             {
-                _rotateTarget.rotation = rotation;
-                _rotateTarget2.rotation = rotation;
+                _rotateTarget.localRotation = rotation;
+                _rotateTarget2.localRotation = rotation;
             }
             else
             {
-                _rotateTarget.rotation = rotation * Quaternion.Inverse(_calibratedOffset);
-                _rotateTarget2.rotation = rotation * Quaternion.Inverse(_calibratedOffset);
+                _rotateTarget.localRotation = rotation * Quaternion.Inverse(_calibratedOffset);
+                _rotateTarget2.localRotation = rotation * Quaternion.Inverse(_calibratedOffset);
             }
             
             _lastRotation = rotation;

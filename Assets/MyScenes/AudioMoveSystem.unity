@@ -310,7 +310,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e242891dac4e6741b1242d8e036a84e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Phone: {fileID: 0}
+  Phone: {fileID: 1870177126}
   GameAudioController: {fileID: 534158932}
   GameUIControl: {fileID: 1595359775}
 --- !u!4 &224480866
@@ -2388,7 +2388,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3535473601529558972, guid: 9c993bdd1f0fb3e4da5b61dabec5fbb3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1870177126}
   m_SourcePrefab: {fileID: 100100000, guid: 9c993bdd1f0fb3e4da5b61dabec5fbb3, type: 3}
 --- !u!1 &1754400106
 GameObject:
@@ -2469,6 +2472,27 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 
+--- !u!1 &1870177123 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3535473601529558972, guid: 9c993bdd1f0fb3e4da5b61dabec5fbb3, type: 3}
+  m_PrefabInstance: {fileID: 1596834165}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1870177126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870177123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c4c01e947727e14ab849beb1cb05784, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pointingDirection: {x: 0, y: 0, z: 0}
+  initialDownDirection: {x: 0, y: 0, z: 0}
+  GameAudioController: {fileID: 534158932}
+  GameUIControl: {fileID: 1595359775}
 --- !u!1 &2082929993
 GameObject:
   m_ObjectHideFlags: 0
@@ -2478,7 +2502,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2082929994}
-  - component: {fileID: 2082929995}
   m_Layer: 0
   m_Name: MobileContainer
   m_TagString: Untagged
@@ -2502,22 +2525,6 @@ Transform:
   - {fileID: 441558716}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2082929995
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2082929993}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c4c01e947727e14ab849beb1cb05784, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pointingDirection: {x: 0, y: 0, z: 0}
-  initialDownDirection: {x: 0, y: 0, z: 0}
-  GameAudioController: {fileID: 534158932}
-  GameUIControl: {fileID: 1595359775}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

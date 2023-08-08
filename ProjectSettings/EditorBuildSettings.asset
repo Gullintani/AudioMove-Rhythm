@@ -17,4 +17,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/HeadphoneMotion/Example/Scenes/HeadphoneMotionExample.unity
     guid: 47f2d13c6e6654d47a2a038695496755
+  - enabled: 1
+    path: Assets/MyScenes/ExperimentSettings.unity
+    guid: f6d2d41099a356c4a9968c7a610c27cc
+  - enabled: 1
+    path: Assets/MyScenes/ExperimentSystem.unity
+    guid: 28c9360d4e470fe4e8c0cc049dca0bce
   m_configObjects: {}

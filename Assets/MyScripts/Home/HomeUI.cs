@@ -12,7 +12,7 @@ public class HomeUI : MonoBehaviour
     public AudioClip Clip1_;
     public AudioClip Clip2_;
     private VisualElement UIRoot;
-    private Button UIButtonRelax;
+    private Button UIButtonExperiment;
     private Button UIButtonExercise;
     private Button UIButtonRehablitation;
     private Button UIButtonAchievements;
@@ -23,7 +23,7 @@ public class HomeUI : MonoBehaviour
         // Variables claim
         Verbal = GetComponent<AudioSource>();
         UIRoot = UI.rootVisualElement;
-        UIButtonRelax = UIRoot.Q<Button>("ButtonRelax");
+        UIButtonExperiment = UIRoot.Q<Button>("ButtonExperiment");
         UIButtonExercise = UIRoot.Q<Button>("ButtonExercise");
         UIButtonRehablitation = UIRoot.Q<Button>("ButtonRehablitation");
         UIButtonAchievements = UIRoot.Q<Button>("ButtonAchievements");
@@ -33,9 +33,9 @@ public class HomeUI : MonoBehaviour
         DisplayHomeView();
 
         // Button event registration
-        UIButtonRelax.clicked += delegate(){
-            CurrentModeSelectionChange("Relax");
-            SceneManager.LoadScene("AudioMoveSettings");
+        UIButtonExperiment.clicked += delegate(){
+            CurrentModeSelectionChange("Experiment");
+            SceneManager.LoadScene("ExperimentSettings");
         };
         UIButtonExercise.clicked += delegate(){
             CurrentModeSelectionChange("Exercise");
@@ -61,14 +61,14 @@ public class HomeUI : MonoBehaviour
     }
 
     private void DisplayAchievementsView(){
-        UIButtonRelax.style.display = DisplayStyle.None;
+        UIButtonExperiment.style.display = DisplayStyle.None;
         UIButtonExercise.style.display = DisplayStyle.None;
         UIButtonRehablitation.style.display = DisplayStyle.None;
         UIButtonAchievements.style.display = DisplayStyle.None;
         UIButtonBack.style.display = DisplayStyle.Flex;
     }
     private void DisplayHomeView(){
-        UIButtonRelax.style.display = DisplayStyle.Flex;
+        UIButtonExperiment.style.display = DisplayStyle.Flex;
         UIButtonExercise.style.display = DisplayStyle.Flex;
         UIButtonRehablitation.style.display = DisplayStyle.Flex;
         UIButtonAchievements.style.display = DisplayStyle.Flex;

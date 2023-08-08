@@ -136,6 +136,7 @@ public class CameraRotation : MonoBehaviour
                                 CurrentSelection = PhoneRightLowerLeg;
                             }
                             DigitalHumanControl.AttachedLimb = CurrentSelection.name;
+                            PlayerPrefs.SetString("BodyPosition", CurrentSelection.name);
                             // Update constrains depends on limb selection
                             UpdatePositionConstrain(CurrentSelection.name);
                         }
@@ -227,13 +228,13 @@ public class CameraRotation : MonoBehaviour
                 StartThetaAngle = 60;
                 EndThetaAngle = 120f;
                 StartPhiAngle = -80f;
-                EndPhiAngle = 0f;
+                EndPhiAngle = -30f;
                 TargetPositionManager.SettingViewOffset = new Vector3(0f, -1f, 0f);
             }else if(AttachedLimb.Contains("LeftLowerLeg")||AttachedLimb.Contains("RightLowerLeg")){
-                StartThetaAngle = 60;
-                EndThetaAngle = 120f;
+                StartThetaAngle = 70;
+                EndThetaAngle = 110f;
                 StartPhiAngle = -80f;
-                EndPhiAngle = 0f;
+                EndPhiAngle = -45f;
                 TargetPositionManager.SettingViewOffset = new Vector3(0f, -1.5f, 0f);
             }
         TargetPositionManager.GenerateThetaStart = StartThetaAngle;

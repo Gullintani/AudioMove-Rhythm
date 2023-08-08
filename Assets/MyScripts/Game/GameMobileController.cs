@@ -11,6 +11,7 @@ public class GameMobileController : MonoBehaviour
     public Vector3 initialDownDirection;
     public GameAudioController GameAudioController;
     public GameUIControl GameUIControl;
+    public int HitCount;
 
     void Start()
     {   
@@ -18,8 +19,8 @@ public class GameMobileController : MonoBehaviour
         GyroEnabled = EnableGyro();
         Input.gyro.enabled = true;
 
-        // Set the rotation offset
-        // RotationOffSet = Quanterion.Euler(180f, 0f, 180f);
+        // Variable initialize
+        HitCount = 0;
     }
 
     void Update()
@@ -44,6 +45,7 @@ public class GameMobileController : MonoBehaviour
                 if (HitObject.name.Contains("Sphere") && GameAudioController.isMoving == false){
                     GameAudioController.MoveToNextPosition();
                     GameUIControl.Verbal.PlayOneShot(GameUIControl.Clip3_SuccessHit);
+                    HitCount += 1;
                 }
             }
 

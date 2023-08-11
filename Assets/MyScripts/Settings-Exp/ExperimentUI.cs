@@ -14,6 +14,7 @@ public class ExperimentUI : MonoBehaviour
     private RadioButtonGroup UITaskSelection;
     private RadioButtonGroup UITrailSelection;
     private RadioButtonGroup UIMotionSelection;
+    private RadioButtonGroup UIAdaptiveShrink;
     public string CurrentView;
 
     void Start()
@@ -25,6 +26,7 @@ public class ExperimentUI : MonoBehaviour
         UITaskSelection = UIRoot.Q<RadioButtonGroup>("TaskSelection");
         UITrailSelection = UIRoot.Q<RadioButtonGroup>("TrailSelection");
         UIMotionSelection = UIRoot.Q<RadioButtonGroup>("MotionSelection");
+        UIAdaptiveShrink = UIRoot.Q<RadioButtonGroup>("AdaptiveShrink");
 
         // Button event registration
         UIButtonNext.clicked += delegate(){
@@ -44,12 +46,11 @@ public class ExperimentUI : MonoBehaviour
         };
         
         // Radio button group registration
-        UITaskSelection.RegisterValueChangedCallback(evt => Debug.Log(evt.newValue));
+        // UITaskSelection.RegisterValueChangedCallback(evt => Debug.Log(evt.newValue));
 
         // Display first view
         DisplayBodyPositionView();
     
-        Debug.Log(UITaskSelection.value);
     }
 
     void Update()
@@ -75,7 +76,7 @@ public class ExperimentUI : MonoBehaviour
             UIMotionSelection.value = -1;
         }
 
-        if(CurrentView == "Configuration" && UITaskSelection.value != -1 && UIMotionSelection.value != -1){
+        if(CurrentView == "Configuration" && UITaskSelection.value != -1 && UIMotionSelection.value != -1 && UIAdaptiveShrink.value != -1){
             UIButtonNext.style.display = DisplayStyle.Flex;
         }
     }
@@ -87,9 +88,11 @@ public class ExperimentUI : MonoBehaviour
         UITaskSelection.style.display = DisplayStyle.None;
         UITrailSelection.style.display = DisplayStyle.None;
         UIMotionSelection.style.display = DisplayStyle.None;
+        UIAdaptiveShrink.style.display = DisplayStyle.None;
         UITaskSelection.value = -1;
         UITrailSelection.value = -1;
         UIMotionSelection.value = -1;
+        UIAdaptiveShrink.value = -1;
     }
 
     void DisplayConfiguration(){
@@ -97,6 +100,7 @@ public class ExperimentUI : MonoBehaviour
         ExperimentCamera.isConfiguration = true;
         UIButtonNext.style.display = DisplayStyle.None;
         UITaskSelection.style.display = DisplayStyle.Flex;
+        UIAdaptiveShrink.style.display = DisplayStyle.Flex;
     }
 
     void SaveConfiguration(){
@@ -104,6 +108,6 @@ public class ExperimentUI : MonoBehaviour
         PlayerPrefs.SetInt("ExperimentTask", UITaskSelection.value);
         PlayerPrefs.SetInt("ExperimentTrail", UITrailSelection.value);
         PlayerPrefs.SetInt("ExperimentMotion", UIMotionSelection.value);
-
+        PlayerPrefs.SetInt("ExperimentAdaptiveShrink", UIAdaptiveShrink.value);
     }
 }

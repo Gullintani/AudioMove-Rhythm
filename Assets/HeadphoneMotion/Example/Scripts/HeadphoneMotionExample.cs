@@ -91,6 +91,12 @@ namespace HearXR
                 // Start tracking headphone motion.
                 HeadphoneMotion.StartTracking();
                 _tracking = true;
+
+                // PlayerPrefs settings:
+                if(PlayerPrefs.GetInt("ExperimentMotion") != 2){
+                    HeadphoneMotion.StopTracking();
+                    _tracking = false;
+                }
             }
             
             UpdateTrackingButton();

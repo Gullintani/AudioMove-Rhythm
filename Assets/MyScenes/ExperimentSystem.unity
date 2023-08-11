@@ -290,7 +290,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 224480866}
-  - component: {fileID: 224480865}
+  - component: {fileID: 224480867}
   m_Layer: 0
   m_Name: MainControl
   m_TagString: Untagged
@@ -298,21 +298,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &224480865
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 224480864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e242891dac4e6741b1242d8e036a84e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Phone: {fileID: 1870177126}
-  GameAudioController: {fileID: 534158932}
-  GameUIControl: {fileID: 1595359775}
 --- !u!4 &224480866
 Transform:
   m_ObjectHideFlags: 0
@@ -336,6 +321,19 @@ Transform:
   - {fileID: 245470426}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &224480867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 224480864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 727a893123bb3f245a2c5ea2271b4f07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Phone: {fileID: 1870177124}
 --- !u!1 &245470424
 GameObject:
   m_ObjectHideFlags: 0
@@ -608,8 +606,8 @@ GameObject:
   - component: {fileID: 534158929}
   - component: {fileID: 534158928}
   - component: {fileID: 534158931}
-  - component: {fileID: 534158932}
   - component: {fileID: 534158933}
+  - component: {fileID: 534158934}
   m_Layer: 0
   m_Name: Audio Sphere
   m_TagString: Untagged
@@ -799,24 +797,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &534158932
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 534158926}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47e7e85cc5da672499d6fe9707de0f7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Music: {fileID: 0}
-  BodyPositionOffSet: {x: -1.33, y: 0, z: 0}
-  GameMainController: {fileID: 0}
-  isMoving: 0
-  PositionList: []
-  TargetSizeList: []
 --- !u!114 &534158933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -840,6 +820,23 @@ MonoBehaviour:
   occlusionEnabled: 1
   occlusionIntensity: 1
   quality: 2
+--- !u!114 &534158934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 534158926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bbc2ea0f63ac9f4eb10b09047c5586e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Music: {fileID: 534158931}
+  BodyPositionOffSet: {x: -1.33, y: 0, z: 0}
+  GameMainControl: {fileID: 224480867}
+  isMoving: 0
+  PositionList: []
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1225,6 +1222,7 @@ GameObject:
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
+  - component: {fileID: 963194230}
   m_Layer: 0
   m_Name: Camera Listener
   m_TagString: MainCamera
@@ -1326,6 +1324,19 @@ MonoBehaviour:
   recorderSeamless: 0
   recorderSourceTag: Untagged
   recorderFoldout: 1
+--- !u!114 &963194230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b61fb0a9c2c544d4ea5adaf046807301, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AttachedLimb: 
 --- !u!1 &968352301
 GameObject:
   m_ObjectHideFlags: 0
@@ -2229,13 +2240,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1595359770}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22ce511646201e94a9017387d4994c48, type: 3}
+  m_Script: {fileID: 11500000, guid: babaa2382457cb049b7c2cb1cbd2d356, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   CameraList: []
   TargetSize: 2
-  GameMainController: {fileID: 224480865}
-  GameAudioController: {fileID: 534158932}
+  GameMainControl: {fileID: 224480867}
+  GameAudioControl: {fileID: 534158934}
   HeadphoneMotionExample: {fileID: 137559733}
   Verbal: {fileID: 1595359774}
   Clip1_ExerciseStart: {fileID: 8300000, guid: 40dbb81309e271a45b780ce910ead41c, type: 3}
@@ -2395,7 +2406,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3535473601529558972, guid: 9c993bdd1f0fb3e4da5b61dabec5fbb3, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1870177126}
+      addedObject: {fileID: 1870177124}
   m_SourcePrefab: {fileID: 100100000, guid: 9c993bdd1f0fb3e4da5b61dabec5fbb3, type: 3}
 --- !u!1 &1754400106
 GameObject:
@@ -2481,7 +2492,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3535473601529558972, guid: 9c993bdd1f0fb3e4da5b61dabec5fbb3, type: 3}
   m_PrefabInstance: {fileID: 1596834165}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1870177126
+--- !u!114 &1870177124
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2490,13 +2501,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1870177123}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c4c01e947727e14ab849beb1cb05784, type: 3}
+  m_Script: {fileID: 11500000, guid: 5fab3ce0f2ac5e9418cecd801d5bb9dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pointingDirection: {x: 0, y: 0, z: 0}
   initialDownDirection: {x: 0, y: 0, z: 0}
-  GameAudioController: {fileID: 534158932}
+  GameAudioControl: {fileID: 534158934}
   GameUIControl: {fileID: 1595359775}
+  ExperimentGameListenerControl: {fileID: 963194230}
+  HitCount: 0
 --- !u!1 &2082929993
 GameObject:
   m_ObjectHideFlags: 0

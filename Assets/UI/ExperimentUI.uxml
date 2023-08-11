@@ -6,9 +6,10 @@
     <ui:VisualElement>
         <ui:Label tabindex="-1" display-tooltip-when-elided="true" name="TextCoordinate" style="align-items: center; align-self: center; font-size: 10px;" />
     </ui:VisualElement>
-    <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); justify-content: flex-start; align-self: center; align-items: center; right: 20%;">
+    <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); justify-content: flex-start; align-self: center; align-items: flex-end; right: 20%;">
         <ui:RadioButtonGroup label="Task" value="-1" choices="Task 1, Task 2, Task 3" name="TaskSelection" style="-unity-text-align: upper-right; color: rgb(255, 255, 255); justify-content: center;" />
         <ui:RadioButtonGroup label="Trail" value="-1" choices="Trail 1,Trail 2" name="TrailSelection" style="-unity-text-align: upper-right; color: rgb(255, 255, 255); justify-content: center;" />
         <ui:RadioButtonGroup label="Motion" value="-1" choices="None,Phone,Head" name="MotionSelection" style="-unity-text-align: upper-right; color: rgb(255, 255, 255); justify-content: center;" />
+        <ui:RadioButtonGroup label="A-Shrink" value="-1" choices="Yes,No" name="AdaptiveShrink" style="-unity-text-align: upper-right; color: rgb(255, 255, 255); justify-content: center;" />
     </ui:VisualElement>
 </ui:UXML>

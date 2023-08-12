@@ -22,6 +22,8 @@ public class ExperimentGameAudioControl : MonoBehaviour
     private int NumberOfTargets, TryTime, MaxTryTime;
     private float InitialScale;
     private float Radius, Tolerance;
+    public List<float> ErrorAngles;
+
     void Start() {
         // Initialize Variables
         MaxTryTime = 3;
@@ -152,6 +154,8 @@ public class ExperimentGameAudioControl : MonoBehaviour
                 TryTime = MaxTryTime;
                 UIControl.Verbal.PlayOneShot(UIControl.Clip7_AudioMove);
             }
+            ErrorAngles.Add(minimumAngle);
+            Debug.Log(ErrorAngles);
             return;
         }
         if (maxAlphaAngel > (betaAngle + 10.0f)){

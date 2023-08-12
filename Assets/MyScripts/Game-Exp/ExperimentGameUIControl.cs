@@ -51,9 +51,12 @@ public class ExperimentGameUIControl : MonoBehaviour
         };
     }
 
-    // Update is called once per frame
     void Update(){
 
+    }
+
+    void ShowResults(){
+        
     }
     
 }

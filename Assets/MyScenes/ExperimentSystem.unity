@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18215132, g: 0.22456804, b: 0.28842226, a: 1}
+  m_IndirectSpecularColor: {r: 0.18217021, g: 0.2246046, b: 0.2884034, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -335,6 +335,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Phone: {fileID: 1870177124}
   HeadTracker: {fileID: 137559732}
+  GameAudioControl: {fileID: 534158934}
 --- !u!1 &245470424
 GameObject:
   m_ObjectHideFlags: 0

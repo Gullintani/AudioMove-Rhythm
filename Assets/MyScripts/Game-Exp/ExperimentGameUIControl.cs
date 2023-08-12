@@ -30,6 +30,7 @@ public class ExperimentGameUIControl : MonoBehaviour
     private Label UITextTarget5;
     private Label UITextTarget6;
     private Label UITextTime;
+    private int AllClearNumber;
 
 
 
@@ -51,6 +52,11 @@ public class ExperimentGameUIControl : MonoBehaviour
         UITextTarget5 = UIRoot.Q<Label>("Target5");
         UITextTarget6 = UIRoot.Q<Label>("Target6");
 
+        if(PlayerPrefs.GetInt("ExperimentTask")==1){
+            AllClearNumber = 18;
+        }else if(PlayerPrefs.GetInt("ExperimentTask")==2){
+            AllClearNumber = 3;
+        }
 
         // OnStart displays and verbal prompt
         Verbal.PlayOneShot(Clip1_ExerciseStart);
@@ -75,7 +81,7 @@ public class ExperimentGameUIControl : MonoBehaviour
     }
 
     void Update(){
-        if(GameAudioControl.ErrorAngles.Count == 18){
+        if(GameAudioControl.ErrorAngles.Count == AllClearNumber){
             GameMainControl.IsTiming = false;
             ShowResults();
             GameAudioControl.gameObject.SetActive(false);
@@ -84,20 +90,32 @@ public class ExperimentGameUIControl : MonoBehaviour
 
     void ShowResults(){
         UITextTime.text = GameMainControl.Timer.ToString();
-        UITextTarget1.text = string.Join(", ", GameAudioControl.ErrorAngles.GetRange(0, 3));
-        UITextTarget2.text = string.Join(", ", GameAudioControl.ErrorAngles.GetRange(3, 3));
-        UITextTarget3.text = string.Join(", ", GameAudioControl.ErrorAngles.GetRange(6, 3));
-        UITextTarget4.text = string.Join(", ", GameAudioControl.ErrorAngles.GetRange(9, 3));
-        UITextTarget5.text = string.Join(", ", GameAudioControl.ErrorAngles.GetRange(12, 3));
-        UITextTarget6.text = string.Join(", ", GameAudioControl.ErrorAngles.GetRange(15, 3));
+        if(PlayerPrefs.GetInt("ExperimentTask")==1){
+            UITextTarget1.text = string.Join(", ", GameAudioControl.ErrorAngles.GetRange(0, 3));
+            UITextTarget2.text = string.Join(", ", GameAudioControl.ErrorAngles.GetRange(3, 3));
+            UITextTarget3.text = string.Join(", ", GameAudioControl.ErrorAngles.GetRange(6, 3));
+            UITextTarget4.text = string.Join(", ", GameAudioControl.ErrorAngles.GetRange(9, 3));
+            UITextTarget5.text = string.Join(", ", GameAudioControl.ErrorAngles.GetRange(12, 3));
+            UITextTarget6.text = string.Join(", ", GameAudioControl.ErrorAngles.GetRange(15, 3));
+            UITextTime.style.display = DisplayStyle.Flex;
+            UITextTarget1.style.display = DisplayStyle.Flex;
+            UITextTarget2.style.display = DisplayStyle.Flex;
+            UITextTarget3.style.display = DisplayStyle.Flex;
+            UITextTarget4.style.display = DisplayStyle.Flex;
+            UITextTarget5.style.display = DisplayStyle.Flex;
+            UITextTarget6.style.display = DisplayStyle.Flex;
+        }else if(PlayerPrefs.GetInt("ExperimentTask")==2){
+            UITextTarget1.text = string.Join(", ", GameAudioControl.ErrorAngles.GetRange(0, 1));
+            UITextTarget2.text = string.Join(", ", GameAudioControl.ErrorAngles.GetRange(1, 1));
+            UITextTarget3.text = string.Join(", ", GameAudioControl.ErrorAngles.GetRange(2, 1));
+            UITextTime.style.display = DisplayStyle.Flex;
+            UITextTarget1.style.display = DisplayStyle.Flex;
+            UITextTarget2.style.display = DisplayStyle.Flex;
+            UITextTarget3.style.display = DisplayStyle.Flex;
+        }
+        
 
-        UITextTime.style.display = DisplayStyle.Flex;
-        UITextTarget1.style.display = DisplayStyle.Flex;
-        UITextTarget2.style.display = DisplayStyle.Flex;
-        UITextTarget3.style.display = DisplayStyle.Flex;
-        UITextTarget4.style.display = DisplayStyle.Flex;
-        UITextTarget5.style.display = DisplayStyle.Flex;
-        UITextTarget6.style.display = DisplayStyle.Flex;
+        
     }
     
 }

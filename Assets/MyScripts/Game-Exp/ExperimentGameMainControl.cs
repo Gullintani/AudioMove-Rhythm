@@ -15,9 +15,9 @@ public class ExperimentGameMainControl : MonoBehaviour
     {
         // Debug PlayerPrefs Settings
         PlayerPrefs.SetString("ExperimentLimb", "LeftUpperArm");
-        PlayerPrefs.SetInt("ExperimentTask", 1);
+        PlayerPrefs.SetInt("ExperimentTask", 2);
         PlayerPrefs.SetInt("ExperimentTrail", 1);
-        PlayerPrefs.SetInt("ExperimentMotion", 2);
+        PlayerPrefs.SetInt("ExperimentMotion", 1);
         PlayerPrefs.SetInt("ExperimentAdaptiveShrink", 0);
 
         // Variable initialization

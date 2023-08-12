@@ -26,7 +26,12 @@ public class ExperimentGameAudioControl : MonoBehaviour
 
     void Start() {
         // Initialize Variables
-        MaxTryTime = 3;
+        if(PlayerPrefs.GetInt("ExperimentTask")==1){
+            MaxTryTime = 3;
+        }else if(PlayerPrefs.GetInt("ExperimentTask")==2){
+            MaxTryTime = 1;
+        }
+
         TryTime = MaxTryTime;
         InitialScale = PlayerPrefs.GetInt("ExperimentAdaptiveShrink")==0? 8f : 5f;
         Radius = 5f;

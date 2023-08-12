@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18217021, g: 0.2246046, b: 0.2884034, a: 1}
+  m_IndirectSpecularColor: {r: 0.18215132, g: 0.22456804, b: 0.28842226, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -334,6 +334,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Phone: {fileID: 1870177124}
+  HeadTracker: {fileID: 137559732}
 --- !u!1 &245470424
 GameObject:
   m_ObjectHideFlags: 0
@@ -835,6 +836,8 @@ MonoBehaviour:
   Music: {fileID: 534158931}
   BodyPositionOffSet: {x: -1.33, y: 0, z: 0}
   GameMainControl: {fileID: 224480867}
+  Phone: {fileID: 1870177124}
+  UIControl: {fileID: 1595359775}
   isMoving: 0
   PositionList: []
 --- !u!1 &705507993
@@ -2252,6 +2255,9 @@ MonoBehaviour:
   Clip1_ExerciseStart: {fileID: 8300000, guid: 40dbb81309e271a45b780ce910ead41c, type: 3}
   Clip2_Calibration: {fileID: 8300000, guid: 77599f318f111824886998cb1e1b3627, type: 3}
   Clip3_SuccessHit: {fileID: 8300000, guid: 22d1e86636abdda4aa08f287a1cf4f35, type: 3}
+  Clip4_SuccessHit2: {fileID: 8300000, guid: b46ad2781f8a9404097affcde6ad64ee, type: 3}
+  Clip5_OverHit: {fileID: 8300000, guid: 2bda2a4727fc94ff3bae5d58c6a63246, type: 3}
+  Clip7_AudioMove: {fileID: 8300000, guid: f1ecb7151461f4efca02c7f0b8cecd07, type: 3}
   UI: {fileID: 1595359771}
 --- !u!1 &1595945916
 GameObject:
@@ -2510,6 +2516,12 @@ MonoBehaviour:
   GameUIControl: {fileID: 1595359775}
   ExperimentGameListenerControl: {fileID: 963194230}
   HitCount: 0
+  HitCountAdpative: 0
+  ray_initialDown: 0
+  ray_target: 0
+  target_initialDown: 0
+  maxElevationAngel: 0
+  minBetweenAngle: 0
 --- !u!1 &2082929993
 GameObject:
   m_ObjectHideFlags: 0

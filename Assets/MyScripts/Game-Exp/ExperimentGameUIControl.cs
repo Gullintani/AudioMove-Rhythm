@@ -16,6 +16,9 @@ public class ExperimentGameUIControl : MonoBehaviour
     public AudioClip Clip1_ExerciseStart;
     public AudioClip Clip2_Calibration;
     public AudioClip Clip3_SuccessHit;
+    public AudioClip Clip4_SuccessHit2;
+    public AudioClip Clip5_OverHit;
+    public AudioClip Clip7_AudioMove;
     public UIDocument UI;
     private VisualElement UIRoot;
     private Button UIButtonCalibration;

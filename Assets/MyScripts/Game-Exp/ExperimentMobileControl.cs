@@ -13,6 +13,10 @@ public class ExperimentGameMobileControl : MonoBehaviour
     public ExperimentGameUIControl GameUIControl;
     public ExperimentGameListenerControl ExperimentGameListenerControl;
     public int HitCount;
+    public int HitCountAdpative;
+    private bool isMotionReset;
+    public float ray_initialDown, ray_target, target_initialDown, maxElevationAngel, minBetweenAngle;
+    private GameObject HitObject, LastHitObject;
 
     void Start()
     {   
@@ -22,10 +26,14 @@ public class ExperimentGameMobileControl : MonoBehaviour
 
         // Variable initialize
         HitCount = 0;
+        isMotionReset = true;
+        maxElevationAngel = 90;
+        minBetweenAngle = 50;
     }
 
     void Update()
     {   
+
         // InitialDownDirection initialization
         // if (Time.frameCount == 120){
             // SetInitialDownDirection();
@@ -39,21 +47,63 @@ public class ExperimentGameMobileControl : MonoBehaviour
             }
 
 
-            // Create raycast
+            // Create raycast and important angles
             pointingDirection = transform.up;
             Ray ray = new Ray(transform.position, pointingDirection);
             RaycastHit hit;
+            ray_initialDown = Vector3.Angle(pointingDirection, initialDownDirection);
+            ray_target = Vector3.Angle(pointingDirection, GameAudioControl.transform.position);
+            target_initialDown = Vector3.Angle(GameAudioControl.transform.position, initialDownDirection);
             
+            // Set flags
+            if(ray_initialDown < 30.0f){
+                isMotionReset = true;
+            }
+
             // Target detection
             if (Physics.Raycast(ray, out hit)){
-                GameObject HitObject = hit.collider.gameObject;
-                if (HitObject.name.Contains("Sphere") && GameAudioControl.isMoving == false){
-                    GameAudioControl.MoveToNextPosition();
-                    GameUIControl.Verbal.PlayOneShot(GameUIControl.Clip3_SuccessHit);
-                    HitCount += 1;
+                HitObject = hit.collider.gameObject;
+                if (HitObject.name.Contains("Sphere") && GameAudioControl.isMoving == false && isMotionReset == true){
+                    // SetColor
+                    GameAudioControl.ColorHit(true);
+                    
+                    if(PlayerPrefs.GetInt("ExperimentAdaptiveShrink")==0){                        
+                        // if activated adpative shrink, 
+                        // Record maximum elevation angle, only record when ray inside the target area, and active adaptive shrink
+                        if (ray_initialDown > maxElevationAngel){
+                            maxElevationAngel = ray_initialDown;
+                        }
+                        // Record minimum AngleBetween, only record when ray inside the target area, and active adaptive shrink
+                        if (ray_target < minBetweenAngle){
+                            minBetweenAngle = ray_target;
+                        }
+                        if (maxElevationAngel > target_initialDown + 10){
+                            GameAudioControl.OverhitColor(true);
+                        }
+                        
+                    }else{
+                        // if not activated adpative shrink
+                        GameAudioControl.MoveToNextPosition();
+                        GameUIControl.Verbal.PlayOneShot(GameUIControl.Clip3_SuccessHit);
+                        HitCount += 1;
+                    }
+                }else if(PlayerPrefs.GetInt("ExperimentAdaptiveShrink")==0 && LastHitObject != null){
+                    // Leaving the AudioSource Sphere
+                    if(LastHitObject.name.Contains("Sphere")){
+                        GameAudioControl.AdpativeShrink(minBetweenAngle, maxElevationAngel, target_initialDown);
+                        isMotionReset = false;
+                        GameAudioControl.ColorHit(false);
+                        GameAudioControl.OverhitColor(false);
+                    }
+                }else if(PlayerPrefs.GetInt("ExperimentAdaptiveShrink")==1 && LastHitObject != null){
+                    if(LastHitObject.name.Contains("Sphere")){
+                        GameAudioControl.ColorHit(false);
+                    }
                 }
             }
 
+            // Setting LastHitObject
+            LastHitObject = HitObject;
             // Debug
             Debug.DrawRay(transform.position, pointingDirection * 30.0f, Color.green);
         }

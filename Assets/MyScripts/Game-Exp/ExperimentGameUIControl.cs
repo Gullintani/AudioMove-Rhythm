@@ -23,6 +23,14 @@ public class ExperimentGameUIControl : MonoBehaviour
     private VisualElement UIRoot;
     private Button UIButtonCalibration;
     private Button UIButtonBack;
+    private Label UITextTarget1;
+    private Label UITextTarget2;
+    private Label UITextTarget3;
+    private Label UITextTarget4;
+    private Label UITextTarget5;
+    private Label UITextTarget6;
+    private Label UITextTime;
+
 
 
     private void OnEnable() {
@@ -35,9 +43,24 @@ public class ExperimentGameUIControl : MonoBehaviour
         UIRoot = UI.rootVisualElement;
         UIButtonCalibration = UIRoot.Q<Button>("ButtonCalibration");
         UIButtonBack = UIRoot.Q<Button>("ButtonBack");
+        UITextTime = UIRoot.Q<Label>("Time");
+        UITextTarget1 = UIRoot.Q<Label>("Target1");
+        UITextTarget2 = UIRoot.Q<Label>("Target2");
+        UITextTarget3 = UIRoot.Q<Label>("Target3");
+        UITextTarget4 = UIRoot.Q<Label>("Target4");
+        UITextTarget5 = UIRoot.Q<Label>("Target5");
+        UITextTarget6 = UIRoot.Q<Label>("Target6");
+
 
         // OnStart displays and verbal prompt
         Verbal.PlayOneShot(Clip1_ExerciseStart);
+        UITextTime.style.display = DisplayStyle.None;
+        UITextTarget1.style.display = DisplayStyle.None;
+        UITextTarget2.style.display = DisplayStyle.None;
+        UITextTarget3.style.display = DisplayStyle.None;
+        UITextTarget4.style.display = DisplayStyle.None;
+        UITextTarget5.style.display = DisplayStyle.None;
+        UITextTarget6.style.display = DisplayStyle.None;
 
         // Set Button Event
         UIButtonCalibration.clicked += delegate(){
@@ -47,16 +70,34 @@ public class ExperimentGameUIControl : MonoBehaviour
             GameMainControl.WorldCalibration();
         };
         UIButtonBack.clicked += delegate(){
-            SceneManager.LoadScene("AudioMoveSettings");
+            SceneManager.LoadScene("ExperimentSettings");
         };
     }
 
     void Update(){
-
+        if(GameAudioControl.ErrorAngles.Count == 18){
+            GameMainControl.IsTiming = false;
+            ShowResults();
+            GameAudioControl.gameObject.SetActive(false);
+        }
     }
 
     void ShowResults(){
-        
+        UITextTime.text = GameMainControl.Timer.ToString();
+        UITextTarget1.text = string.Join(", ", GameAudioControl.ErrorAngles.GetRange(0, 3));
+        UITextTarget2.text = string.Join(", ", GameAudioControl.ErrorAngles.GetRange(3, 3));
+        UITextTarget3.text = string.Join(", ", GameAudioControl.ErrorAngles.GetRange(6, 3));
+        UITextTarget4.text = string.Join(", ", GameAudioControl.ErrorAngles.GetRange(9, 3));
+        UITextTarget5.text = string.Join(", ", GameAudioControl.ErrorAngles.GetRange(12, 3));
+        UITextTarget6.text = string.Join(", ", GameAudioControl.ErrorAngles.GetRange(15, 3));
+
+        UITextTime.style.display = DisplayStyle.Flex;
+        UITextTarget1.style.display = DisplayStyle.Flex;
+        UITextTarget2.style.display = DisplayStyle.Flex;
+        UITextTarget3.style.display = DisplayStyle.Flex;
+        UITextTarget4.style.display = DisplayStyle.Flex;
+        UITextTarget5.style.display = DisplayStyle.Flex;
+        UITextTarget6.style.display = DisplayStyle.Flex;
     }
     
 }

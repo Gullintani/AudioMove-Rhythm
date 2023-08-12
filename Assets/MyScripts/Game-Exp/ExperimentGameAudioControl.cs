@@ -79,12 +79,12 @@ public class ExperimentGameAudioControl : MonoBehaviour
 
     // Move to the next position in PositionList
     public void MoveToNextPosition(){
-        Debug.Log("AudioMoved.");
-        if(CurrentPositionIndex + 1 >= PositionList.Count){
-            CurrentPositionIndex = -1;
-        }
         CurrentPositionIndex += 1;
+        if(CurrentPositionIndex >= PositionList.Count){
+            CurrentPositionIndex = 0;
+        }
         MovingDestination = PositionList[CurrentPositionIndex];
+        Debug.Log("AudioMoved.");
     }
 
     // Move to random next position in PositionList
@@ -111,20 +111,20 @@ public class ExperimentGameAudioControl : MonoBehaviour
             // Task 2
             PositionList.Add(SphericalToCartesian(new Vector3(Radius, 60f, 0f)));
             PositionList.Add(SphericalToCartesian(new Vector3(Radius, 120f, 0f)));
-            PositionList.Add(SphericalToCartesian(new Vector3(Radius, 60f, 30f)));
-            PositionList.Add(SphericalToCartesian(new Vector3(Radius, 120f, 30f)));
-            PositionList.Add(SphericalToCartesian(new Vector3(Radius, 60f, -30f)));
-            PositionList.Add(SphericalToCartesian(new Vector3(Radius, 120f, -30f)));
+            PositionList.Add(SphericalToCartesian(new Vector3(Radius, 60f, 20f)));
+            PositionList.Add(SphericalToCartesian(new Vector3(Radius, 120f, 20f)));
+            PositionList.Add(SphericalToCartesian(new Vector3(Radius, 60f, -20f)));
+            PositionList.Add(SphericalToCartesian(new Vector3(Radius, 120f, -20f)));
         }else if(PlayerPrefs.GetInt("ExperimentTask") == 2){
             // Task 3
             if(PlayerPrefs.GetInt("ExperimentTrail") == 0 ){
                 // Task 3, Trail 1
-                PositionList.Add(SphericalToCartesian(new Vector3(Radius, 45f, -30f)));
+                PositionList.Add(SphericalToCartesian(new Vector3(Radius, 45f, -20f)));
                 PositionList.Add(SphericalToCartesian(new Vector3(Radius, 120f, 0f)));
                 PositionList.Add(SphericalToCartesian(new Vector3(Radius, 60f, 30f)));
             }else if(PlayerPrefs.GetInt("ExperimentTrail") == 1){
                 // Task 3, Trail 2
-                PositionList.Add(SphericalToCartesian(new Vector3(Radius, 45f, -30f)));
+                PositionList.Add(SphericalToCartesian(new Vector3(Radius, 45f, -20f)));
                 PositionList.Add(SphericalToCartesian(new Vector3(Radius, 120f, 0f)));
                 PositionList.Add(SphericalToCartesian(new Vector3(Radius, 60f, 30f)));
             }
@@ -133,14 +133,13 @@ public class ExperimentGameAudioControl : MonoBehaviour
     }
 
     public void AdpativeShrink(float minimumAngle, float maxAlphaAngel, float betaAngle){
-        UIControl.Verbal.PlayOneShot(UIControl.Clip4_SuccessHit2);
         
         float ShrinkScale = Mathf.Abs(Mathf.Sin(minimumAngle * Mathf.Deg2Rad) * Radius);
         if (ShrinkScale > InitialScale || ShrinkScale <= 0){
             ShrinkScale = InitialScale;
         }
         // Debug
-        Debug.Log("MinAngle: " + minimumAngle + "; MaxElevation: " + maxAlphaAngel + "; target_InitialDown: " + betaAngle + "; ShrinkScale: " + ShrinkScale + "; TryTime: " + TryTime);
+        // Debug.Log("MinAngle: " + minimumAngle + "; MaxElevation: " + maxAlphaAngel + "; target_InitialDown: " + betaAngle + "; ShrinkScale: " + ShrinkScale + "; TryTime: " + TryTime);
         transform.localScale = new Vector3(ShrinkScale, ShrinkScale, ShrinkScale);
         
         if (minimumAngle <= Tolerance && maxAlphaAngel <= (betaAngle + 10.0f)){ // 20.0f is the tolerant angle here
@@ -155,16 +154,18 @@ public class ExperimentGameAudioControl : MonoBehaviour
                 UIControl.Verbal.PlayOneShot(UIControl.Clip7_AudioMove);
             }
             ErrorAngles.Add(minimumAngle);
-            Debug.Log(ErrorAngles);
+            string joinedList = string.Join(", ", ErrorAngles);
+            Debug.Log(joinedList);
             return;
-        }
-        if (maxAlphaAngel > (betaAngle + 10.0f)){
+        }else if(maxAlphaAngel > (betaAngle + 10.0f)){
             transform.localScale = new Vector3(InitialScale, InitialScale, InitialScale);
             Phone.minBetweenAngle = 90.0f;
             Phone.maxElevationAngel = 0.0f;
             // TryTime = MaxTryTime;
             UIControl.Verbal.PlayOneShot(UIControl.Clip5_OverHit);
             return;
+        }else if(minimumAngle > Tolerance){
+            UIControl.Verbal.PlayOneShot(UIControl.Clip4_SuccessHit2);
         }
     }
 

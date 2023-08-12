@@ -56,7 +56,7 @@ public class ExperimentGameMobileControl : MonoBehaviour
             target_initialDown = Vector3.Angle(GameAudioControl.transform.position, initialDownDirection);
             
             // Set flags
-            if(ray_initialDown < 30.0f){
+            if(ray_initialDown < 15.0f){
                 isMotionReset = true;
             }
 
@@ -80,14 +80,13 @@ public class ExperimentGameMobileControl : MonoBehaviour
                         if (maxElevationAngel > target_initialDown + 10){
                             GameAudioControl.OverhitColor(true);
                         }
-                        
                     }else{
                         // if not activated adpative shrink
                         GameAudioControl.MoveToNextPosition();
                         GameUIControl.Verbal.PlayOneShot(GameUIControl.Clip3_SuccessHit);
                         HitCount += 1;
                     }
-                }else if(PlayerPrefs.GetInt("ExperimentAdaptiveShrink")==0 && LastHitObject != null){
+                }else if(PlayerPrefs.GetInt("ExperimentAdaptiveShrink")==0 && LastHitObject != null && GameAudioControl.isMoving == false && isMotionReset == true){
                     // Leaving the AudioSource Sphere
                     if(LastHitObject.name.Contains("Sphere")){
                         GameAudioControl.AdpativeShrink(minBetweenAngle, maxElevationAngel, target_initialDown);
@@ -95,7 +94,7 @@ public class ExperimentGameMobileControl : MonoBehaviour
                         GameAudioControl.ColorHit(false);
                         GameAudioControl.OverhitColor(false);
                     }
-                }else if(PlayerPrefs.GetInt("ExperimentAdaptiveShrink")==1 && LastHitObject != null){
+                }else if(PlayerPrefs.GetInt("ExperimentAdaptiveShrink")==1 && LastHitObject != null && GameAudioControl.isMoving == false && isMotionReset == true){
                     if(LastHitObject.name.Contains("Sphere")){
                         GameAudioControl.ColorHit(false);
                     }

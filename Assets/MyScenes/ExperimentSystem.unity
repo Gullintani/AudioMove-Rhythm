@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18217021, g: 0.2246046, b: 0.2884034, a: 1}
+  m_IndirectSpecularColor: {r: 0.18215132, g: 0.22456804, b: 0.28842226, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -336,6 +336,8 @@ MonoBehaviour:
   Phone: {fileID: 1870177124}
   HeadTracker: {fileID: 137559732}
   GameAudioControl: {fileID: 534158934}
+  Timer: 0
+  IsTiming: 0
 --- !u!1 &245470424
 GameObject:
   m_ObjectHideFlags: 0
@@ -841,6 +843,7 @@ MonoBehaviour:
   UIControl: {fileID: 1595359775}
   isMoving: 0
   PositionList: []
+  ErrorAngles: []
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -2122,7 +2125,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PanelSettings: {fileID: 11400000, guid: b15fa689a0c207f46aacb6919dc7eea5, type: 2}
   m_ParentUI: {fileID: 0}
-  sourceAsset: {fileID: 9197481963319205126, guid: 6f6384349c2437e47aa12154f9d07d41, type: 3}
+  sourceAsset: {fileID: 9197481963319205126, guid: caa37e66c97074b7cb4d70b34aba3796, type: 3}
   m_SortingOrder: 0
 --- !u!4 &1595359772
 Transform:

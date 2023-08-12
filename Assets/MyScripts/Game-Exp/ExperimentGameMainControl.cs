@@ -17,8 +17,8 @@ public class ExperimentGameMainControl : MonoBehaviour
         PlayerPrefs.SetString("ExperimentLimb", "LeftUpperArm");
         PlayerPrefs.SetInt("ExperimentTask", 1);
         PlayerPrefs.SetInt("ExperimentTrail", 1);
-        PlayerPrefs.SetInt("ExperimentMotion", 1);
-        PlayerPrefs.SetInt("ExperimentAdaptiveShrink", 1);
+        PlayerPrefs.SetInt("ExperimentMotion", 2);
+        PlayerPrefs.SetInt("ExperimentAdaptiveShrink", 0);
 
         // Variable initialization
         Timer = 0f;
@@ -35,7 +35,6 @@ public class ExperimentGameMainControl : MonoBehaviour
         if (IsTiming)
         {
             Timer += Time.deltaTime;
-            Debug.Log("Time: " + Timer.ToString("F2"));
         }
     }
 

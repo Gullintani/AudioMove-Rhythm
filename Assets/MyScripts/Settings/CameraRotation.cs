@@ -52,9 +52,9 @@ public class CameraRotation : MonoBehaviour
         isMovingCamera = false;
         isRotatingCamera = false;
         isSelectingMusic = true;
-        RotationSpeed = 20f;
+        RotationSpeed = 10f;
         SelfRotationSpeed = 10f;
-        MovingSpeed = 15f;
+        MovingSpeed = 10f;
         HeadphonePosition = new Vector3(1.87f, 0f, 4f);
         // Limb motion limitation
         StartThetaAngle = 45f;

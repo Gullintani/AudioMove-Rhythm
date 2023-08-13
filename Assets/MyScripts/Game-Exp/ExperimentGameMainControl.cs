@@ -14,11 +14,11 @@ public class ExperimentGameMainControl : MonoBehaviour
     void Start()
     {
         // Debug PlayerPrefs Settings
-        PlayerPrefs.SetString("ExperimentLimb", "LeftUpperArm");
-        PlayerPrefs.SetInt("ExperimentTask", 2);
-        PlayerPrefs.SetInt("ExperimentTrail", 1);
-        PlayerPrefs.SetInt("ExperimentMotion", 1);
-        PlayerPrefs.SetInt("ExperimentAdaptiveShrink", 0);
+        // PlayerPrefs.SetString("ExperimentLimb", "LeftUpperArm");
+        // PlayerPrefs.SetInt("ExperimentTask", 1);
+        // PlayerPrefs.SetInt("ExperimentTrail", 1);
+        // PlayerPrefs.SetInt("ExperimentMotion", 1);
+        // PlayerPrefs.SetInt("ExperimentAdaptiveShrink", 0);
 
         // Variable initialization
         Timer = 0f;

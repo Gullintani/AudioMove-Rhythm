@@ -30,6 +30,7 @@ public class ExperimentGameUIControl : MonoBehaviour
     private Label UITextTarget5;
     private Label UITextTarget6;
     private Label UITextTime;
+    private Label UICurrentState;
     private int AllClearNumber;
 
 
@@ -51,6 +52,7 @@ public class ExperimentGameUIControl : MonoBehaviour
         UITextTarget4 = UIRoot.Q<Label>("Target4");
         UITextTarget5 = UIRoot.Q<Label>("Target5");
         UITextTarget6 = UIRoot.Q<Label>("Target6");
+        UICurrentState = UIRoot.Q<Label>("CurrentState");
 
         if(PlayerPrefs.GetInt("ExperimentTask")==1){
             AllClearNumber = 18;
@@ -78,6 +80,8 @@ public class ExperimentGameUIControl : MonoBehaviour
         UIButtonBack.clicked += delegate(){
             SceneManager.LoadScene("ExperimentSettings");
         };
+
+        DisplayCurrentState();
     }
 
     void Update(){
@@ -88,15 +92,19 @@ public class ExperimentGameUIControl : MonoBehaviour
         }
     }
 
+    void DisplayCurrentState(){
+        UICurrentState.text = PlayerPrefs.GetString("ExperimentLimb") + "-Task" + PlayerPrefs.GetInt("ExperimentTask") + "-Trace" + PlayerPrefs.GetInt("ExperimentTrail", 1) +"-Motio"+ PlayerPrefs.GetInt("ExperimentMotion", 1) + "-Shrink" + PlayerPrefs.GetInt("ExperimentAdaptiveShrink", 0);
+    }
+
     void ShowResults(){
-        UITextTime.text = GameMainControl.Timer.ToString();
+        UITextTime.text = "Time: " + GameMainControl.Timer.ToString();
         if(PlayerPrefs.GetInt("ExperimentTask")==1){
-            UITextTarget1.text = string.Join(", ", GameAudioControl.ErrorAngles.GetRange(0, 3));
-            UITextTarget2.text = string.Join(", ", GameAudioControl.ErrorAngles.GetRange(3, 3));
-            UITextTarget3.text = string.Join(", ", GameAudioControl.ErrorAngles.GetRange(6, 3));
-            UITextTarget4.text = string.Join(", ", GameAudioControl.ErrorAngles.GetRange(9, 3));
-            UITextTarget5.text = string.Join(", ", GameAudioControl.ErrorAngles.GetRange(12, 3));
-            UITextTarget6.text = string.Join(", ", GameAudioControl.ErrorAngles.GetRange(15, 3));
+            UITextTarget1.text = "1: " + string.Join(", ", GameAudioControl.ErrorAngles.GetRange(0, 3));
+            UITextTarget2.text = "2: " + string.Join(", ", GameAudioControl.ErrorAngles.GetRange(3, 3));
+            UITextTarget3.text = "3: " + string.Join(", ", GameAudioControl.ErrorAngles.GetRange(6, 3));
+            UITextTarget4.text = "4: " + string.Join(", ", GameAudioControl.ErrorAngles.GetRange(9, 3));
+            UITextTarget5.text = "5: " + string.Join(", ", GameAudioControl.ErrorAngles.GetRange(12, 3));
+            UITextTarget6.text = "6: " + string.Join(", ", GameAudioControl.ErrorAngles.GetRange(15, 3));
             UITextTime.style.display = DisplayStyle.Flex;
             UITextTarget1.style.display = DisplayStyle.Flex;
             UITextTarget2.style.display = DisplayStyle.Flex;
@@ -105,9 +113,9 @@ public class ExperimentGameUIControl : MonoBehaviour
             UITextTarget5.style.display = DisplayStyle.Flex;
             UITextTarget6.style.display = DisplayStyle.Flex;
         }else if(PlayerPrefs.GetInt("ExperimentTask")==2){
-            UITextTarget1.text = string.Join(", ", GameAudioControl.ErrorAngles.GetRange(0, 1));
-            UITextTarget2.text = string.Join(", ", GameAudioControl.ErrorAngles.GetRange(1, 1));
-            UITextTarget3.text = string.Join(", ", GameAudioControl.ErrorAngles.GetRange(2, 1));
+            UITextTarget1.text = "1: " + string.Join(", ", GameAudioControl.ErrorAngles.GetRange(0, 1));
+            UITextTarget2.text = "2: " + string.Join(", ", GameAudioControl.ErrorAngles.GetRange(1, 1));
+            UITextTarget3.text = "3: " + string.Join(", ", GameAudioControl.ErrorAngles.GetRange(2, 1));
             UITextTime.style.display = DisplayStyle.Flex;
             UITextTarget1.style.display = DisplayStyle.Flex;
             UITextTarget2.style.display = DisplayStyle.Flex;

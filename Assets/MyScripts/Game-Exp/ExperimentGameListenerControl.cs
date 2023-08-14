@@ -35,5 +35,9 @@ public class ExperimentGameListenerControl : MonoBehaviour
         }else{
             this.transform.localPosition = new Vector3(0f, 0f, 0f);
         }
+        // In task 1 scenario for head tracking.
+        if(PlayerPrefs.GetInt("ExperimentTask") == 0){
+            this.transform.localPosition = new Vector3(0f, 0f, 0f);
+        }
     }
 }

@@ -63,7 +63,7 @@ public class ExperimentUI : MonoBehaviour
         // Handle display of TrailSelection in Configuration view when selection Task 3
         if(UITaskSelection.value != -1 && CurrentView == "Configuration"){
             UIMotionSelection.style.display = DisplayStyle.Flex;
-            if(UITaskSelection.value == 2){
+            if(UITaskSelection.value == 2 || UITaskSelection.value == 1){
                 UITrailSelection.style.display = DisplayStyle.Flex;
             }else{
                 UITrailSelection.style.display = DisplayStyle.None;

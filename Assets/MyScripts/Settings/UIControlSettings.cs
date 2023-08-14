@@ -168,7 +168,7 @@ public class UIControlBodyPosition : MonoBehaviour
 
     private void OnSliderSizeValueChanged(ChangeEvent<float> evt){   
         // Change size data
-        TargetSize = Mathf.Lerp(2, 8, UISliderSize.value / 100f);
+        TargetSize = Mathf.Lerp(4, 8, UISliderSize.value / 100f);
         if(CameraRotation.IsPreviewSphere(CameraRotation.CurrentTargetSelection) == true){
             CameraRotation.CurrentTargetSelection.transform.localScale = new Vector3(TargetSize, TargetSize, TargetSize);
         }else{

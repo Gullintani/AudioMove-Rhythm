@@ -23,6 +23,8 @@ public class ExperimentGameAudioControl : MonoBehaviour
     private float InitialScale;
     private float Radius, Tolerance;
     public List<float> ErrorAngles;
+    public GameObject SpatialListenerHead;
+    public float HeadAngleBetween;
 
     void Start() {
         // Initialize Variables
@@ -37,6 +39,7 @@ public class ExperimentGameAudioControl : MonoBehaviour
         Radius = 5f;
         Tolerance = 20f;
         CurrentPositionIndex = 0;
+        HeadAngleBetween = 10f;
 
         // Load data from PlayerPref
         GetExperimentPosition();
@@ -53,12 +56,9 @@ public class ExperimentGameAudioControl : MonoBehaviour
     }
 
     private void Update(){
-        // Testing function.
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Debug.Log("Space pressed. AudioController.cs test triggered.");
-            MoveToNextPosition();
-            // MoveToNextRandomPosition();
+        // Calculate HeadAngleBetween
+        if(PlayerPrefs.GetInt("ExperimentTask")==0){
+            HeadAngleBetween = Vector3.Angle(this.transform.position, SpatialListenerHead.transform.forward);
         }
 
         // Smooth moving
@@ -107,25 +107,35 @@ public class ExperimentGameAudioControl : MonoBehaviour
         if (PlayerPrefs.GetInt("ExperimentTask") == 0){
             // Task 1
             PositionList.Add(SphericalToCartesian(new Vector3(Radius, 20f, 0f)));
-            PositionList.Add(SphericalToCartesian(new Vector3(Radius, 50f, 0f)));
-            PositionList.Add(SphericalToCartesian(new Vector3(Radius, 80f, 0f)));
             PositionList.Add(SphericalToCartesian(new Vector3(Radius, 110f, 0f)));
+            PositionList.Add(SphericalToCartesian(new Vector3(Radius, 50f, 0f)));
             PositionList.Add(SphericalToCartesian(new Vector3(Radius, 140f, 0f)));
-            PositionList.Add(SphericalToCartesian(new Vector3(Radius, 170f, 0f)));            
+            PositionList.Add(SphericalToCartesian(new Vector3(Radius, 80f, 0f)));
+            PositionList.Add(SphericalToCartesian(new Vector3(Radius, 170f, 0f)));         
         }else if(PlayerPrefs.GetInt("ExperimentTask") == 1){
             // Task 2
-            PositionList.Add(SphericalToCartesian(new Vector3(Radius, 60f, 0f)));
-            PositionList.Add(SphericalToCartesian(new Vector3(Radius, 120f, 0f)));
-            PositionList.Add(SphericalToCartesian(new Vector3(Radius, 60f, 20f)));
-            PositionList.Add(SphericalToCartesian(new Vector3(Radius, 120f, 20f)));
-            PositionList.Add(SphericalToCartesian(new Vector3(Radius, 60f, -20f)));
-            PositionList.Add(SphericalToCartesian(new Vector3(Radius, 120f, -20f)));
+            if(PlayerPrefs.GetInt("ExperimentTrail")==0){
+                PositionList.Add(SphericalToCartesian(new Vector3(Radius, 120f, 0f)));
+                PositionList.Add(SphericalToCartesian(new Vector3(Radius, 60f, 20f)));
+                PositionList.Add(SphericalToCartesian(new Vector3(Radius, 120f, 20f)));
+                PositionList.Add(SphericalToCartesian(new Vector3(Radius, 60f, -20f)));
+                PositionList.Add(SphericalToCartesian(new Vector3(Radius, 120f, -20f)));
+                PositionList.Add(SphericalToCartesian(new Vector3(Radius, 60f, 0f)));
+            }else if(PlayerPrefs.GetInt("ExperimentTrail")==1){
+                PositionList.Add(SphericalToCartesian(new Vector3(Radius, 60f, 0f)));
+                PositionList.Add(SphericalToCartesian(new Vector3(Radius, 120f, 0f)));
+                PositionList.Add(SphericalToCartesian(new Vector3(Radius, 60f, 20f)));
+                PositionList.Add(SphericalToCartesian(new Vector3(Radius, 120f, 20f)));
+                PositionList.Add(SphericalToCartesian(new Vector3(Radius, 60f, -20f)));
+                PositionList.Add(SphericalToCartesian(new Vector3(Radius, 120f, -20f)));
+            }
+            
         }else if(PlayerPrefs.GetInt("ExperimentTask") == 2){
             // Task 3
             if(PlayerPrefs.GetInt("ExperimentTrail") == 0 ){
                 // Task 3, Trail 1
                 PositionList.Add(SphericalToCartesian(new Vector3(Radius, 45f, -20f)));
-                PositionList.Add(SphericalToCartesian(new Vector3(Radius, 120f, 0f)));
+                PositionList.Add(SphericalToCartesian(new Vector3(Radius, 120f, -20f)));
                 PositionList.Add(SphericalToCartesian(new Vector3(Radius, 60f, 30f)));
             }else if(PlayerPrefs.GetInt("ExperimentTrail") == 1){
                 // Task 3, Trail 2
@@ -138,7 +148,6 @@ public class ExperimentGameAudioControl : MonoBehaviour
     }
 
     public void AdpativeShrink(float minimumAngle, float maxAlphaAngel, float betaAngle){
-        
         float ShrinkScale = Mathf.Abs(Mathf.Sin(minimumAngle * Mathf.Deg2Rad) * Radius);
         if (ShrinkScale > InitialScale || ShrinkScale <= 0){
             ShrinkScale = InitialScale;

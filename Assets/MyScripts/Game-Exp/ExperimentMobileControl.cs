@@ -59,15 +59,32 @@ public class ExperimentGameMobileControl : MonoBehaviour
             if(ray_initialDown < 15.0f){
                 isMotionReset = true;
             }
+            // Just directly set true when doing task 3
+            if(PlayerPrefs.GetInt("ExperimentTask")==2){
+                isMotionReset = true;
+            }
 
             // Target detection
-            if (Physics.Raycast(ray, out hit)){
+            if (Physics.Raycast(ray, out hit) && PlayerPrefs.GetInt("ExperimentTask")!=0){
                 HitObject = hit.collider.gameObject;
                 if (HitObject.name.Contains("Sphere") && GameAudioControl.isMoving == false && isMotionReset == true){
                     // SetColor
                     GameAudioControl.ColorHit(true);
                     
-                    if(PlayerPrefs.GetInt("ExperimentAdaptiveShrink")==0){                        
+                    if(PlayerPrefs.GetInt("ExperimentAdaptiveShrink")==0 && PlayerPrefs.GetInt("ExperimentTask")==2){
+                        if (ray_target < 20.0f && GameAudioControl.isMoving == false){
+                            Debug.Log(ray_target);
+                            if (ray_target < minBetweenAngle){
+                                minBetweenAngle = ray_target;
+                            }
+                            GameAudioControl.MoveToNextPosition();
+                            GameUIControl.Verbal.PlayOneShot(GameUIControl.Clip3_SuccessHit);
+                            GameUIControl.Verbal.PlayOneShot(GameUIControl.Clip7_AudioMove);
+                            GameAudioControl.ErrorAngles.Add(minBetweenAngle);
+                        }
+                    }
+
+                    if(PlayerPrefs.GetInt("ExperimentAdaptiveShrink")==0 && PlayerPrefs.GetInt("ExperimentTask")!=2){                        
                         // if activated adpative shrink, 
                         // Record maximum elevation angle, only record when ray inside the target area, and active adaptive shrink
                         if (ray_initialDown > maxElevationAngel){
@@ -80,7 +97,7 @@ public class ExperimentGameMobileControl : MonoBehaviour
                         if (maxElevationAngel > target_initialDown + 10){
                             GameAudioControl.OverhitColor(true);
                         }
-                    }else{
+                    }else if(PlayerPrefs.GetInt("ExperimentAdaptiveShrink")==1 && PlayerPrefs.GetInt("ExperimentTask")!=2){
                         // if not activated adpative shrink
                         GameAudioControl.MoveToNextPosition();
                         GameUIControl.Verbal.PlayOneShot(GameUIControl.Clip3_SuccessHit);

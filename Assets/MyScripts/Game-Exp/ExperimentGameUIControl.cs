@@ -23,6 +23,7 @@ public class ExperimentGameUIControl : MonoBehaviour
     private VisualElement UIRoot;
     private Button UIButtonCalibration;
     private Button UIButtonBack;
+    private Button UIButtonNextPosition;
     private Label UITextTarget1;
     private Label UITextTarget2;
     private Label UITextTarget3;
@@ -31,6 +32,7 @@ public class ExperimentGameUIControl : MonoBehaviour
     private Label UITextTarget6;
     private Label UITextTime;
     private Label UICurrentState;
+    private Label UIHeadAngleBetween;
     private int AllClearNumber;
 
 
@@ -45,6 +47,7 @@ public class ExperimentGameUIControl : MonoBehaviour
         UIRoot = UI.rootVisualElement;
         UIButtonCalibration = UIRoot.Q<Button>("ButtonCalibration");
         UIButtonBack = UIRoot.Q<Button>("ButtonBack");
+        UIButtonNextPosition = UIRoot.Q<Button>("NextPosition");
         UITextTime = UIRoot.Q<Label>("Time");
         UITextTarget1 = UIRoot.Q<Label>("Target1");
         UITextTarget2 = UIRoot.Q<Label>("Target2");
@@ -53,11 +56,14 @@ public class ExperimentGameUIControl : MonoBehaviour
         UITextTarget5 = UIRoot.Q<Label>("Target5");
         UITextTarget6 = UIRoot.Q<Label>("Target6");
         UICurrentState = UIRoot.Q<Label>("CurrentState");
+        UIHeadAngleBetween = UIRoot.Q<Label>("HeadAngleBetween");
 
         if(PlayerPrefs.GetInt("ExperimentTask")==1){
             AllClearNumber = 18;
         }else if(PlayerPrefs.GetInt("ExperimentTask")==2){
             AllClearNumber = 3;
+        }else if(PlayerPrefs.GetInt("ExperimentTask")==0){
+            AllClearNumber = 8;
         }
 
         // OnStart displays and verbal prompt
@@ -69,6 +75,15 @@ public class ExperimentGameUIControl : MonoBehaviour
         UITextTarget4.style.display = DisplayStyle.None;
         UITextTarget5.style.display = DisplayStyle.None;
         UITextTarget6.style.display = DisplayStyle.None;
+        DisplayCurrentState();
+        if(PlayerPrefs.GetInt("ExperimentTask")==0){
+            UIButtonNextPosition.style.display = DisplayStyle.Flex;
+            UIHeadAngleBetween.style.display = DisplayStyle.Flex;
+        }else{
+            UIButtonNextPosition.style.display = DisplayStyle.None;
+            UIHeadAngleBetween.style.display = DisplayStyle.None;
+        }
+        
 
         // Set Button Event
         UIButtonCalibration.clicked += delegate(){
@@ -80,8 +95,9 @@ public class ExperimentGameUIControl : MonoBehaviour
         UIButtonBack.clicked += delegate(){
             SceneManager.LoadScene("ExperimentSettings");
         };
-
-        DisplayCurrentState();
+        UIButtonNextPosition.clicked += delegate(){
+            GameAudioControl.MoveToNextPosition();
+        };
     }
 
     void Update(){
@@ -89,6 +105,9 @@ public class ExperimentGameUIControl : MonoBehaviour
             GameMainControl.IsTiming = false;
             ShowResults();
             GameAudioControl.gameObject.SetActive(false);
+        }
+        if(PlayerPrefs.GetInt("ExperimentTask")==0){
+            UIHeadAngleBetween.text = GameAudioControl.HeadAngleBetween.ToString();
         }
     }
 
@@ -120,10 +139,7 @@ public class ExperimentGameUIControl : MonoBehaviour
             UITextTarget1.style.display = DisplayStyle.Flex;
             UITextTarget2.style.display = DisplayStyle.Flex;
             UITextTarget3.style.display = DisplayStyle.Flex;
-        }
-        
-
-        
+        }        
     }
     
 }
